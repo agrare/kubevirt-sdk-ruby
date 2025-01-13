@@ -1,0 +1,7 @@
+{
+  "gemName": "kubevirt",
+  "gemAuthor": "ManageIQ Developers",
+  "gemSummary": "Kubevirt SDK",
+  "gemDescription": "Ruby gem for Kubevirt",
+  "gemLicense": "Apache-2.0"
+}

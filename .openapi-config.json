@@ -4,5 +4,5 @@
   "gemSummary": "Kubevirt SDK",
   "gemDescription": "Ruby gem for Kubevirt",
   "gemLicense": "Apache-2.0",
-  "gemVersion": "0.0.1"
+  "gemVersion": "0.1.0"
 }

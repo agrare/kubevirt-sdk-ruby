@@ -27,6 +27,9 @@ module Kubevirt
     # List of all IP addresses of a Virtual Machine interface
     attr_accessor :ip_addresses
 
+    # LinkState Reports the current operational link state`. values: up, down.
+    attr_accessor :link_state
+
     # Hardware address of a Virtual Machine interface
     attr_accessor :mac
 
@@ -46,6 +49,7 @@ module Kubevirt
         :'interface_name' => :'interfaceName',
         :'ip_address' => :'ipAddress',
         :'ip_addresses' => :'ipAddresses',
+        :'link_state' => :'linkState',
         :'mac' => :'mac',
         :'name' => :'name',
         :'pod_interface_name' => :'podInterfaceName',
@@ -65,6 +69,7 @@ module Kubevirt
         :'interface_name' => :'String',
         :'ip_address' => :'String',
         :'ip_addresses' => :'Array<String>',
+        :'link_state' => :'String',
         :'mac' => :'String',
         :'name' => :'String',
         :'pod_interface_name' => :'String',
@@ -111,6 +116,10 @@ module Kubevirt
         end
       end
 
+      if attributes.key?(:'link_state')
+        self.link_state = attributes[:'link_state']
+      end
+
       if attributes.key?(:'mac')
         self.mac = attributes[:'mac']
       end
@@ -152,6 +161,7 @@ module Kubevirt
           interface_name == o.interface_name &&
           ip_address == o.ip_address &&
           ip_addresses == o.ip_addresses &&
+          link_state == o.link_state &&
           mac == o.mac &&
           name == o.name &&
           pod_interface_name == o.pod_interface_name &&
@@ -167,7 +177,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [info_source, interface_name, ip_address, ip_addresses, mac, name, pod_interface_name, queue_count].hash
+      [info_source, interface_name, ip_address, ip_addresses, link_state, mac, name, pod_interface_name, queue_count].hash
     end
 
     # Builds the object from hash

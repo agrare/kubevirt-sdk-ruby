@@ -15,6 +15,8 @@ require 'time'
 
 module Kubevirt
   class V1alpha1VirtualMachinePoolSpec
+    attr_accessor :name_generation
+
     # Indicates that the pool is paused.
     attr_accessor :paused
 
@@ -28,6 +30,7 @@ module Kubevirt
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'name_generation' => :'nameGeneration',
         :'paused' => :'paused',
         :'replicas' => :'replicas',
         :'selector' => :'selector',
@@ -43,6 +46,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'name_generation' => :'V1alpha1VirtualMachinePoolNameGeneration',
         :'paused' => :'Boolean',
         :'replicas' => :'Integer',
         :'selector' => :'K8sIoApimachineryPkgApisMetaV1LabelSelector',
@@ -70,6 +74,10 @@ module Kubevirt
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'name_generation')
+        self.name_generation = attributes[:'name_generation']
+      end
 
       if attributes.key?(:'paused')
         self.paused = attributes[:'paused']
@@ -122,6 +130,7 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          name_generation == o.name_generation &&
           paused == o.paused &&
           replicas == o.replicas &&
           selector == o.selector &&
@@ -137,7 +146,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [paused, replicas, selector, virtual_machine_template].hash
+      [name_generation, paused, replicas, selector, virtual_machine_template].hash
     end
 
     # Builds the object from hash

@@ -96,7 +96,7 @@ module Kubevirt
     # VMRolloutStrategy defines how live-updatable fields, like CPU sockets, memory, tolerations, and affinity, are propagated from a VM to its VMI.
     attr_accessor :vm_rollout_strategy
 
-    # VMStateStorageClass is the name of the storage class to use for the PVCs created to preserve VM state, like TPM. The storage class must support RWX in filesystem mode.
+    # VMStateStorageClass is the name of the storage class to use for the PVCs created to preserve VM state, like TPM.
     attr_accessor :vm_state_storage_class
 
     attr_accessor :webhook_configuration
@@ -181,7 +181,7 @@ module Kubevirt
         :'common_instancetypes_deployment' => :'V1CommonInstancetypesDeployment',
         :'controller_configuration' => :'V1ReloadableComponentConfiguration',
         :'cpu_model' => :'String',
-        :'cpu_request' => :'String',
+        :'cpu_request' => :'Object',
         :'default_runtime_class' => :'String',
         :'developer_configuration' => :'V1DeveloperConfiguration',
         :'emulated_machines' => :'Array<String>',

@@ -43,7 +43,7 @@ module Kubevirt
     def self.openapi_types
       {
         :'container_name' => :'String',
-        :'divisor' => :'String',
+        :'divisor' => :'Object',
         :'resource' => :'String'
       }
     end

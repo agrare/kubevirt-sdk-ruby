@@ -41,9 +41,9 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'guest' => :'String',
+        :'guest' => :'Object',
         :'hugepages' => :'V1Hugepages',
-        :'max_guest' => :'String'
+        :'max_guest' => :'Object'
       }
     end
 

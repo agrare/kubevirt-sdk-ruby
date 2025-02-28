@@ -58,7 +58,7 @@ module Kubevirt
     # InterfaceSRIOV connects to a given network by passing-through an SR-IOV PCI device via vfio.
     attr_accessor :sriov
 
-    # State represents the requested operational state of the interface. The (only) value supported is `absent`, expressing a request to remove the interface.
+    # State represents the requested operational state of the interface. The supported values are: `absent`, expressing a request to remove the interface. `down`, expressing a request to set the link down. `up`, expressing a request to set the link up. Empty value functions as `up`.
     attr_accessor :state
 
     # If specified, the virtual network interface address and its tag will be provided to the guest via config drive

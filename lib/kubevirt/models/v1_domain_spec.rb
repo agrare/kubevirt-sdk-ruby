@@ -27,6 +27,8 @@ module Kubevirt
 
     attr_accessor :firmware
 
+    attr_accessor :io_threads
+
     # Controls whether or not disks will share IOThreads. Omitting IOThreadsPolicy disables use of IOThreads. One of: shared, auto
     attr_accessor :io_threads_policy
 
@@ -47,6 +49,7 @@ module Kubevirt
         :'devices' => :'devices',
         :'features' => :'features',
         :'firmware' => :'firmware',
+        :'io_threads' => :'ioThreads',
         :'io_threads_policy' => :'ioThreadsPolicy',
         :'launch_security' => :'launchSecurity',
         :'machine' => :'machine',
@@ -69,6 +72,7 @@ module Kubevirt
         :'devices' => :'V1Devices',
         :'features' => :'V1Features',
         :'firmware' => :'V1Firmware',
+        :'io_threads' => :'V1DiskIOThreads',
         :'io_threads_policy' => :'String',
         :'launch_security' => :'V1LaunchSecurity',
         :'machine' => :'V1Machine',
@@ -124,6 +128,10 @@ module Kubevirt
         self.firmware = attributes[:'firmware']
       end
 
+      if attributes.key?(:'io_threads')
+        self.io_threads = attributes[:'io_threads']
+      end
+
       if attributes.key?(:'io_threads_policy')
         self.io_threads_policy = attributes[:'io_threads_policy']
       end
@@ -176,6 +184,7 @@ module Kubevirt
           devices == o.devices &&
           features == o.features &&
           firmware == o.firmware &&
+          io_threads == o.io_threads &&
           io_threads_policy == o.io_threads_policy &&
           launch_security == o.launch_security &&
           machine == o.machine &&
@@ -192,7 +201,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [chassis, clock, cpu, devices, features, firmware, io_threads_policy, launch_security, machine, memory, resources].hash
+      [chassis, clock, cpu, devices, features, firmware, io_threads, io_threads_policy, launch_security, machine, memory, resources].hash
     end
 
     # Builds the object from hash

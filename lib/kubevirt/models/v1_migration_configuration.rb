@@ -85,7 +85,7 @@ module Kubevirt
         :'allow_auto_converge' => :'Boolean',
         :'allow_post_copy' => :'Boolean',
         :'allow_workload_disruption' => :'Boolean',
-        :'bandwidth_per_migration' => :'String',
+        :'bandwidth_per_migration' => :'Object',
         :'completion_timeout_per_gi_b' => :'Integer',
         :'disable_tls' => :'Boolean',
         :'match_se_linux_level_on_migration' => :'Boolean',

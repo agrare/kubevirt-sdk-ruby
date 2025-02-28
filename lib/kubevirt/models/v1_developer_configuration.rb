@@ -16,6 +16,9 @@ require 'time'
 module Kubevirt
   # DeveloperConfiguration holds developer options
   class V1DeveloperConfiguration
+    # Enable the ability to pprof profile KubeVirt control plane
+    attr_accessor :cluster_profiler
+
     # For each requested virtual CPU, CPUAllocationRatio defines how much physical CPU to request per VMI from the hosting node. The value is in fraction of a CPU thread (or core on non-hyperthreaded nodes). For example, a value of 1 means 1 physical CPU thread per VMI CPU thread. A value of 100 would be 1% of a physical thread allocated for each requested VMI thread. This option has no effect on VMIs that request dedicated CPUs. More information at: https://kubevirt.io/user-guide/operations/node_overcommit/#node-cpu-allocation-ratio Defaults to 10
     attr_accessor :cpu_allocation_ratio
 
@@ -47,6 +50,7 @@ module Kubevirt
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'cluster_profiler' => :'clusterProfiler',
         :'cpu_allocation_ratio' => :'cpuAllocationRatio',
         :'disk_verification' => :'diskVerification',
         :'feature_gates' => :'featureGates',
@@ -68,6 +72,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'cluster_profiler' => :'Boolean',
         :'cpu_allocation_ratio' => :'Integer',
         :'disk_verification' => :'V1DiskVerification',
         :'feature_gates' => :'Array<String>',
@@ -101,6 +106,10 @@ module Kubevirt
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'cluster_profiler')
+        self.cluster_profiler = attributes[:'cluster_profiler']
+      end
 
       if attributes.key?(:'cpu_allocation_ratio')
         self.cpu_allocation_ratio = attributes[:'cpu_allocation_ratio']
@@ -167,6 +176,7 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          cluster_profiler == o.cluster_profiler &&
           cpu_allocation_ratio == o.cpu_allocation_ratio &&
           disk_verification == o.disk_verification &&
           feature_gates == o.feature_gates &&
@@ -188,7 +198,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [cpu_allocation_ratio, disk_verification, feature_gates, log_verbosity, memory_overcommit, minimum_cluster_tsc_frequency, minimum_reserve_pvc_bytes, node_selectors, pvc_tolerate_less_space_up_to_percent, use_emulation].hash
+      [cluster_profiler, cpu_allocation_ratio, disk_verification, feature_gates, log_verbosity, memory_overcommit, minimum_cluster_tsc_frequency, minimum_reserve_pvc_bytes, node_selectors, pvc_tolerate_less_space_up_to_percent, use_emulation].hash
     end
 
     # Builds the object from hash

@@ -25,10 +25,14 @@ module Kubevirt
     # DesiredGeneration is the generation which is desired for the VMI. This will be used in comparisons with ObservedGeneration to understand when the VMI is out of sync. This will be changed at the same time as ObservedGeneration to remove errors which could occur if Generation is updated through an Update() before ObservedGeneration in Status.
     attr_accessor :desired_generation
 
+    attr_accessor :instancetype_ref
+
     attr_accessor :memory_dump_request
 
     # ObservedGeneration is the generation observed by the vmi when started.
     attr_accessor :observed_generation
+
+    attr_accessor :preference_ref
 
     # PrintableStatus is a human readable, high-level representation of the status of the virtual machine
     attr_accessor :printable_status
@@ -64,8 +68,10 @@ module Kubevirt
         :'conditions' => :'conditions',
         :'created' => :'created',
         :'desired_generation' => :'desiredGeneration',
+        :'instancetype_ref' => :'instancetypeRef',
         :'memory_dump_request' => :'memoryDumpRequest',
         :'observed_generation' => :'observedGeneration',
+        :'preference_ref' => :'preferenceRef',
         :'printable_status' => :'printableStatus',
         :'ready' => :'ready',
         :'restore_in_progress' => :'restoreInProgress',
@@ -90,8 +96,10 @@ module Kubevirt
         :'conditions' => :'Array<V1VirtualMachineCondition>',
         :'created' => :'Boolean',
         :'desired_generation' => :'Integer',
+        :'instancetype_ref' => :'V1InstancetypeStatusRef',
         :'memory_dump_request' => :'V1VirtualMachineMemoryDumpRequest',
         :'observed_generation' => :'Integer',
+        :'preference_ref' => :'V1InstancetypeStatusRef',
         :'printable_status' => :'String',
         :'ready' => :'Boolean',
         :'restore_in_progress' => :'String',
@@ -140,12 +148,20 @@ module Kubevirt
         self.desired_generation = attributes[:'desired_generation']
       end
 
+      if attributes.key?(:'instancetype_ref')
+        self.instancetype_ref = attributes[:'instancetype_ref']
+      end
+
       if attributes.key?(:'memory_dump_request')
         self.memory_dump_request = attributes[:'memory_dump_request']
       end
 
       if attributes.key?(:'observed_generation')
         self.observed_generation = attributes[:'observed_generation']
+      end
+
+      if attributes.key?(:'preference_ref')
+        self.preference_ref = attributes[:'preference_ref']
       end
 
       if attributes.key?(:'printable_status')
@@ -218,8 +234,10 @@ module Kubevirt
           conditions == o.conditions &&
           created == o.created &&
           desired_generation == o.desired_generation &&
+          instancetype_ref == o.instancetype_ref &&
           memory_dump_request == o.memory_dump_request &&
           observed_generation == o.observed_generation &&
+          preference_ref == o.preference_ref &&
           printable_status == o.printable_status &&
           ready == o.ready &&
           restore_in_progress == o.restore_in_progress &&
@@ -241,7 +259,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [conditions, created, desired_generation, memory_dump_request, observed_generation, printable_status, ready, restore_in_progress, run_strategy, snapshot_in_progress, start_failure, state_change_requests, volume_requests, volume_snapshot_statuses, volume_update_state].hash
+      [conditions, created, desired_generation, instancetype_ref, memory_dump_request, observed_generation, preference_ref, printable_status, ready, restore_in_progress, run_strategy, snapshot_in_progress, start_failure, state_change_requests, volume_requests, volume_snapshot_statuses, volume_update_state].hash
     end
 
     # Builds the object from hash

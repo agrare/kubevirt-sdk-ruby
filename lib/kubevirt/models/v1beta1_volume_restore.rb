@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module Kubevirt
-  # VolumeRestore contains the data neeed to restore a PVC
+  # VolumeRestore contains the data needed to restore a PVC
   class V1beta1VolumeRestore
     attr_accessor :data_volume_name
 

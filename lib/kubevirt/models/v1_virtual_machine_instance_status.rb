@@ -22,6 +22,8 @@ module Kubevirt
     # ActivePods is a mapping of pod UID to node name. It is possible for multiple pods to be running for a single VMI during migration.
     attr_accessor :active_pods
 
+    attr_accessor :changed_block_tracking
+
     # Conditions are specific points in VirtualMachineInstance's pod runtime.
     attr_accessor :conditions
 
@@ -30,7 +32,7 @@ module Kubevirt
     # EvacuationNodeName is used to track the eviction process of a VMI. It stores the name of the node that we want to evacuate. It is meant to be used by KubeVirt core components only and can't be set or modified by users.
     attr_accessor :evacuation_node_name
 
-    # FSFreezeStatus is the state of the fs of the guest it can be either frozen or thawed
+    # FSFreezeStatus indicates whether a freeze operation was requested for the guest filesystem. It will be set to \"frozen\" if the request was made, or unset otherwise. This does not reflect the actual state of the guest filesystem.
     attr_accessor :fs_freeze_status
 
     attr_accessor :guest_os_info
@@ -114,6 +116,7 @@ module Kubevirt
       {
         :'vsockcid' => :'VSOCKCID',
         :'active_pods' => :'activePods',
+        :'changed_block_tracking' => :'changedBlockTracking',
         :'conditions' => :'conditions',
         :'current_cpu_topology' => :'currentCPUTopology',
         :'evacuation_node_name' => :'evacuationNodeName',
@@ -151,6 +154,7 @@ module Kubevirt
       {
         :'vsockcid' => :'Integer',
         :'active_pods' => :'Hash<String, String>',
+        :'changed_block_tracking' => :'V1ChangedBlockTrackingStatus',
         :'conditions' => :'Array<V1VirtualMachineInstanceCondition>',
         :'current_cpu_topology' => :'V1CPUTopology',
         :'evacuation_node_name' => :'String',
@@ -207,6 +211,10 @@ module Kubevirt
         if (value = attributes[:'active_pods']).is_a?(Hash)
           self.active_pods = value
         end
+      end
+
+      if attributes.key?(:'changed_block_tracking')
+        self.changed_block_tracking = attributes[:'changed_block_tracking']
       end
 
       if attributes.key?(:'conditions')
@@ -352,6 +360,7 @@ module Kubevirt
       self.class == o.class &&
           vsockcid == o.vsockcid &&
           active_pods == o.active_pods &&
+          changed_block_tracking == o.changed_block_tracking &&
           conditions == o.conditions &&
           current_cpu_topology == o.current_cpu_topology &&
           evacuation_node_name == o.evacuation_node_name &&
@@ -387,7 +396,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [vsockcid, active_pods, conditions, current_cpu_topology, evacuation_node_name, fs_freeze_status, guest_os_info, interfaces, kernel_boot_status, launcher_container_image_version, machine, memory, migrated_volumes, migration_method, migration_state, migration_transport, node_name, phase, phase_transition_timestamps, qos_class, reason, runtime_user, selinux_context, topology_hints, virtual_machine_revision_name, volume_status].hash
+      [vsockcid, active_pods, changed_block_tracking, conditions, current_cpu_topology, evacuation_node_name, fs_freeze_status, guest_os_info, interfaces, kernel_boot_status, launcher_container_image_version, machine, memory, migrated_volumes, migration_method, migration_state, migration_transport, node_name, phase, phase_transition_timestamps, qos_class, reason, runtime_user, selinux_context, topology_hints, virtual_machine_revision_name, volume_status].hash
     end
 
     # Builds the object from hash

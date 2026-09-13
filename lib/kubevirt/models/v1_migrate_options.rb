@@ -16,6 +16,9 @@ require 'time'
 module Kubevirt
   # MigrateOptions may be provided on migrate request.
   class V1MigrateOptions
+    # AddedNodeSelector is an additional selector that can be used to complement a NodeSelector or NodeAffinity as set on the VM to restrict the set of allowed target nodes for a migration. In case of key collisions, values set on the VM objects are going to be preserved to ensure that addedNodeSelector can only restrict but not bypass constraints already set on the VM object.
+    attr_accessor :added_node_selector
+
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
     attr_accessor :api_version
 
@@ -28,6 +31,7 @@ module Kubevirt
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'added_node_selector' => :'addedNodeSelector',
         :'api_version' => :'apiVersion',
         :'dry_run' => :'dryRun',
         :'kind' => :'kind'
@@ -42,6 +46,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'added_node_selector' => :'Hash<String, String>',
         :'api_version' => :'String',
         :'dry_run' => :'Array<String>',
         :'kind' => :'String'
@@ -68,6 +73,12 @@ module Kubevirt
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'added_node_selector')
+        if (value = attributes[:'added_node_selector']).is_a?(Hash)
+          self.added_node_selector = value
+        end
+      end
 
       if attributes.key?(:'api_version')
         self.api_version = attributes[:'api_version']
@@ -104,6 +115,7 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          added_node_selector == o.added_node_selector &&
           api_version == o.api_version &&
           dry_run == o.dry_run &&
           kind == o.kind
@@ -118,7 +130,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [api_version, dry_run, kind].hash
+      [added_node_selector, api_version, dry_run, kind].hash
     end
 
     # Builds the object from hash

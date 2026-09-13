@@ -16,6 +16,8 @@ require 'time'
 module Kubevirt
   # Named watchdog device.
   class V1Watchdog
+    attr_accessor :diag288
+
     attr_accessor :i6300esb
 
     # Name of the watchdog.
@@ -24,6 +26,7 @@ module Kubevirt
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'diag288' => :'diag288',
         :'i6300esb' => :'i6300esb',
         :'name' => :'name'
       }
@@ -37,6 +40,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'diag288' => :'V1Diag288Watchdog',
         :'i6300esb' => :'V1I6300ESBWatchdog',
         :'name' => :'String'
       }
@@ -62,6 +66,10 @@ module Kubevirt
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'diag288')
+        self.diag288 = attributes[:'diag288']
+      end
 
       if attributes.key?(:'i6300esb')
         self.i6300esb = attributes[:'i6300esb']
@@ -99,6 +107,7 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          diag288 == o.diag288 &&
           i6300esb == o.i6300esb &&
           name == o.name
     end
@@ -112,7 +121,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [i6300esb, name].hash
+      [diag288, i6300esb, name].hash
     end
 
     # Builds the object from hash

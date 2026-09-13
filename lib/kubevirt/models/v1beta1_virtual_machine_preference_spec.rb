@@ -34,6 +34,11 @@ module Kubevirt
     # PreferSpreadSocketToCoreRatio defines the ratio to spread vCPUs between cores and sockets, it defaults to 2.
     attr_accessor :prefer_spread_socket_to_core_ratio
 
+    # PreferredArchitecture defines a prefeerred architecture for the VirtualMachine
+    attr_accessor :preferred_architecture
+
+    attr_accessor :preferred_launch_security
+
     # Subdomain of the VirtualMachineInstance
     attr_accessor :preferred_subdomain
 
@@ -55,6 +60,8 @@ module Kubevirt
         :'firmware' => :'firmware',
         :'machine' => :'machine',
         :'prefer_spread_socket_to_core_ratio' => :'preferSpreadSocketToCoreRatio',
+        :'preferred_architecture' => :'preferredArchitecture',
+        :'preferred_launch_security' => :'preferredLaunchSecurity',
         :'preferred_subdomain' => :'preferredSubdomain',
         :'preferred_termination_grace_period_seconds' => :'preferredTerminationGracePeriodSeconds',
         :'requirements' => :'requirements',
@@ -78,6 +85,8 @@ module Kubevirt
         :'firmware' => :'V1beta1FirmwarePreferences',
         :'machine' => :'V1beta1MachinePreferences',
         :'prefer_spread_socket_to_core_ratio' => :'Integer',
+        :'preferred_architecture' => :'String',
+        :'preferred_launch_security' => :'V1LaunchSecurity',
         :'preferred_subdomain' => :'String',
         :'preferred_termination_grace_period_seconds' => :'Integer',
         :'requirements' => :'V1beta1PreferenceRequirements',
@@ -140,6 +149,14 @@ module Kubevirt
         self.prefer_spread_socket_to_core_ratio = attributes[:'prefer_spread_socket_to_core_ratio']
       end
 
+      if attributes.key?(:'preferred_architecture')
+        self.preferred_architecture = attributes[:'preferred_architecture']
+      end
+
+      if attributes.key?(:'preferred_launch_security')
+        self.preferred_launch_security = attributes[:'preferred_launch_security']
+      end
+
       if attributes.key?(:'preferred_subdomain')
         self.preferred_subdomain = attributes[:'preferred_subdomain']
       end
@@ -185,6 +202,8 @@ module Kubevirt
           firmware == o.firmware &&
           machine == o.machine &&
           prefer_spread_socket_to_core_ratio == o.prefer_spread_socket_to_core_ratio &&
+          preferred_architecture == o.preferred_architecture &&
+          preferred_launch_security == o.preferred_launch_security &&
           preferred_subdomain == o.preferred_subdomain &&
           preferred_termination_grace_period_seconds == o.preferred_termination_grace_period_seconds &&
           requirements == o.requirements &&
@@ -200,7 +219,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [annotations, clock, cpu, devices, features, firmware, machine, prefer_spread_socket_to_core_ratio, preferred_subdomain, preferred_termination_grace_period_seconds, requirements, volumes].hash
+      [annotations, clock, cpu, devices, features, firmware, machine, prefer_spread_socket_to_core_ratio, preferred_architecture, preferred_launch_security, preferred_subdomain, preferred_termination_grace_period_seconds, requirements, volumes].hash
     end
 
     # Builds the object from hash

@@ -41,9 +41,9 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'limits' => :'Object',
+        :'limits' => :'Hash<String, Object>',
         :'overcommit_guest_overhead' => :'Boolean',
-        :'requests' => :'Object'
+        :'requests' => :'Hash<String, Object>'
       }
     end
 
@@ -69,7 +69,9 @@ module Kubevirt
       }
 
       if attributes.key?(:'limits')
-        self.limits = attributes[:'limits']
+        if (value = attributes[:'limits']).is_a?(Hash)
+          self.limits = value
+        end
       end
 
       if attributes.key?(:'overcommit_guest_overhead')
@@ -77,7 +79,9 @@ module Kubevirt
       end
 
       if attributes.key?(:'requests')
-        self.requests = attributes[:'requests']
+        if (value = attributes[:'requests']).is_a?(Hash)
+          self.requests = value
+        end
       end
     end
 

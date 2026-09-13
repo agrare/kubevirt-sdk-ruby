@@ -41,9 +41,9 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'affinity' => :'K8sIoApiCoreV1Affinity',
+        :'affinity' => :'IoK8sApiCoreV1Affinity',
         :'node_selector' => :'Hash<String, String>',
-        :'tolerations' => :'Array<K8sIoApiCoreV1Toleration>'
+        :'tolerations' => :'Array<IoK8sApiCoreV1Toleration>'
       }
     end
 

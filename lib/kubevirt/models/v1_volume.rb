@@ -24,6 +24,8 @@ module Kubevirt
 
     attr_accessor :container_disk
 
+    attr_accessor :container_path
+
     attr_accessor :data_volume
 
     attr_accessor :downward_api
@@ -57,6 +59,7 @@ module Kubevirt
         :'cloud_init_no_cloud' => :'cloudInitNoCloud',
         :'config_map' => :'configMap',
         :'container_disk' => :'containerDisk',
+        :'container_path' => :'containerPath',
         :'data_volume' => :'dataVolume',
         :'downward_api' => :'downwardAPI',
         :'downward_metrics' => :'downwardMetrics',
@@ -84,6 +87,7 @@ module Kubevirt
         :'cloud_init_no_cloud' => :'V1CloudInitNoCloudSource',
         :'config_map' => :'V1ConfigMapVolumeSource',
         :'container_disk' => :'V1ContainerDiskSource',
+        :'container_path' => :'V1ContainerPathVolumeSource',
         :'data_volume' => :'V1DataVolumeSource',
         :'downward_api' => :'V1DownwardAPIVolumeSource',
         :'downward_metrics' => :'Object',
@@ -134,6 +138,10 @@ module Kubevirt
 
       if attributes.key?(:'container_disk')
         self.container_disk = attributes[:'container_disk']
+      end
+
+      if attributes.key?(:'container_path')
+        self.container_path = attributes[:'container_path']
       end
 
       if attributes.key?(:'data_volume')
@@ -216,6 +224,7 @@ module Kubevirt
           cloud_init_no_cloud == o.cloud_init_no_cloud &&
           config_map == o.config_map &&
           container_disk == o.container_disk &&
+          container_path == o.container_path &&
           data_volume == o.data_volume &&
           downward_api == o.downward_api &&
           downward_metrics == o.downward_metrics &&
@@ -239,7 +248,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [cloud_init_config_drive, cloud_init_no_cloud, config_map, container_disk, data_volume, downward_api, downward_metrics, empty_disk, ephemeral, host_disk, memory_dump, name, persistent_volume_claim, secret, service_account, sysprep].hash
+      [cloud_init_config_drive, cloud_init_no_cloud, config_map, container_disk, container_path, data_volume, downward_api, downward_metrics, empty_disk, ephemeral, host_disk, memory_dump, name, persistent_volume_claim, secret, service_account, sysprep].hash
     end
 
     # Builds the object from hash

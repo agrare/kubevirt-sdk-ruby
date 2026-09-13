@@ -22,6 +22,8 @@ module Kubevirt
     # ImageStream is the name of image stream for import
     attr_accessor :image_stream
 
+    attr_accessor :platform
+
     # PullMethod can be either \"pod\" (default import), or \"node\" (node docker cache based import)
     attr_accessor :pull_method
 
@@ -36,6 +38,7 @@ module Kubevirt
       {
         :'cert_config_map' => :'certConfigMap',
         :'image_stream' => :'imageStream',
+        :'platform' => :'platform',
         :'pull_method' => :'pullMethod',
         :'secret_ref' => :'secretRef',
         :'url' => :'url'
@@ -52,6 +55,7 @@ module Kubevirt
       {
         :'cert_config_map' => :'String',
         :'image_stream' => :'String',
+        :'platform' => :'V1beta1PlatformOptions',
         :'pull_method' => :'String',
         :'secret_ref' => :'String',
         :'url' => :'String'
@@ -85,6 +89,10 @@ module Kubevirt
 
       if attributes.key?(:'image_stream')
         self.image_stream = attributes[:'image_stream']
+      end
+
+      if attributes.key?(:'platform')
+        self.platform = attributes[:'platform']
       end
 
       if attributes.key?(:'pull_method')
@@ -122,6 +130,7 @@ module Kubevirt
       self.class == o.class &&
           cert_config_map == o.cert_config_map &&
           image_stream == o.image_stream &&
+          platform == o.platform &&
           pull_method == o.pull_method &&
           secret_ref == o.secret_ref &&
           url == o.url
@@ -136,7 +145,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [cert_config_map, image_stream, pull_method, secret_ref, url].hash
+      [cert_config_map, image_stream, platform, pull_method, secret_ref, url].hash
     end
 
     # Builds the object from hash

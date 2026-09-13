@@ -42,7 +42,7 @@ module Kubevirt
       {
         :'deletion_policy' => :'String',
         :'failure_deadline' => :'String',
-        :'source' => :'K8sIoApiCoreV1TypedLocalObjectReference'
+        :'source' => :'IoK8sApiCoreV1TypedLocalObjectReference'
       }
     end
 

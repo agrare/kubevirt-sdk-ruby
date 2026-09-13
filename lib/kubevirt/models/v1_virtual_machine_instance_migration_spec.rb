@@ -15,12 +15,26 @@ require 'time'
 
 module Kubevirt
   class V1VirtualMachineInstanceMigrationSpec
+    # AddedNodeSelector is an additional selector that can be used to complement a NodeSelector or NodeAffinity as set on the VM to restrict the set of allowed target nodes for a migration. In case of key collisions, values set on the VM objects are going to be preserved to ensure that addedNodeSelector can only restrict but not bypass constraints already set on the VM object.
+    attr_accessor :added_node_selector
+
+    # Priority of the migration. This can be one of `system-critical`, `user-triggered`, `system-maintenance`.
+    attr_accessor :priority
+
+    attr_accessor :receive
+
+    attr_accessor :send_to
+
     # The name of the VMI to perform the migration on. VMI must exist in the migration objects namespace
     attr_accessor :vmi_name
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'added_node_selector' => :'addedNodeSelector',
+        :'priority' => :'priority',
+        :'receive' => :'receive',
+        :'send_to' => :'sendTo',
         :'vmi_name' => :'vmiName'
       }
     end
@@ -33,6 +47,10 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'added_node_selector' => :'Hash<String, String>',
+        :'priority' => :'String',
+        :'receive' => :'V1VirtualMachineInstanceMigrationTarget',
+        :'send_to' => :'V1VirtualMachineInstanceMigrationSource',
         :'vmi_name' => :'String'
       }
     end
@@ -57,6 +75,24 @@ module Kubevirt
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'added_node_selector')
+        if (value = attributes[:'added_node_selector']).is_a?(Hash)
+          self.added_node_selector = value
+        end
+      end
+
+      if attributes.key?(:'priority')
+        self.priority = attributes[:'priority']
+      end
+
+      if attributes.key?(:'receive')
+        self.receive = attributes[:'receive']
+      end
+
+      if attributes.key?(:'send_to')
+        self.send_to = attributes[:'send_to']
+      end
 
       if attributes.key?(:'vmi_name')
         self.vmi_name = attributes[:'vmi_name']
@@ -83,6 +119,10 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          added_node_selector == o.added_node_selector &&
+          priority == o.priority &&
+          receive == o.receive &&
+          send_to == o.send_to &&
           vmi_name == o.vmi_name
     end
 
@@ -95,7 +135,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [vmi_name].hash
+      [added_node_selector, priority, receive, send_to, vmi_name].hash
     end
 
     # Builds the object from hash

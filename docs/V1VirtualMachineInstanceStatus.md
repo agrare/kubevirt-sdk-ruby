@@ -6,10 +6,11 @@
 | ---- | ---- | ----------- | ----- |
 | **vsockcid** | **Integer** | VSOCKCID is used to track the allocated VSOCK CID in the VM. | [optional] |
 | **active_pods** | **Hash&lt;String, String&gt;** | ActivePods is a mapping of pod UID to node name. It is possible for multiple pods to be running for a single VMI during migration. | [optional] |
+| **changed_block_tracking** | [**V1ChangedBlockTrackingStatus**](V1ChangedBlockTrackingStatus.md) |  | [optional] |
 | **conditions** | [**Array&lt;V1VirtualMachineInstanceCondition&gt;**](V1VirtualMachineInstanceCondition.md) | Conditions are specific points in VirtualMachineInstance&#39;s pod runtime. | [optional] |
 | **current_cpu_topology** | [**V1CPUTopology**](V1CPUTopology.md) |  | [optional] |
 | **evacuation_node_name** | **String** | EvacuationNodeName is used to track the eviction process of a VMI. It stores the name of the node that we want to evacuate. It is meant to be used by KubeVirt core components only and can&#39;t be set or modified by users. | [optional] |
-| **fs_freeze_status** | **String** | FSFreezeStatus is the state of the fs of the guest it can be either frozen or thawed | [optional] |
+| **fs_freeze_status** | **String** | FSFreezeStatus indicates whether a freeze operation was requested for the guest filesystem. It will be set to \&quot;frozen\&quot; if the request was made, or unset otherwise. This does not reflect the actual state of the guest filesystem. | [optional] |
 | **guest_os_info** | [**V1VirtualMachineInstanceGuestOSInfo**](V1VirtualMachineInstanceGuestOSInfo.md) |  | [optional] |
 | **interfaces** | [**Array&lt;V1VirtualMachineInstanceNetworkInterface&gt;**](V1VirtualMachineInstanceNetworkInterface.md) | Interfaces represent the details of available network interfaces. | [optional] |
 | **kernel_boot_status** | [**V1KernelBootStatus**](V1KernelBootStatus.md) |  | [optional] |
@@ -39,6 +40,7 @@ require 'kubevirt'
 instance = Kubevirt::V1VirtualMachineInstanceStatus.new(
   vsockcid: null,
   active_pods: null,
+  changed_block_tracking: null,
   conditions: null,
   current_cpu_topology: null,
   evacuation_node_name: null,

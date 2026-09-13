@@ -47,7 +47,7 @@ module Kubevirt
         :'api_version' => :'String',
         :'items' => :'Array<V1VirtualMachineInstance>',
         :'kind' => :'String',
-        :'metadata' => :'K8sIoApimachineryPkgApisMetaV1ListMeta'
+        :'metadata' => :'IoK8sApimachineryPkgApisMetaV1ListMeta'
       }
     end
 

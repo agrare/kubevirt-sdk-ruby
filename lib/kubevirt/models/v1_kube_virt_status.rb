@@ -38,6 +38,8 @@ module Kubevirt
 
     attr_accessor :phase
 
+    attr_accessor :synchronization_addresses
+
     attr_accessor :target_deployment_config
 
     attr_accessor :target_deployment_id
@@ -60,6 +62,7 @@ module Kubevirt
         :'operator_version' => :'operatorVersion',
         :'outdated_virtual_machine_instance_workloads' => :'outdatedVirtualMachineInstanceWorkloads',
         :'phase' => :'phase',
+        :'synchronization_addresses' => :'synchronizationAddresses',
         :'target_deployment_config' => :'targetDeploymentConfig',
         :'target_deployment_id' => :'targetDeploymentID',
         :'target_kube_virt_registry' => :'targetKubeVirtRegistry',
@@ -86,6 +89,7 @@ module Kubevirt
         :'operator_version' => :'String',
         :'outdated_virtual_machine_instance_workloads' => :'Integer',
         :'phase' => :'String',
+        :'synchronization_addresses' => :'Array<String>',
         :'target_deployment_config' => :'String',
         :'target_deployment_id' => :'String',
         :'target_kube_virt_registry' => :'String',
@@ -162,6 +166,12 @@ module Kubevirt
         self.phase = attributes[:'phase']
       end
 
+      if attributes.key?(:'synchronization_addresses')
+        if (value = attributes[:'synchronization_addresses']).is_a?(Array)
+          self.synchronization_addresses = value
+        end
+      end
+
       if attributes.key?(:'target_deployment_config')
         self.target_deployment_config = attributes[:'target_deployment_config']
       end
@@ -210,6 +220,7 @@ module Kubevirt
           operator_version == o.operator_version &&
           outdated_virtual_machine_instance_workloads == o.outdated_virtual_machine_instance_workloads &&
           phase == o.phase &&
+          synchronization_addresses == o.synchronization_addresses &&
           target_deployment_config == o.target_deployment_config &&
           target_deployment_id == o.target_deployment_id &&
           target_kube_virt_registry == o.target_kube_virt_registry &&
@@ -225,7 +236,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [conditions, default_architecture, generations, observed_deployment_config, observed_deployment_id, observed_generation, observed_kube_virt_registry, observed_kube_virt_version, operator_version, outdated_virtual_machine_instance_workloads, phase, target_deployment_config, target_deployment_id, target_kube_virt_registry, target_kube_virt_version].hash
+      [conditions, default_architecture, generations, observed_deployment_config, observed_deployment_id, observed_generation, observed_kube_virt_registry, observed_kube_virt_version, operator_version, outdated_virtual_machine_instance_workloads, phase, synchronization_addresses, target_deployment_config, target_deployment_id, target_kube_virt_registry, target_kube_virt_version].hash
     end
 
     # Builds the object from hash

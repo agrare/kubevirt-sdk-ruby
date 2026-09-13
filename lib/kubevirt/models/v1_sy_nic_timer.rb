@@ -17,6 +17,7 @@ module Kubevirt
   class V1SyNICTimer
     attr_accessor :direct
 
+    # Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.
     attr_accessor :enabled
 
     # Attribute mapping from ruby-style variable name to JSON key.

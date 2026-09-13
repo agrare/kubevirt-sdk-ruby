@@ -68,6 +68,9 @@ module Kubevirt
     # If specified, virtual network interfaces configured with a virtio bus will also enable the vhost multiqueue feature for network devices. The number of queues created depends on additional factors of the VirtualMachineInstance, like the number of guest CPUs.
     attr_accessor :network_interface_multiqueue
 
+    # PanicDevices provides additional crash information when a guest crashes.
+    attr_accessor :panic_devices
+
     # Rng represents the random device passed from host
     attr_accessor :rng
 
@@ -77,6 +80,8 @@ module Kubevirt
 
     # Fall back to legacy virtio 0.9 support if virtio bus is selected on devices. This is helpful for old machines like CentOS6 or RHEL6 which do not understand virtio_non_transitional (virtio 1.0).
     attr_accessor :use_virtio_transitional
+
+    attr_accessor :video
 
     attr_accessor :watchdog
 
@@ -101,10 +106,12 @@ module Kubevirt
         :'interfaces' => :'interfaces',
         :'log_serial_console' => :'logSerialConsole',
         :'network_interface_multiqueue' => :'networkInterfaceMultiqueue',
+        :'panic_devices' => :'panicDevices',
         :'rng' => :'rng',
         :'sound' => :'sound',
         :'tpm' => :'tpm',
         :'use_virtio_transitional' => :'useVirtioTransitional',
+        :'video' => :'video',
         :'watchdog' => :'watchdog'
       }
     end
@@ -135,10 +142,12 @@ module Kubevirt
         :'interfaces' => :'Array<V1Interface>',
         :'log_serial_console' => :'Boolean',
         :'network_interface_multiqueue' => :'Boolean',
+        :'panic_devices' => :'Array<V1PanicDevice>',
         :'rng' => :'Object',
         :'sound' => :'V1SoundDevice',
         :'tpm' => :'V1TPMDevice',
         :'use_virtio_transitional' => :'Boolean',
+        :'video' => :'V1VideoDevice',
         :'watchdog' => :'V1Watchdog'
       }
     end
@@ -248,6 +257,12 @@ module Kubevirt
         self.network_interface_multiqueue = attributes[:'network_interface_multiqueue']
       end
 
+      if attributes.key?(:'panic_devices')
+        if (value = attributes[:'panic_devices']).is_a?(Array)
+          self.panic_devices = value
+        end
+      end
+
       if attributes.key?(:'rng')
         self.rng = attributes[:'rng']
       end
@@ -262,6 +277,10 @@ module Kubevirt
 
       if attributes.key?(:'use_virtio_transitional')
         self.use_virtio_transitional = attributes[:'use_virtio_transitional']
+      end
+
+      if attributes.key?(:'video')
+        self.video = attributes[:'video']
       end
 
       if attributes.key?(:'watchdog')
@@ -307,10 +326,12 @@ module Kubevirt
           interfaces == o.interfaces &&
           log_serial_console == o.log_serial_console &&
           network_interface_multiqueue == o.network_interface_multiqueue &&
+          panic_devices == o.panic_devices &&
           rng == o.rng &&
           sound == o.sound &&
           tpm == o.tpm &&
           use_virtio_transitional == o.use_virtio_transitional &&
+          video == o.video &&
           watchdog == o.watchdog
     end
 
@@ -323,7 +344,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [autoattach_graphics_device, autoattach_input_device, autoattach_mem_balloon, autoattach_pod_interface, autoattach_serial_console, autoattach_vsock, block_multi_queue, client_passthrough, disable_hotplug, disks, downward_metrics, filesystems, gpus, host_devices, inputs, interfaces, log_serial_console, network_interface_multiqueue, rng, sound, tpm, use_virtio_transitional, watchdog].hash
+      [autoattach_graphics_device, autoattach_input_device, autoattach_mem_balloon, autoattach_pod_interface, autoattach_serial_console, autoattach_vsock, block_multi_queue, client_passthrough, disable_hotplug, disks, downward_metrics, filesystems, gpus, host_devices, inputs, interfaces, log_serial_console, network_interface_multiqueue, panic_devices, rng, sound, tpm, use_virtio_transitional, video, watchdog].hash
     end
 
     # Builds the object from hash

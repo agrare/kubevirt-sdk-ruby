@@ -36,7 +36,7 @@ module Kubevirt
     def self.openapi_types
       {
         :'domain' => :'V1DomainSpec',
-        :'selector' => :'K8sIoApimachineryPkgApisMetaV1LabelSelector'
+        :'selector' => :'IoK8sApimachineryPkgApisMetaV1LabelSelector'
       }
     end
 

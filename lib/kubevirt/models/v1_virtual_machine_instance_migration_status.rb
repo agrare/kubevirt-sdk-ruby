@@ -25,13 +25,17 @@ module Kubevirt
     # PhaseTransitionTimestamp is the timestamp of when the last phase change occurred
     attr_accessor :phase_transition_timestamps
 
+    # The synchronization addresses one can use to connect to the synchronization controller, includes the port, if multiple addresses are available, the first one is reported in the synchronizationAddress field.
+    attr_accessor :synchronization_addresses
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'conditions' => :'conditions',
         :'migration_state' => :'migrationState',
         :'phase' => :'phase',
-        :'phase_transition_timestamps' => :'phaseTransitionTimestamps'
+        :'phase_transition_timestamps' => :'phaseTransitionTimestamps',
+        :'synchronization_addresses' => :'synchronizationAddresses'
       }
     end
 
@@ -46,7 +50,8 @@ module Kubevirt
         :'conditions' => :'Array<V1VirtualMachineInstanceMigrationCondition>',
         :'migration_state' => :'V1VirtualMachineInstanceMigrationState',
         :'phase' => :'String',
-        :'phase_transition_timestamps' => :'Array<V1VirtualMachineInstanceMigrationPhaseTransitionTimestamp>'
+        :'phase_transition_timestamps' => :'Array<V1VirtualMachineInstanceMigrationPhaseTransitionTimestamp>',
+        :'synchronization_addresses' => :'Array<String>'
       }
     end
 
@@ -90,6 +95,12 @@ module Kubevirt
           self.phase_transition_timestamps = value
         end
       end
+
+      if attributes.key?(:'synchronization_addresses')
+        if (value = attributes[:'synchronization_addresses']).is_a?(Array)
+          self.synchronization_addresses = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -115,7 +126,8 @@ module Kubevirt
           conditions == o.conditions &&
           migration_state == o.migration_state &&
           phase == o.phase &&
-          phase_transition_timestamps == o.phase_transition_timestamps
+          phase_transition_timestamps == o.phase_transition_timestamps &&
+          synchronization_addresses == o.synchronization_addresses
     end
 
     # @see the `==` method
@@ -127,7 +139,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [conditions, migration_state, phase, phase_transition_timestamps].hash
+      [conditions, migration_state, phase, phase_transition_timestamps, synchronization_addresses].hash
     end
 
     # Builds the object from hash

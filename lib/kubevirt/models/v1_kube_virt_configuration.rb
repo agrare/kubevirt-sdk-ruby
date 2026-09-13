@@ -25,7 +25,11 @@ module Kubevirt
 
     attr_accessor :auto_cpu_limit_namespace_label_selector
 
+    attr_accessor :changed_block_tracking_label_selectors
+
     attr_accessor :common_instancetypes_deployment
+
+    attr_accessor :confidential_compute
 
     attr_accessor :controller_configuration
 
@@ -46,7 +50,10 @@ module Kubevirt
 
     attr_accessor :handler_configuration
 
-    # Possible enum values:  - `\"Always\"` means that kubelet always attempts to pull the latest image. Container will fail If the pull fails.  - `\"IfNotPresent\"` means that kubelet pulls if the image isn't present on disk. Container will fail if the image isn't present and the pull fails.  - `\"Never\"` means that kubelet never pulls an image, but only uses a local image. Container will fail if the image isn't present
+    # Hypervisors holds information regarding the hypervisor configurations supported on this cluster.
+    attr_accessor :hypervisors
+
+    # The ImagePullPolicy to use for user workload pods and their containers (launcher pods, exporter pods, etc.). For KubeVirt infrastructure images, use spec.imagePullPolicy instead.  Possible enum values:  - `\"Always\"` means that kubelet always attempts to pull the latest image. Container will fail If the pull fails.  - `\"IfNotPresent\"` means that kubelet pulls if the image isn't present on disk. Container will fail if the image isn't present and the pull fails.  - `\"Never\"` means that kubelet never pulls an image, but only uses a local image. Container will fail if the image isn't present
     attr_accessor :image_pull_policy
 
     attr_accessor :instancetype
@@ -64,6 +71,7 @@ module Kubevirt
 
     attr_accessor :migrations
 
+    # deprecated
     attr_accessor :min_cpu_model
 
     attr_accessor :network
@@ -74,6 +82,11 @@ module Kubevirt
     attr_accessor :ovmf_path
 
     attr_accessor :permitted_host_devices
+
+    attr_accessor :persistent_reservation_configuration
+
+    # RoleAggregationStrategy controls whether RBAC cluster roles should be aggregated to the default Kubernetes roles (admin, edit, view). When set to \"AggregateToDefault\" (default) or not specified, the aggregate-to-* labels are added to the cluster roles. When set to \"Manual\", the labels are not added, and roles will not be aggregated to the default roles. Setting RoleAggregationStrategy to \"Manual\" requires the OptOutRoleAggregation feature gate to be enabled (Beta, enabled by default since v1.9.0).
+    attr_accessor :role_aggregation_strategy
 
     attr_accessor :seccomp_configuration
 
@@ -89,6 +102,8 @@ module Kubevirt
 
     attr_accessor :tls_configuration
 
+    attr_accessor :virt_template_deployment
+
     attr_accessor :virtual_machine_instances_per_node
 
     attr_accessor :virtual_machine_options
@@ -96,7 +111,7 @@ module Kubevirt
     # VMRolloutStrategy defines how live-updatable fields, like CPU sockets, memory, tolerations, and affinity, are propagated from a VM to its VMI.
     attr_accessor :vm_rollout_strategy
 
-    # VMStateStorageClass is the name of the storage class to use for the PVCs created to preserve VM state, like TPM. The storage class must support RWX in filesystem mode.
+    # VMStateStorageClass is the name of the storage class to use for the PVCs created to preserve VM state, like TPM.
     attr_accessor :vm_state_storage_class
 
     attr_accessor :webhook_configuration
@@ -130,7 +145,9 @@ module Kubevirt
         :'api_configuration' => :'apiConfiguration',
         :'architecture_configuration' => :'architectureConfiguration',
         :'auto_cpu_limit_namespace_label_selector' => :'autoCPULimitNamespaceLabelSelector',
+        :'changed_block_tracking_label_selectors' => :'changedBlockTrackingLabelSelectors',
         :'common_instancetypes_deployment' => :'commonInstancetypesDeployment',
+        :'confidential_compute' => :'confidentialCompute',
         :'controller_configuration' => :'controllerConfiguration',
         :'cpu_model' => :'cpuModel',
         :'cpu_request' => :'cpuRequest',
@@ -139,6 +156,7 @@ module Kubevirt
         :'emulated_machines' => :'emulatedMachines',
         :'eviction_strategy' => :'evictionStrategy',
         :'handler_configuration' => :'handlerConfiguration',
+        :'hypervisors' => :'hypervisors',
         :'image_pull_policy' => :'imagePullPolicy',
         :'instancetype' => :'instancetype',
         :'ksm_configuration' => :'ksmConfiguration',
@@ -152,12 +170,15 @@ module Kubevirt
         :'obsolete_cpu_models' => :'obsoleteCPUModels',
         :'ovmf_path' => :'ovmfPath',
         :'permitted_host_devices' => :'permittedHostDevices',
+        :'persistent_reservation_configuration' => :'persistentReservationConfiguration',
+        :'role_aggregation_strategy' => :'roleAggregationStrategy',
         :'seccomp_configuration' => :'seccompConfiguration',
         :'selinux_launcher_type' => :'selinuxLauncherType',
         :'smbios' => :'smbios',
         :'support_container_resources' => :'supportContainerResources',
         :'supported_guest_agent_versions' => :'supportedGuestAgentVersions',
         :'tls_configuration' => :'tlsConfiguration',
+        :'virt_template_deployment' => :'virtTemplateDeployment',
         :'virtual_machine_instances_per_node' => :'virtualMachineInstancesPerNode',
         :'virtual_machine_options' => :'virtualMachineOptions',
         :'vm_rollout_strategy' => :'vmRolloutStrategy',
@@ -177,16 +198,19 @@ module Kubevirt
         :'additional_guest_memory_overhead_ratio' => :'String',
         :'api_configuration' => :'V1ReloadableComponentConfiguration',
         :'architecture_configuration' => :'V1ArchConfiguration',
-        :'auto_cpu_limit_namespace_label_selector' => :'K8sIoApimachineryPkgApisMetaV1LabelSelector',
+        :'auto_cpu_limit_namespace_label_selector' => :'IoK8sApimachineryPkgApisMetaV1LabelSelector',
+        :'changed_block_tracking_label_selectors' => :'V1ChangedBlockTrackingSelectors',
         :'common_instancetypes_deployment' => :'V1CommonInstancetypesDeployment',
+        :'confidential_compute' => :'V1ConfidentialComputeConfiguration',
         :'controller_configuration' => :'V1ReloadableComponentConfiguration',
         :'cpu_model' => :'String',
-        :'cpu_request' => :'String',
+        :'cpu_request' => :'Object',
         :'default_runtime_class' => :'String',
         :'developer_configuration' => :'V1DeveloperConfiguration',
         :'emulated_machines' => :'Array<String>',
         :'eviction_strategy' => :'String',
         :'handler_configuration' => :'V1ReloadableComponentConfiguration',
+        :'hypervisors' => :'Array<V1HypervisorConfiguration>',
         :'image_pull_policy' => :'String',
         :'instancetype' => :'V1InstancetypeConfiguration',
         :'ksm_configuration' => :'V1KSMConfiguration',
@@ -200,12 +224,15 @@ module Kubevirt
         :'obsolete_cpu_models' => :'Hash<String, Boolean>',
         :'ovmf_path' => :'String',
         :'permitted_host_devices' => :'V1PermittedHostDevices',
+        :'persistent_reservation_configuration' => :'V1PersistentReservationConfiguration',
+        :'role_aggregation_strategy' => :'String',
         :'seccomp_configuration' => :'V1SeccompConfiguration',
         :'selinux_launcher_type' => :'String',
         :'smbios' => :'V1SMBiosConfiguration',
         :'support_container_resources' => :'Array<V1SupportContainerResources>',
         :'supported_guest_agent_versions' => :'Array<String>',
         :'tls_configuration' => :'V1TLSConfiguration',
+        :'virt_template_deployment' => :'V1VirtTemplateDeployment',
         :'virtual_machine_instances_per_node' => :'Integer',
         :'virtual_machine_options' => :'V1VirtualMachineOptions',
         :'vm_rollout_strategy' => :'String',
@@ -251,8 +278,16 @@ module Kubevirt
         self.auto_cpu_limit_namespace_label_selector = attributes[:'auto_cpu_limit_namespace_label_selector']
       end
 
+      if attributes.key?(:'changed_block_tracking_label_selectors')
+        self.changed_block_tracking_label_selectors = attributes[:'changed_block_tracking_label_selectors']
+      end
+
       if attributes.key?(:'common_instancetypes_deployment')
         self.common_instancetypes_deployment = attributes[:'common_instancetypes_deployment']
+      end
+
+      if attributes.key?(:'confidential_compute')
+        self.confidential_compute = attributes[:'confidential_compute']
       end
 
       if attributes.key?(:'controller_configuration')
@@ -287,6 +322,12 @@ module Kubevirt
 
       if attributes.key?(:'handler_configuration')
         self.handler_configuration = attributes[:'handler_configuration']
+      end
+
+      if attributes.key?(:'hypervisors')
+        if (value = attributes[:'hypervisors']).is_a?(Array)
+          self.hypervisors = value
+        end
       end
 
       if attributes.key?(:'image_pull_policy')
@@ -343,6 +384,14 @@ module Kubevirt
         self.permitted_host_devices = attributes[:'permitted_host_devices']
       end
 
+      if attributes.key?(:'persistent_reservation_configuration')
+        self.persistent_reservation_configuration = attributes[:'persistent_reservation_configuration']
+      end
+
+      if attributes.key?(:'role_aggregation_strategy')
+        self.role_aggregation_strategy = attributes[:'role_aggregation_strategy']
+      end
+
       if attributes.key?(:'seccomp_configuration')
         self.seccomp_configuration = attributes[:'seccomp_configuration']
       end
@@ -369,6 +418,10 @@ module Kubevirt
 
       if attributes.key?(:'tls_configuration')
         self.tls_configuration = attributes[:'tls_configuration']
+      end
+
+      if attributes.key?(:'virt_template_deployment')
+        self.virt_template_deployment = attributes[:'virt_template_deployment']
       end
 
       if attributes.key?(:'virtual_machine_instances_per_node')
@@ -428,7 +481,9 @@ module Kubevirt
           api_configuration == o.api_configuration &&
           architecture_configuration == o.architecture_configuration &&
           auto_cpu_limit_namespace_label_selector == o.auto_cpu_limit_namespace_label_selector &&
+          changed_block_tracking_label_selectors == o.changed_block_tracking_label_selectors &&
           common_instancetypes_deployment == o.common_instancetypes_deployment &&
+          confidential_compute == o.confidential_compute &&
           controller_configuration == o.controller_configuration &&
           cpu_model == o.cpu_model &&
           cpu_request == o.cpu_request &&
@@ -437,6 +492,7 @@ module Kubevirt
           emulated_machines == o.emulated_machines &&
           eviction_strategy == o.eviction_strategy &&
           handler_configuration == o.handler_configuration &&
+          hypervisors == o.hypervisors &&
           image_pull_policy == o.image_pull_policy &&
           instancetype == o.instancetype &&
           ksm_configuration == o.ksm_configuration &&
@@ -450,12 +506,15 @@ module Kubevirt
           obsolete_cpu_models == o.obsolete_cpu_models &&
           ovmf_path == o.ovmf_path &&
           permitted_host_devices == o.permitted_host_devices &&
+          persistent_reservation_configuration == o.persistent_reservation_configuration &&
+          role_aggregation_strategy == o.role_aggregation_strategy &&
           seccomp_configuration == o.seccomp_configuration &&
           selinux_launcher_type == o.selinux_launcher_type &&
           smbios == o.smbios &&
           support_container_resources == o.support_container_resources &&
           supported_guest_agent_versions == o.supported_guest_agent_versions &&
           tls_configuration == o.tls_configuration &&
+          virt_template_deployment == o.virt_template_deployment &&
           virtual_machine_instances_per_node == o.virtual_machine_instances_per_node &&
           virtual_machine_options == o.virtual_machine_options &&
           vm_rollout_strategy == o.vm_rollout_strategy &&
@@ -472,7 +531,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [additional_guest_memory_overhead_ratio, api_configuration, architecture_configuration, auto_cpu_limit_namespace_label_selector, common_instancetypes_deployment, controller_configuration, cpu_model, cpu_request, default_runtime_class, developer_configuration, emulated_machines, eviction_strategy, handler_configuration, image_pull_policy, instancetype, ksm_configuration, live_update_configuration, machine_type, mediated_devices_configuration, mem_balloon_stats_period, migrations, min_cpu_model, network, obsolete_cpu_models, ovmf_path, permitted_host_devices, seccomp_configuration, selinux_launcher_type, smbios, support_container_resources, supported_guest_agent_versions, tls_configuration, virtual_machine_instances_per_node, virtual_machine_options, vm_rollout_strategy, vm_state_storage_class, webhook_configuration].hash
+      [additional_guest_memory_overhead_ratio, api_configuration, architecture_configuration, auto_cpu_limit_namespace_label_selector, changed_block_tracking_label_selectors, common_instancetypes_deployment, confidential_compute, controller_configuration, cpu_model, cpu_request, default_runtime_class, developer_configuration, emulated_machines, eviction_strategy, handler_configuration, hypervisors, image_pull_policy, instancetype, ksm_configuration, live_update_configuration, machine_type, mediated_devices_configuration, mem_balloon_stats_period, migrations, min_cpu_model, network, obsolete_cpu_models, ovmf_path, permitted_host_devices, persistent_reservation_configuration, role_aggregation_strategy, seccomp_configuration, selinux_launcher_type, smbios, support_container_resources, supported_guest_agent_versions, tls_configuration, virt_template_deployment, virtual_machine_instances_per_node, virtual_machine_options, vm_rollout_strategy, vm_state_storage_class, webhook_configuration].hash
     end
 
     # Builds the object from hash

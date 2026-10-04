@@ -27,6 +27,8 @@ module Kubevirt
     # Optionally defines any HostDevices associated with the instancetype.
     attr_accessor :host_devices
 
+    attr_accessor :io_threads
+
     # Optionally defines the IOThreadsPolicy to be used by the instancetype.
     attr_accessor :io_threads_policy
 
@@ -47,6 +49,7 @@ module Kubevirt
         :'cpu' => :'cpu',
         :'gpus' => :'gpus',
         :'host_devices' => :'hostDevices',
+        :'io_threads' => :'ioThreads',
         :'io_threads_policy' => :'ioThreadsPolicy',
         :'launch_security' => :'launchSecurity',
         :'memory' => :'memory',
@@ -67,6 +70,7 @@ module Kubevirt
         :'cpu' => :'V1beta1CPUInstancetype',
         :'gpus' => :'Array<V1GPU>',
         :'host_devices' => :'Array<V1HostDevice>',
+        :'io_threads' => :'V1DiskIOThreads',
         :'io_threads_policy' => :'String',
         :'launch_security' => :'V1LaunchSecurity',
         :'memory' => :'V1beta1MemoryInstancetype',
@@ -118,6 +122,10 @@ module Kubevirt
         if (value = attributes[:'host_devices']).is_a?(Array)
           self.host_devices = value
         end
+      end
+
+      if attributes.key?(:'io_threads')
+        self.io_threads = attributes[:'io_threads']
       end
 
       if attributes.key?(:'io_threads_policy')
@@ -179,6 +187,7 @@ module Kubevirt
           cpu == o.cpu &&
           gpus == o.gpus &&
           host_devices == o.host_devices &&
+          io_threads == o.io_threads &&
           io_threads_policy == o.io_threads_policy &&
           launch_security == o.launch_security &&
           memory == o.memory &&
@@ -195,7 +204,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [annotations, cpu, gpus, host_devices, io_threads_policy, launch_security, memory, node_selector, scheduler_name].hash
+      [annotations, cpu, gpus, host_devices, io_threads, io_threads_policy, launch_security, memory, node_selector, scheduler_name].hash
     end
 
     # Builds the object from hash

@@ -15,12 +15,16 @@ require 'time'
 
 module Kubevirt
   class V1ACPI
+    # Similar to SlicNameRef, another ACPI entry that is used in more recent Windows versions. The above points to the spec of MSDM too.
+    attr_accessor :msdm_name_ref
+
     # SlicNameRef should match the volume name of a secret object. The data in the secret should be a binary blob that follows the ACPI SLIC standard, see: https://learn.microsoft.com/en-us/previous-versions/windows/hardware/design/dn653305(v=vs.85)
     attr_accessor :slic_name_ref
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'msdm_name_ref' => :'msdmNameRef',
         :'slic_name_ref' => :'slicNameRef'
       }
     end
@@ -33,6 +37,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'msdm_name_ref' => :'String',
         :'slic_name_ref' => :'String'
       }
     end
@@ -57,6 +62,10 @@ module Kubevirt
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'msdm_name_ref')
+        self.msdm_name_ref = attributes[:'msdm_name_ref']
+      end
 
       if attributes.key?(:'slic_name_ref')
         self.slic_name_ref = attributes[:'slic_name_ref']
@@ -83,6 +92,7 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          msdm_name_ref == o.msdm_name_ref &&
           slic_name_ref == o.slic_name_ref
     end
 
@@ -95,7 +105,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [slic_name_ref].hash
+      [msdm_name_ref, slic_name_ref].hash
     end
 
     # Builds the object from hash

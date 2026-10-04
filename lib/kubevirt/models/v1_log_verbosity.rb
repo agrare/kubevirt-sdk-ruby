@@ -14,20 +14,28 @@ require 'date'
 require 'time'
 
 module Kubevirt
-  # LogVerbosity sets log verbosity level of  various components
+  # LogVerbosity sets log verbosity level of various components
   class V1LogVerbosity
-    # NodeVerbosity represents a map of nodes with a specific verbosity level
+    # NodeVerbosity represents a map of node names to specific log verbosity levels. Allows overriding verbosity on specific nodes without altering cluster-wide settings. Changes take effect on the fly without triggering a pod restart.
     attr_accessor :node_verbosity
 
+    # VirtAPI specifies the log verbosity level for the virt-api deployment. A higher value increases the amount of logged information. Changes take effect on the fly without triggering a pod restart. Default: 2. Levels up to 9 produce progressively more detailed logs.
     attr_accessor :virt_api
 
+    # VirtController specifies the log verbosity level for the virt-controller deployment. A higher value increases the amount of logged information. Changes take effect on the fly without triggering a pod restart. Default: 2. Levels up to 9 produce progressively more detailed logs.
     attr_accessor :virt_controller
 
+    # VirtHandler specifies the log verbosity level for the virt-handler DaemonSet. A higher value increases the amount of logged information. Changes take effect on the fly without triggering a pod restart. Default: 2. Levels up to 9 produce progressively more detailed logs.
     attr_accessor :virt_handler
 
+    # VirtLauncher specifies the log verbosity level for virt-launcher pods managing VMI workloads. A higher value increases the amount of logged information. Changes apply to newly created virt-launcher pods. Existing pods retain their original verbosity. Default: 2. Levels up to 9 produce progressively more detailed logs.
     attr_accessor :virt_launcher
 
+    # VirtOperator specifies the log verbosity level for the virt-operator deployment. A higher value increases the amount of logged information. Changes take effect on the fly without triggering a pod restart. Default: 2. Levels up to 9 produce progressively more detailed logs.
     attr_accessor :virt_operator
+
+    # VirtSynchronizationController specifies the log verbosity level for the virt-synchronization-controller component. A higher value increases the amount of logged information. Changes take effect on the fly without triggering a pod restart. Default: 2. Levels up to 9 produce progressively more detailed logs.
+    attr_accessor :virt_synchronization_controller
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -37,7 +45,8 @@ module Kubevirt
         :'virt_controller' => :'virtController',
         :'virt_handler' => :'virtHandler',
         :'virt_launcher' => :'virtLauncher',
-        :'virt_operator' => :'virtOperator'
+        :'virt_operator' => :'virtOperator',
+        :'virt_synchronization_controller' => :'virtSynchronizationController'
       }
     end
 
@@ -54,7 +63,8 @@ module Kubevirt
         :'virt_controller' => :'Integer',
         :'virt_handler' => :'Integer',
         :'virt_launcher' => :'Integer',
-        :'virt_operator' => :'Integer'
+        :'virt_operator' => :'Integer',
+        :'virt_synchronization_controller' => :'Integer'
       }
     end
 
@@ -104,6 +114,10 @@ module Kubevirt
       if attributes.key?(:'virt_operator')
         self.virt_operator = attributes[:'virt_operator']
       end
+
+      if attributes.key?(:'virt_synchronization_controller')
+        self.virt_synchronization_controller = attributes[:'virt_synchronization_controller']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -131,7 +145,8 @@ module Kubevirt
           virt_controller == o.virt_controller &&
           virt_handler == o.virt_handler &&
           virt_launcher == o.virt_launcher &&
-          virt_operator == o.virt_operator
+          virt_operator == o.virt_operator &&
+          virt_synchronization_controller == o.virt_synchronization_controller
     end
 
     # @see the `==` method
@@ -143,7 +158,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [node_verbosity, virt_api, virt_controller, virt_handler, virt_launcher, virt_operator].hash
+      [node_verbosity, virt_api, virt_controller, virt_handler, virt_launcher, virt_operator, virt_synchronization_controller].hash
     end
 
     # Builds the object from hash

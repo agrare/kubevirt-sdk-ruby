@@ -31,13 +31,22 @@ module Kubevirt
     # CompletionTimeoutPerGiB is the maximum number of seconds per GiB a migration is allowed to take. If the timeout is reached, the migration will be either paused, switched to post-copy or cancelled depending on other settings. Defaults to 150
     attr_accessor :completion_timeout_per_gi_b
 
-    # When set to true, DisableTLS will disable the additional layer of live migration encryption provided by KubeVirt. This is usually a bad idea. Defaults to false
+    # CrossClusterNetwork is the name of the CNI network used for synchronization-controller peer traffic when decentralizedLiveMigrationDatapath is Proxy. When set, sync controllers attach to this network as crosscluster0 and bind the sync gRPC port only there. When omitted with Proxy, peer traffic uses the pod network. Must not be set when decentralizedLiveMigrationDatapath is Direct (or unset).
+    attr_accessor :cross_cluster_network
+
+    # DecentralizedLiveMigrationDatapath selects how live-migration traffic moves for decentralized live migrations (cross-namespace or cross-cluster). Direct (default when unset): no synchronization-controller migration-data proxy. Proxy: sync controllers proxy migration traffic on a single gRPC port. Requires the CrossClusterMigrationProxy feature gate while Alpha.
+    attr_accessor :decentralized_live_migration_datapath
+
+    # DisableTLS disables both TLS encryption and mutual TLS authentication on the migration proxy when set to true. This removes all cryptographic protection from the migration data stream. When disabled, implement network-level access controls to restrict migration traffic to trusted sources only. Defaults to false.
     attr_accessor :disable_tls
 
     # By default, the SELinux level of target virt-launcher pods is forced to the level of the source virt-launcher. When set to true, MatchSELinuxLevelOnMigration lets the CRI auto-assign a random level to the target. That will ensure the target virt-launcher doesn't share categories with another pod on the node. However, migrations will fail when using RWX volumes that don't automatically deal with SELinux levels.
     attr_accessor :match_se_linux_level_on_migration
 
-    # Network is the name of the CNI network to use for live migrations. By default, migrations go through the pod network.
+    # MaxDowntimeMs specifies the maximum tolerable downtime (in milliseconds) during switchover. Defaults to 900
+    attr_accessor :max_downtime_ms
+
+    # Network is the name of the CNI network to use for live migrations. By default, migrations go through the pod network. When decentralizedLiveMigrationDatapath is Proxy, this network is also used for virt-handler ↔ synchronization-controller migration listeners (omit = pod IP). If set with Proxy, synchronization controllers require the migration0 interface at startup and will fail to start if it is missing.
     attr_accessor :network
 
     # NodeDrainTaintKey defines the taint key that indicates a node should be drained. Note: this option relies on the deprecated node taint feature. Default: kubevirt.io/drain
@@ -55,6 +64,9 @@ module Kubevirt
     # UnsafeMigrationOverride allows live migrations to occur even if the compatibility check indicates the migration will be unsafe to the guest. Defaults to false
     attr_accessor :unsafe_migration_override
 
+    # UtilityVolumesTimeout is the maximum number of seconds a migration can wait in Pending state for utility volumes to be detached. If utility volumes are still present after this timeout, the migration will be marked as Failed. Defaults to 150
+    attr_accessor :utility_volumes_timeout
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -63,14 +75,18 @@ module Kubevirt
         :'allow_workload_disruption' => :'allowWorkloadDisruption',
         :'bandwidth_per_migration' => :'bandwidthPerMigration',
         :'completion_timeout_per_gi_b' => :'completionTimeoutPerGiB',
+        :'cross_cluster_network' => :'crossClusterNetwork',
+        :'decentralized_live_migration_datapath' => :'decentralizedLiveMigrationDatapath',
         :'disable_tls' => :'disableTLS',
         :'match_se_linux_level_on_migration' => :'matchSELinuxLevelOnMigration',
+        :'max_downtime_ms' => :'maxDowntimeMs',
         :'network' => :'network',
         :'node_drain_taint_key' => :'nodeDrainTaintKey',
         :'parallel_migrations_per_cluster' => :'parallelMigrationsPerCluster',
         :'parallel_outbound_migrations_per_node' => :'parallelOutboundMigrationsPerNode',
         :'progress_timeout' => :'progressTimeout',
-        :'unsafe_migration_override' => :'unsafeMigrationOverride'
+        :'unsafe_migration_override' => :'unsafeMigrationOverride',
+        :'utility_volumes_timeout' => :'utilityVolumesTimeout'
       }
     end
 
@@ -85,16 +101,20 @@ module Kubevirt
         :'allow_auto_converge' => :'Boolean',
         :'allow_post_copy' => :'Boolean',
         :'allow_workload_disruption' => :'Boolean',
-        :'bandwidth_per_migration' => :'String',
+        :'bandwidth_per_migration' => :'Object',
         :'completion_timeout_per_gi_b' => :'Integer',
+        :'cross_cluster_network' => :'String',
+        :'decentralized_live_migration_datapath' => :'String',
         :'disable_tls' => :'Boolean',
         :'match_se_linux_level_on_migration' => :'Boolean',
+        :'max_downtime_ms' => :'Integer',
         :'network' => :'String',
         :'node_drain_taint_key' => :'String',
         :'parallel_migrations_per_cluster' => :'Integer',
         :'parallel_outbound_migrations_per_node' => :'Integer',
         :'progress_timeout' => :'Integer',
-        :'unsafe_migration_override' => :'Boolean'
+        :'unsafe_migration_override' => :'Boolean',
+        :'utility_volumes_timeout' => :'Integer'
       }
     end
 
@@ -139,12 +159,24 @@ module Kubevirt
         self.completion_timeout_per_gi_b = attributes[:'completion_timeout_per_gi_b']
       end
 
+      if attributes.key?(:'cross_cluster_network')
+        self.cross_cluster_network = attributes[:'cross_cluster_network']
+      end
+
+      if attributes.key?(:'decentralized_live_migration_datapath')
+        self.decentralized_live_migration_datapath = attributes[:'decentralized_live_migration_datapath']
+      end
+
       if attributes.key?(:'disable_tls')
         self.disable_tls = attributes[:'disable_tls']
       end
 
       if attributes.key?(:'match_se_linux_level_on_migration')
         self.match_se_linux_level_on_migration = attributes[:'match_se_linux_level_on_migration']
+      end
+
+      if attributes.key?(:'max_downtime_ms')
+        self.max_downtime_ms = attributes[:'max_downtime_ms']
       end
 
       if attributes.key?(:'network')
@@ -169,6 +201,10 @@ module Kubevirt
 
       if attributes.key?(:'unsafe_migration_override')
         self.unsafe_migration_override = attributes[:'unsafe_migration_override']
+      end
+
+      if attributes.key?(:'utility_volumes_timeout')
+        self.utility_volumes_timeout = attributes[:'utility_volumes_timeout']
       end
     end
 
@@ -197,14 +233,18 @@ module Kubevirt
           allow_workload_disruption == o.allow_workload_disruption &&
           bandwidth_per_migration == o.bandwidth_per_migration &&
           completion_timeout_per_gi_b == o.completion_timeout_per_gi_b &&
+          cross_cluster_network == o.cross_cluster_network &&
+          decentralized_live_migration_datapath == o.decentralized_live_migration_datapath &&
           disable_tls == o.disable_tls &&
           match_se_linux_level_on_migration == o.match_se_linux_level_on_migration &&
+          max_downtime_ms == o.max_downtime_ms &&
           network == o.network &&
           node_drain_taint_key == o.node_drain_taint_key &&
           parallel_migrations_per_cluster == o.parallel_migrations_per_cluster &&
           parallel_outbound_migrations_per_node == o.parallel_outbound_migrations_per_node &&
           progress_timeout == o.progress_timeout &&
-          unsafe_migration_override == o.unsafe_migration_override
+          unsafe_migration_override == o.unsafe_migration_override &&
+          utility_volumes_timeout == o.utility_volumes_timeout
     end
 
     # @see the `==` method
@@ -216,7 +256,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [allow_auto_converge, allow_post_copy, allow_workload_disruption, bandwidth_per_migration, completion_timeout_per_gi_b, disable_tls, match_se_linux_level_on_migration, network, node_drain_taint_key, parallel_migrations_per_cluster, parallel_outbound_migrations_per_node, progress_timeout, unsafe_migration_override].hash
+      [allow_auto_converge, allow_post_copy, allow_workload_disruption, bandwidth_per_migration, completion_timeout_per_gi_b, cross_cluster_network, decentralized_live_migration_datapath, disable_tls, match_se_linux_level_on_migration, max_downtime_ms, network, node_drain_taint_key, parallel_migrations_per_cluster, parallel_outbound_migrations_per_node, progress_timeout, unsafe_migration_override, utility_volumes_timeout].hash
     end
 
     # Builds the object from hash

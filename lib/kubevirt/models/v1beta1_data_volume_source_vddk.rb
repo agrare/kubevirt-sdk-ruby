@@ -19,6 +19,9 @@ module Kubevirt
     # BackingFile is the path to the virtual hard disk to migrate from vCenter/ESXi
     attr_accessor :backing_file
 
+    # ExtraArgs is a reference to a ConfigMap containing extra arguments to pass directly to the VDDK library
+    attr_accessor :extra_args
+
     # InitImageURL is an optional URL to an image containing an extracted VDDK library, overrides v2v-vmware config map
     attr_accessor :init_image_url
 
@@ -38,6 +41,7 @@ module Kubevirt
     def self.attribute_map
       {
         :'backing_file' => :'backingFile',
+        :'extra_args' => :'extraArgs',
         :'init_image_url' => :'initImageURL',
         :'secret_ref' => :'secretRef',
         :'thumbprint' => :'thumbprint',
@@ -55,6 +59,7 @@ module Kubevirt
     def self.openapi_types
       {
         :'backing_file' => :'String',
+        :'extra_args' => :'String',
         :'init_image_url' => :'String',
         :'secret_ref' => :'String',
         :'thumbprint' => :'String',
@@ -86,6 +91,10 @@ module Kubevirt
 
       if attributes.key?(:'backing_file')
         self.backing_file = attributes[:'backing_file']
+      end
+
+      if attributes.key?(:'extra_args')
+        self.extra_args = attributes[:'extra_args']
       end
 
       if attributes.key?(:'init_image_url')
@@ -130,6 +139,7 @@ module Kubevirt
       return true if self.equal?(o)
       self.class == o.class &&
           backing_file == o.backing_file &&
+          extra_args == o.extra_args &&
           init_image_url == o.init_image_url &&
           secret_ref == o.secret_ref &&
           thumbprint == o.thumbprint &&
@@ -146,7 +156,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [backing_file, init_image_url, secret_ref, thumbprint, url, uuid].hash
+      [backing_file, extra_args, init_image_url, secret_ref, thumbprint, url, uuid].hash
     end
 
     # Builds the object from hash

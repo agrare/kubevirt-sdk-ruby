@@ -32,7 +32,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'persistent_volume_claim' => :'K8sIoApiCoreV1PersistentVolumeClaimVolumeSource'
+        :'persistent_volume_claim' => :'IoK8sApiCoreV1PersistentVolumeClaimVolumeSource'
       }
     end
 

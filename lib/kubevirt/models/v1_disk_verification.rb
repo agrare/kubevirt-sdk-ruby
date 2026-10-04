@@ -34,7 +34,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'memory_limit' => :'String'
+        :'memory_limit' => :'Object'
       }
     end
 

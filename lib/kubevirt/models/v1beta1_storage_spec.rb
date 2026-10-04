@@ -81,10 +81,10 @@ module Kubevirt
     def self.openapi_types
       {
         :'access_modes' => :'Array<String>',
-        :'data_source' => :'K8sIoApiCoreV1TypedLocalObjectReference',
-        :'data_source_ref' => :'K8sIoApiCoreV1TypedObjectReference',
-        :'resources' => :'K8sIoApiCoreV1VolumeResourceRequirements',
-        :'selector' => :'K8sIoApimachineryPkgApisMetaV1LabelSelector',
+        :'data_source' => :'IoK8sApiCoreV1TypedLocalObjectReference',
+        :'data_source_ref' => :'IoK8sApiCoreV1TypedObjectReference',
+        :'resources' => :'IoK8sApiCoreV1VolumeResourceRequirements',
+        :'selector' => :'IoK8sApimachineryPkgApisMetaV1LabelSelector',
         :'storage_class_name' => :'String',
         :'volume_mode' => :'String',
         :'volume_name' => :'String'

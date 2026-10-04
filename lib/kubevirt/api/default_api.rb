@@ -229,35 +229,35 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Create a VirtualMachineExport object.
+    # Create a VirtualMachineBackup object.
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [V1beta1VirtualMachineExport] 
+    # @param body [V1alpha1VirtualMachineBackup] 
     # @param [Hash] opts the optional parameters
-    # @return [V1beta1VirtualMachineExport]
-    def create_namespaced_virtual_machine_export(namespace, body, opts = {})
-      data, _status_code, _headers = create_namespaced_virtual_machine_export_with_http_info(namespace, body, opts)
+    # @return [V1alpha1VirtualMachineBackup]
+    def create_namespaced_virtual_machine_backup(namespace, body, opts = {})
+      data, _status_code, _headers = create_namespaced_virtual_machine_backup_with_http_info(namespace, body, opts)
       data
     end
 
-    # Create a VirtualMachineExport object.
+    # Create a VirtualMachineBackup object.
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [V1beta1VirtualMachineExport] 
+    # @param body [V1alpha1VirtualMachineBackup] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(V1beta1VirtualMachineExport, Integer, Hash)>] V1beta1VirtualMachineExport data, response status code and response headers
-    def create_namespaced_virtual_machine_export_with_http_info(namespace, body, opts = {})
+    # @return [Array<(V1alpha1VirtualMachineBackup, Integer, Hash)>] V1alpha1VirtualMachineBackup data, response status code and response headers
+    def create_namespaced_virtual_machine_backup_with_http_info(namespace, body, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.create_namespaced_virtual_machine_export ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.create_namespaced_virtual_machine_backup ...'
       end
       # verify the required parameter 'namespace' is set
       if @api_client.config.client_side_validation && namespace.nil?
-        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.create_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.create_namespaced_virtual_machine_backup"
       end
       # verify the required parameter 'body' is set
       if @api_client.config.client_side_validation && body.nil?
-        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.create_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.create_namespaced_virtual_machine_backup"
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachineexports'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinebackups'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -279,7 +279,79 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineExport'
+      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineBackup'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.create_namespaced_virtual_machine_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#create_namespaced_virtual_machine_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Create a VirtualMachineExport object.
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1VirtualMachineExport] 
+    # @param [Hash] opts the optional parameters
+    # @return [V1VirtualMachineExport]
+    def create_namespaced_virtual_machine_export(namespace, body, opts = {})
+      data, _status_code, _headers = create_namespaced_virtual_machine_export_with_http_info(namespace, body, opts)
+      data
+    end
+
+    # Create a VirtualMachineExport object.
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1VirtualMachineExport] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(V1VirtualMachineExport, Integer, Hash)>] V1VirtualMachineExport data, response status code and response headers
+    def create_namespaced_virtual_machine_export_with_http_info(namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.create_namespaced_virtual_machine_export ...'
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.create_namespaced_virtual_machine_export"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.create_namespaced_virtual_machine_export"
+      end
+      # resource path
+      local_var_path = '/apis/export.kubevirt.io/v1/namespaces/{namespace}/virtualmachineexports'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'application/yaml']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json', 'application/yaml'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1VirtualMachineExport'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -663,9 +735,9 @@ module Kubevirt
 
     # Create a VirtualMachinePool object.
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [V1alpha1VirtualMachinePool] 
+    # @param body [V1beta1VirtualMachinePool] 
     # @param [Hash] opts the optional parameters
-    # @return [V1alpha1VirtualMachinePool]
+    # @return [V1beta1VirtualMachinePool]
     def create_namespaced_virtual_machine_pool(namespace, body, opts = {})
       data, _status_code, _headers = create_namespaced_virtual_machine_pool_with_http_info(namespace, body, opts)
       data
@@ -673,9 +745,9 @@ module Kubevirt
 
     # Create a VirtualMachinePool object.
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [V1alpha1VirtualMachinePool] 
+    # @param body [V1beta1VirtualMachinePool] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(V1alpha1VirtualMachinePool, Integer, Hash)>] V1alpha1VirtualMachinePool data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachinePool, Integer, Hash)>] V1beta1VirtualMachinePool data, response status code and response headers
     def create_namespaced_virtual_machine_pool_with_http_info(namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.create_namespaced_virtual_machine_pool ...'
@@ -689,7 +761,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.create_namespaced_virtual_machine_pool"
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinepools'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachinepools'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -711,7 +783,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachinePool'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachinePool'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1022,18 +1094,18 @@ module Kubevirt
     end
 
     # Create a VirtualMachineClone object.
-    # @param body [V1alpha1VirtualMachineClone] 
+    # @param body [V1beta1VirtualMachineClone] 
     # @param [Hash] opts the optional parameters
-    # @return [V1alpha1VirtualMachineClone]
+    # @return [V1beta1VirtualMachineClone]
     def create_virtual_machine_clone(body, opts = {})
       data, _status_code, _headers = create_virtual_machine_clone_with_http_info(body, opts)
       data
     end
 
     # Create a VirtualMachineClone object.
-    # @param body [V1alpha1VirtualMachineClone] 
+    # @param body [V1beta1VirtualMachineClone] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(V1alpha1VirtualMachineClone, Integer, Hash)>] V1alpha1VirtualMachineClone data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachineClone, Integer, Hash)>] V1beta1VirtualMachineClone data, response status code and response headers
     def create_virtual_machine_clone_with_http_info(body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.create_virtual_machine_clone ...'
@@ -1043,7 +1115,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.create_virtual_machine_clone"
       end
       # resource path
-      local_var_path = '/apis/clone.kubevirt.io/v1alpha1/virtualmachineclones'
+      local_var_path = '/apis/clone.kubevirt.io/v1beta1/virtualmachineclones'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -1065,7 +1137,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineClone'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineClone'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1229,7 +1301,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_migration_policy(opts = {})
       data, _status_code, _headers = delete_collection_migration_policy_with_http_info(opts)
       data
@@ -1245,7 +1317,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_migration_policy_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_migration_policy ...'
@@ -1276,7 +1348,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1308,7 +1380,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_kube_virt(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_kube_virt_with_http_info(opts)
       data
@@ -1324,7 +1396,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_kube_virt_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_kube_virt ...'
@@ -1355,7 +1427,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1387,7 +1459,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_with_http_info(opts)
       data
@@ -1403,7 +1475,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine ...'
@@ -1434,7 +1506,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1456,7 +1528,7 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Delete a collection of VirtualMachineExport objects.
+    # Delete a collection of VirtualMachineBackup objects.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1466,13 +1538,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
-    def delete_collection_namespaced_virtual_machine_export(opts = {})
-      data, _status_code, _headers = delete_collection_namespaced_virtual_machine_export_with_http_info(opts)
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
+    def delete_collection_namespaced_virtual_machine_backup(opts = {})
+      data, _status_code, _headers = delete_collection_namespaced_virtual_machine_backup_with_http_info(opts)
       data
     end
 
-    # Delete a collection of VirtualMachineExport objects.
+    # Delete a collection of VirtualMachineBackup objects.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1482,13 +1554,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
-    def delete_collection_namespaced_virtual_machine_export_with_http_info(opts = {})
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
+    def delete_collection_namespaced_virtual_machine_backup_with_http_info(opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_export ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_backup ...'
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachineexports'
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinebackups'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -1513,7 +1585,86 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.delete_collection_namespaced_virtual_machine_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#delete_collection_namespaced_virtual_machine_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Delete a collection of VirtualMachineExport objects.
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
+    def delete_collection_namespaced_virtual_machine_export(opts = {})
+      data, _status_code, _headers = delete_collection_namespaced_virtual_machine_export_with_http_info(opts)
+      data
+    end
+
+    # Delete a collection of VirtualMachineExport objects.
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
+    def delete_collection_namespaced_virtual_machine_export_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_export ...'
+      end
+      # resource path
+      local_var_path = '/apis/export.kubevirt.io/v1/namespaces/{namespace}/virtualmachineexports'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'continue'] = opts[:'continue'] if !opts[:'continue'].nil?
+      query_params[:'fieldSelector'] = opts[:'field_selector'] if !opts[:'field_selector'].nil?
+      query_params[:'includeUninitialized'] = opts[:'include_uninitialized'] if !opts[:'include_uninitialized'].nil?
+      query_params[:'labelSelector'] = opts[:'label_selector'] if !opts[:'label_selector'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'resourceVersion'] = opts[:'resource_version'] if !opts[:'resource_version'].nil?
+      query_params[:'timeoutSeconds'] = opts[:'timeout_seconds'] if !opts[:'timeout_seconds'].nil?
+      query_params[:'watch'] = opts[:'watch'] if !opts[:'watch'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'application/yaml']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1545,7 +1696,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_instance(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_instance_with_http_info(opts)
       data
@@ -1561,7 +1712,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_instance_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_instance ...'
@@ -1592,7 +1743,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1624,7 +1775,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_instance_migration(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_instance_migration_with_http_info(opts)
       data
@@ -1640,7 +1791,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_instance_migration_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_instance_migration ...'
@@ -1671,7 +1822,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1703,7 +1854,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_instance_preset(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_instance_preset_with_http_info(opts)
       data
@@ -1719,7 +1870,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_instance_preset_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_instance_preset ...'
@@ -1750,7 +1901,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1782,7 +1933,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_instance_replica_set(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_instance_replica_set_with_http_info(opts)
       data
@@ -1798,7 +1949,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_instance_replica_set_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_instance_replica_set ...'
@@ -1829,7 +1980,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1861,7 +2012,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_instancetype(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_instancetype_with_http_info(opts)
       data
@@ -1877,7 +2028,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_instancetype_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_instancetype ...'
@@ -1908,7 +2059,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1940,7 +2091,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_pool(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_pool_with_http_info(opts)
       data
@@ -1956,13 +2107,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_pool_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_pool ...'
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinepools'
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachinepools'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -1987,7 +2138,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2019,7 +2170,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_preference(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_preference_with_http_info(opts)
       data
@@ -2035,7 +2186,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_preference_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_preference ...'
@@ -2066,7 +2217,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2098,7 +2249,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_restore(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_restore_with_http_info(opts)
       data
@@ -2114,7 +2265,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_restore_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_restore ...'
@@ -2145,7 +2296,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2177,7 +2328,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_snapshot(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_snapshot_with_http_info(opts)
       data
@@ -2193,7 +2344,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_snapshot_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_snapshot ...'
@@ -2224,7 +2375,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2256,7 +2407,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_namespaced_virtual_machine_snapshot_content(opts = {})
       data, _status_code, _headers = delete_collection_namespaced_virtual_machine_snapshot_content_with_http_info(opts)
       data
@@ -2272,7 +2423,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_namespaced_virtual_machine_snapshot_content_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_namespaced_virtual_machine_snapshot_content ...'
@@ -2303,7 +2454,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2335,7 +2486,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_virtual_machine_clone(opts = {})
       data, _status_code, _headers = delete_collection_virtual_machine_clone_with_http_info(opts)
       data
@@ -2351,13 +2502,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_virtual_machine_clone_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_virtual_machine_clone ...'
       end
       # resource path
-      local_var_path = '/apis/clone.kubevirt.io/v1alpha1/virtualmachineclones'
+      local_var_path = '/apis/clone.kubevirt.io/v1beta1/virtualmachineclones'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -2382,7 +2533,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2414,7 +2565,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_virtual_machine_cluster_instancetype(opts = {})
       data, _status_code, _headers = delete_collection_virtual_machine_cluster_instancetype_with_http_info(opts)
       data
@@ -2430,7 +2581,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_virtual_machine_cluster_instancetype_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_virtual_machine_cluster_instancetype ...'
@@ -2461,7 +2612,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2493,7 +2644,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_collection_virtual_machine_cluster_preference(opts = {})
       data, _status_code, _headers = delete_collection_virtual_machine_cluster_preference_with_http_info(opts)
       data
@@ -2509,7 +2660,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_collection_virtual_machine_cluster_preference_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_collection_virtual_machine_cluster_preference ...'
@@ -2540,7 +2691,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2564,12 +2715,12 @@ module Kubevirt
 
     # Delete a MigrationPolicy object.
     # @param name [String] Name of the resource
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_migration_policy(name, body, opts = {})
       data, _status_code, _headers = delete_migration_policy_with_http_info(name, body, opts)
       data
@@ -2577,12 +2728,12 @@ module Kubevirt
 
     # Delete a MigrationPolicy object.
     # @param name [String] Name of the resource
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_migration_policy_with_http_info(name, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_migration_policy ...'
@@ -2621,7 +2772,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2646,12 +2797,12 @@ module Kubevirt
     # Delete a KubeVirt object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_kube_virt(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_kube_virt_with_http_info(name, namespace, body, opts)
       data
@@ -2660,12 +2811,12 @@ module Kubevirt
     # Delete a KubeVirt object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_kube_virt_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_kube_virt ...'
@@ -2708,7 +2859,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2733,12 +2884,12 @@ module Kubevirt
     # Delete a VirtualMachine object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_with_http_info(name, namespace, body, opts)
       data
@@ -2747,12 +2898,12 @@ module Kubevirt
     # Delete a VirtualMachine object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine ...'
@@ -2795,7 +2946,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2817,47 +2968,47 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Delete a VirtualMachineExport object.
+    # Delete a VirtualMachineBackup object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
-    def delete_namespaced_virtual_machine_export(name, namespace, body, opts = {})
-      data, _status_code, _headers = delete_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts)
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
+    def delete_namespaced_virtual_machine_backup(name, namespace, body, opts = {})
+      data, _status_code, _headers = delete_namespaced_virtual_machine_backup_with_http_info(name, namespace, body, opts)
       data
     end
 
-    # Delete a VirtualMachineExport object.
+    # Delete a VirtualMachineBackup object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
-    def delete_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts = {})
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
+    def delete_namespaced_virtual_machine_backup_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_export ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_backup ...'
       end
       # verify the required parameter 'name' is set
       if @api_client.config.client_side_validation && name.nil?
-        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.delete_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.delete_namespaced_virtual_machine_backup"
       end
       # verify the required parameter 'namespace' is set
       if @api_client.config.client_side_validation && namespace.nil?
-        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.delete_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.delete_namespaced_virtual_machine_backup"
       end
       # verify the required parameter 'body' is set
       if @api_client.config.client_side_validation && body.nil?
-        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.delete_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.delete_namespaced_virtual_machine_backup"
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachineexports/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinebackups/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -2882,7 +3033,94 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.delete_namespaced_virtual_machine_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#delete_namespaced_virtual_machine_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Delete a VirtualMachineExport object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
+    def delete_namespaced_virtual_machine_export(name, namespace, body, opts = {})
+      data, _status_code, _headers = delete_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Delete a VirtualMachineExport object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
+    def delete_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_export ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.delete_namespaced_virtual_machine_export"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.delete_namespaced_virtual_machine_export"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.delete_namespaced_virtual_machine_export"
+      end
+      # resource path
+      local_var_path = '/apis/export.kubevirt.io/v1/namespaces/{namespace}/virtualmachineexports/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'gracePeriodSeconds'] = opts[:'grace_period_seconds'] if !opts[:'grace_period_seconds'].nil?
+      query_params[:'orphanDependents'] = opts[:'orphan_dependents'] if !opts[:'orphan_dependents'].nil?
+      query_params[:'propagationPolicy'] = opts[:'propagation_policy'] if !opts[:'propagation_policy'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'application/yaml']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json', 'application/yaml'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2907,12 +3145,12 @@ module Kubevirt
     # Delete a VirtualMachineInstance object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_instance(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_instance_with_http_info(name, namespace, body, opts)
       data
@@ -2921,12 +3159,12 @@ module Kubevirt
     # Delete a VirtualMachineInstance object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_instance_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_instance ...'
@@ -2969,7 +3207,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -2994,12 +3232,12 @@ module Kubevirt
     # Delete a VirtualMachineInstanceMigration object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_instance_migration(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_instance_migration_with_http_info(name, namespace, body, opts)
       data
@@ -3008,12 +3246,12 @@ module Kubevirt
     # Delete a VirtualMachineInstanceMigration object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_instance_migration_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_instance_migration ...'
@@ -3056,7 +3294,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3081,12 +3319,12 @@ module Kubevirt
     # Delete a VirtualMachineInstancePreset object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_instance_preset(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_instance_preset_with_http_info(name, namespace, body, opts)
       data
@@ -3095,12 +3333,12 @@ module Kubevirt
     # Delete a VirtualMachineInstancePreset object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_instance_preset_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_instance_preset ...'
@@ -3143,7 +3381,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3168,12 +3406,12 @@ module Kubevirt
     # Delete a VirtualMachineInstanceReplicaSet object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_instance_replica_set(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_instance_replica_set_with_http_info(name, namespace, body, opts)
       data
@@ -3182,12 +3420,12 @@ module Kubevirt
     # Delete a VirtualMachineInstanceReplicaSet object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_instance_replica_set_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_instance_replica_set ...'
@@ -3230,7 +3468,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3255,12 +3493,12 @@ module Kubevirt
     # Delete a VirtualMachineInstancetype object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_instancetype(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_instancetype_with_http_info(name, namespace, body, opts)
       data
@@ -3269,12 +3507,12 @@ module Kubevirt
     # Delete a VirtualMachineInstancetype object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_instancetype_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_instancetype ...'
@@ -3317,7 +3555,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3342,12 +3580,12 @@ module Kubevirt
     # Delete a VirtualMachinePool object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_pool(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_pool_with_http_info(name, namespace, body, opts)
       data
@@ -3356,12 +3594,12 @@ module Kubevirt
     # Delete a VirtualMachinePool object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_pool_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_pool ...'
@@ -3379,7 +3617,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.delete_namespaced_virtual_machine_pool"
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinepools/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachinepools/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -3404,7 +3642,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3429,12 +3667,12 @@ module Kubevirt
     # Delete a VirtualMachinePreference object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_preference(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_preference_with_http_info(name, namespace, body, opts)
       data
@@ -3443,12 +3681,12 @@ module Kubevirt
     # Delete a VirtualMachinePreference object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_preference_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_preference ...'
@@ -3491,7 +3729,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3516,12 +3754,12 @@ module Kubevirt
     # Delete a VirtualMachineRestore object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_restore(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_restore_with_http_info(name, namespace, body, opts)
       data
@@ -3530,12 +3768,12 @@ module Kubevirt
     # Delete a VirtualMachineRestore object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_restore_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_restore ...'
@@ -3578,7 +3816,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3603,12 +3841,12 @@ module Kubevirt
     # Delete a VirtualMachineSnapshot object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_snapshot(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_snapshot_with_http_info(name, namespace, body, opts)
       data
@@ -3617,12 +3855,12 @@ module Kubevirt
     # Delete a VirtualMachineSnapshot object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_snapshot_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_snapshot ...'
@@ -3665,7 +3903,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3690,12 +3928,12 @@ module Kubevirt
     # Delete a VirtualMachineSnapshotContent object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_namespaced_virtual_machine_snapshot_content(name, namespace, body, opts = {})
       data, _status_code, _headers = delete_namespaced_virtual_machine_snapshot_content_with_http_info(name, namespace, body, opts)
       data
@@ -3704,12 +3942,12 @@ module Kubevirt
     # Delete a VirtualMachineSnapshotContent object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_namespaced_virtual_machine_snapshot_content_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_namespaced_virtual_machine_snapshot_content ...'
@@ -3752,7 +3990,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3776,12 +4014,12 @@ module Kubevirt
 
     # Delete a VirtualMachineClone object.
     # @param name [String] Name of the resource
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_virtual_machine_clone(name, body, opts = {})
       data, _status_code, _headers = delete_virtual_machine_clone_with_http_info(name, body, opts)
       data
@@ -3789,12 +4027,12 @@ module Kubevirt
 
     # Delete a VirtualMachineClone object.
     # @param name [String] Name of the resource
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_virtual_machine_clone_with_http_info(name, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_virtual_machine_clone ...'
@@ -3808,7 +4046,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.delete_virtual_machine_clone"
       end
       # resource path
-      local_var_path = '/apis/clone.kubevirt.io/v1alpha1/virtualmachineclones/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s))
+      local_var_path = '/apis/clone.kubevirt.io/v1beta1/virtualmachineclones/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -3833,7 +4071,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3857,12 +4095,12 @@ module Kubevirt
 
     # Delete a VirtualMachineClusterInstancetype object.
     # @param name [String] Name of the resource
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_virtual_machine_cluster_instancetype(name, body, opts = {})
       data, _status_code, _headers = delete_virtual_machine_cluster_instancetype_with_http_info(name, body, opts)
       data
@@ -3870,12 +4108,12 @@ module Kubevirt
 
     # Delete a VirtualMachineClusterInstancetype object.
     # @param name [String] Name of the resource
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_virtual_machine_cluster_instancetype_with_http_info(name, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_virtual_machine_cluster_instancetype ...'
@@ -3914,7 +4152,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -3938,12 +4176,12 @@ module Kubevirt
 
     # Delete a VirtualMachineClusterPreference object.
     # @param name [String] Name of the resource
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [K8sIoApimachineryPkgApisMetaV1Status]
+    # @return [IoK8sApimachineryPkgApisMetaV1Status]
     def delete_virtual_machine_cluster_preference(name, body, opts = {})
       data, _status_code, _headers = delete_virtual_machine_cluster_preference_with_http_info(name, body, opts)
       data
@@ -3951,12 +4189,12 @@ module Kubevirt
 
     # Delete a VirtualMachineClusterPreference object.
     # @param name [String] Name of the resource
-    # @param body [K8sIoApimachineryPkgApisMetaV1DeleteOptions] 
+    # @param body [IoK8sApimachineryPkgApisMetaV1DeleteOptions] 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :grace_period_seconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     # @option opts [Boolean] :orphan_dependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
     # @option opts [String] :propagation_policy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1Status, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1Status data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1Status, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1Status data, response status code and response headers
     def delete_virtual_machine_cluster_preference_with_http_info(name, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.delete_virtual_machine_cluster_preference ...'
@@ -3995,7 +4233,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1Status'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1Status'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4020,17 +4258,17 @@ module Kubevirt
     # Health endpoint
     # @param [Hash] opts the optional parameters
     # @return [nil]
-    def func13(opts = {})
-      func13_with_http_info(opts)
+    def func17(opts = {})
+      func17_with_http_info(opts)
       nil
     end
 
     # Health endpoint
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
-    def func13_with_http_info(opts = {})
+    def func17_with_http_info(opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.func13 ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.func17 ...'
       end
       # resource path
       local_var_path = '/healthz'
@@ -4054,7 +4292,7 @@ module Kubevirt
       auth_names = opts[:debug_auth_names] || []
 
       new_options = opts.merge(
-        :operation => :"DefaultApi.func13",
+        :operation => :"DefaultApi.func17",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -4065,7 +4303,7 @@ module Kubevirt
 
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: DefaultApi#func13\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: DefaultApi#func17\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -4123,7 +4361,62 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIGroup]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroup]
+    def get_api_group_backup_kubevirt_io(opts = {})
+      data, _status_code, _headers = get_api_group_backup_kubevirt_io_with_http_info(opts)
+      data
+    end
+
+    # Get a KubeVirt API group
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
+    def get_api_group_backup_kubevirt_io_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_group_backup_kubevirt_io ...'
+      end
+      # resource path
+      local_var_path = '/apis/backup.kubevirt.io/'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroup'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.get_api_group_backup_kubevirt_io",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#get_api_group_backup_kubevirt_io\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get a KubeVirt API group
+    # @param [Hash] opts the optional parameters
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroup]
     def get_api_group_clone_kubevirt_io(opts = {})
       data, _status_code, _headers = get_api_group_clone_kubevirt_io_with_http_info(opts)
       data
@@ -4131,7 +4424,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
     def get_api_group_clone_kubevirt_io_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_group_clone_kubevirt_io ...'
@@ -4154,7 +4447,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIGroup'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroup'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4178,7 +4471,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIGroup]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroup]
     def get_api_group_export_kubevirt_io(opts = {})
       data, _status_code, _headers = get_api_group_export_kubevirt_io_with_http_info(opts)
       data
@@ -4186,7 +4479,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
     def get_api_group_export_kubevirt_io_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_group_export_kubevirt_io ...'
@@ -4209,7 +4502,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIGroup'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroup'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4233,7 +4526,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIGroup]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroup]
     def get_api_group_instancetype_kubevirt_io(opts = {})
       data, _status_code, _headers = get_api_group_instancetype_kubevirt_io_with_http_info(opts)
       data
@@ -4241,7 +4534,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
     def get_api_group_instancetype_kubevirt_io_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_group_instancetype_kubevirt_io ...'
@@ -4264,7 +4557,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIGroup'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroup'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4288,7 +4581,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIGroup]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroup]
     def get_api_group_kubevirt_io(opts = {})
       data, _status_code, _headers = get_api_group_kubevirt_io_with_http_info(opts)
       data
@@ -4296,7 +4589,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
     def get_api_group_kubevirt_io_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_group_kubevirt_io ...'
@@ -4319,7 +4612,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIGroup'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroup'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4343,7 +4636,7 @@ module Kubevirt
 
     # Get a KubeVirt API GroupList
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIGroupList]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroupList]
     def get_api_group_list(opts = {})
       data, _status_code, _headers = get_api_group_list_with_http_info(opts)
       data
@@ -4351,7 +4644,7 @@ module Kubevirt
 
     # Get a KubeVirt API GroupList
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIGroupList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIGroupList data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroupList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroupList data, response status code and response headers
     def get_api_group_list_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_group_list ...'
@@ -4374,7 +4667,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIGroupList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroupList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4398,7 +4691,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIGroup]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroup]
     def get_api_group_migrations_kubevirt_io(opts = {})
       data, _status_code, _headers = get_api_group_migrations_kubevirt_io_with_http_info(opts)
       data
@@ -4406,7 +4699,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
     def get_api_group_migrations_kubevirt_io_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_group_migrations_kubevirt_io ...'
@@ -4429,7 +4722,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIGroup'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroup'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4453,7 +4746,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIGroup]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroup]
     def get_api_group_pool_kubevirt_io(opts = {})
       data, _status_code, _headers = get_api_group_pool_kubevirt_io_with_http_info(opts)
       data
@@ -4461,7 +4754,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
     def get_api_group_pool_kubevirt_io_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_group_pool_kubevirt_io ...'
@@ -4484,7 +4777,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIGroup'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroup'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4508,7 +4801,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIGroup]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroup]
     def get_api_group_snapshot_kubevirt_io(opts = {})
       data, _status_code, _headers = get_api_group_snapshot_kubevirt_io_with_http_info(opts)
       data
@@ -4516,7 +4809,7 @@ module Kubevirt
 
     # Get a KubeVirt API group
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
     def get_api_group_snapshot_kubevirt_io_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_group_snapshot_kubevirt_io ...'
@@ -4539,7 +4832,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIGroup'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroup'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4563,21 +4856,21 @@ module Kubevirt
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIResourceList]
-    def get_api_resources_clone_kubevirt_io_v1alpha1(opts = {})
-      data, _status_code, _headers = get_api_resources_clone_kubevirt_io_v1alpha1_with_http_info(opts)
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
+    def get_api_resources_backup_kubevirt_io_v1alpha1(opts = {})
+      data, _status_code, _headers = get_api_resources_backup_kubevirt_io_v1alpha1_with_http_info(opts)
       data
     end
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
-    def get_api_resources_clone_kubevirt_io_v1alpha1_with_http_info(opts = {})
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    def get_api_resources_backup_kubevirt_io_v1alpha1_with_http_info(opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_clone_kubevirt_io_v1alpha1 ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_backup_kubevirt_io_v1alpha1 ...'
       end
       # resource path
-      local_var_path = '/apis/clone.kubevirt.io/v1alpha1/'
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -4594,13 +4887,13 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIResourceList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
 
       new_options = opts.merge(
-        :operation => :"DefaultApi.get_api_resources_clone_kubevirt_io_v1alpha1",
+        :operation => :"DefaultApi.get_api_resources_backup_kubevirt_io_v1alpha1",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -4611,28 +4904,28 @@ module Kubevirt
 
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: DefaultApi#get_api_resources_clone_kubevirt_io_v1alpha1\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: DefaultApi#get_api_resources_backup_kubevirt_io_v1alpha1\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIResourceList]
-    def get_api_resources_export_kubevirt_io_v1beta1(opts = {})
-      data, _status_code, _headers = get_api_resources_export_kubevirt_io_v1beta1_with_http_info(opts)
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
+    def get_api_resources_clone_kubevirt_io_v1beta1(opts = {})
+      data, _status_code, _headers = get_api_resources_clone_kubevirt_io_v1beta1_with_http_info(opts)
       data
     end
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
-    def get_api_resources_export_kubevirt_io_v1beta1_with_http_info(opts = {})
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    def get_api_resources_clone_kubevirt_io_v1beta1_with_http_info(opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_export_kubevirt_io_v1beta1 ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_clone_kubevirt_io_v1beta1 ...'
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/'
+      local_var_path = '/apis/clone.kubevirt.io/v1beta1/'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -4649,13 +4942,13 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIResourceList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
 
       new_options = opts.merge(
-        :operation => :"DefaultApi.get_api_resources_export_kubevirt_io_v1beta1",
+        :operation => :"DefaultApi.get_api_resources_clone_kubevirt_io_v1beta1",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -4666,14 +4959,69 @@ module Kubevirt
 
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: DefaultApi#get_api_resources_export_kubevirt_io_v1beta1\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: DefaultApi#get_api_resources_clone_kubevirt_io_v1beta1\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIResourceList]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
+    def get_api_resources_export_kubevirt_io_v1(opts = {})
+      data, _status_code, _headers = get_api_resources_export_kubevirt_io_v1_with_http_info(opts)
+      data
+    end
+
+    # Get KubeVirt API Resources
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    def get_api_resources_export_kubevirt_io_v1_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_export_kubevirt_io_v1 ...'
+      end
+      # resource path
+      local_var_path = '/apis/export.kubevirt.io/v1/'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.get_api_resources_export_kubevirt_io_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#get_api_resources_export_kubevirt_io_v1\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get KubeVirt API Resources
+    # @param [Hash] opts the optional parameters
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
     def get_api_resources_instancetype_kubevirt_io_v1beta1(opts = {})
       data, _status_code, _headers = get_api_resources_instancetype_kubevirt_io_v1beta1_with_http_info(opts)
       data
@@ -4681,7 +5029,7 @@ module Kubevirt
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
     def get_api_resources_instancetype_kubevirt_io_v1beta1_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_instancetype_kubevirt_io_v1beta1 ...'
@@ -4704,7 +5052,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIResourceList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4728,7 +5076,7 @@ module Kubevirt
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIResourceList]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
     def get_api_resources_kubevirt_io_v1(opts = {})
       data, _status_code, _headers = get_api_resources_kubevirt_io_v1_with_http_info(opts)
       data
@@ -4736,7 +5084,7 @@ module Kubevirt
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
     def get_api_resources_kubevirt_io_v1_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_kubevirt_io_v1 ...'
@@ -4759,7 +5107,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIResourceList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4783,7 +5131,7 @@ module Kubevirt
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIResourceList]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
     def get_api_resources_migrations_kubevirt_io_v1alpha1(opts = {})
       data, _status_code, _headers = get_api_resources_migrations_kubevirt_io_v1alpha1_with_http_info(opts)
       data
@@ -4791,7 +5139,7 @@ module Kubevirt
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
     def get_api_resources_migrations_kubevirt_io_v1alpha1_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_migrations_kubevirt_io_v1alpha1 ...'
@@ -4814,7 +5162,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIResourceList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4838,21 +5186,21 @@ module Kubevirt
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIResourceList]
-    def get_api_resources_pool_kubevirt_io_v1alpha1(opts = {})
-      data, _status_code, _headers = get_api_resources_pool_kubevirt_io_v1alpha1_with_http_info(opts)
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
+    def get_api_resources_pool_kubevirt_io_v1beta1(opts = {})
+      data, _status_code, _headers = get_api_resources_pool_kubevirt_io_v1beta1_with_http_info(opts)
       data
     end
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
-    def get_api_resources_pool_kubevirt_io_v1alpha1_with_http_info(opts = {})
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    def get_api_resources_pool_kubevirt_io_v1beta1_with_http_info(opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_pool_kubevirt_io_v1alpha1 ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_pool_kubevirt_io_v1beta1 ...'
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/'
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -4869,13 +5217,13 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIResourceList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
 
       new_options = opts.merge(
-        :operation => :"DefaultApi.get_api_resources_pool_kubevirt_io_v1alpha1",
+        :operation => :"DefaultApi.get_api_resources_pool_kubevirt_io_v1beta1",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -4886,14 +5234,14 @@ module Kubevirt
 
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: DefaultApi#get_api_resources_pool_kubevirt_io_v1alpha1\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: DefaultApi#get_api_resources_pool_kubevirt_io_v1beta1\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIResourceList]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
     def get_api_resources_snapshot_kubevirt_io_v1beta1(opts = {})
       data, _status_code, _headers = get_api_resources_snapshot_kubevirt_io_v1beta1_with_http_info(opts)
       data
@@ -4901,7 +5249,7 @@ module Kubevirt
 
     # Get KubeVirt API Resources
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
     def get_api_resources_snapshot_kubevirt_io_v1beta1_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_api_resources_snapshot_kubevirt_io_v1beta1 ...'
@@ -4924,7 +5272,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIResourceList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -4946,9 +5294,172 @@ module Kubevirt
       return data, status_code, headers
     end
 
+    # Get OpenAPI v3 discovery
+    # @param [Hash] opts the optional parameters
+    # @return [nil]
+    def get_open_apiv3_discovery(opts = {})
+      get_open_apiv3_discovery_with_http_info(opts)
+      nil
+    end
+
+    # Get OpenAPI v3 discovery
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    def get_open_apiv3_discovery_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.get_open_apiv3_discovery ...'
+      end
+      # resource path
+      local_var_path = '/openapi/v3'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type]
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.get_open_apiv3_discovery",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#get_open_apiv3_discovery\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get OpenAPI v3 specification for subresources.kubevirt.io/v1
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def get_open_apiv3_spec_subresources_kubevirt_io_v1(opts = {})
+      data, _status_code, _headers = get_open_apiv3_spec_subresources_kubevirt_io_v1_with_http_info(opts)
+      data
+    end
+
+    # Get OpenAPI v3 specification for subresources.kubevirt.io/v1
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def get_open_apiv3_spec_subresources_kubevirt_io_v1_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.get_open_apiv3_spec_subresources_kubevirt_io_v1 ...'
+      end
+      # resource path
+      local_var_path = '/openapi/v3/apis/subresources.kubevirt.io/v1'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.get_open_apiv3_spec_subresources_kubevirt_io_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#get_open_apiv3_spec_subresources_kubevirt_io_v1\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get OpenAPI v3 specification for subresources.kubevirt.io/v1alpha3
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def get_open_apiv3_spec_subresources_kubevirt_io_v1alpha3(opts = {})
+      data, _status_code, _headers = get_open_apiv3_spec_subresources_kubevirt_io_v1alpha3_with_http_info(opts)
+      data
+    end
+
+    # Get OpenAPI v3 specification for subresources.kubevirt.io/v1alpha3
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def get_open_apiv3_spec_subresources_kubevirt_io_v1alpha3_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.get_open_apiv3_spec_subresources_kubevirt_io_v1alpha3 ...'
+      end
+      # resource path
+      local_var_path = '/openapi/v3/apis/subresources.kubevirt.io/v1alpha3'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.get_open_apiv3_spec_subresources_kubevirt_io_v1alpha3",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#get_open_apiv3_spec_subresources_kubevirt_io_v1alpha3\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Get KubeVirt API root paths
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1RootPaths]
+    # @return [IoK8sApimachineryPkgApisMetaV1RootPaths]
     def get_root_paths(opts = {})
       data, _status_code, _headers = get_root_paths_with_http_info(opts)
       data
@@ -4956,7 +5467,7 @@ module Kubevirt
 
     # Get KubeVirt API root paths
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1RootPaths, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1RootPaths data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1RootPaths, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1RootPaths data, response status code and response headers
     def get_root_paths_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.get_root_paths ...'
@@ -4979,7 +5490,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1RootPaths'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1RootPaths'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -5488,7 +5999,7 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Get a list of VirtualMachineExport objects.
+    # Get a list of VirtualMachineBackup objects.
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -5499,13 +6010,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [V1beta1VirtualMachineExportList]
-    def list_namespaced_virtual_machine_export(namespace, opts = {})
-      data, _status_code, _headers = list_namespaced_virtual_machine_export_with_http_info(namespace, opts)
+    # @return [V1alpha1VirtualMachineBackupList]
+    def list_namespaced_virtual_machine_backup(namespace, opts = {})
+      data, _status_code, _headers = list_namespaced_virtual_machine_backup_with_http_info(namespace, opts)
       data
     end
 
-    # Get a list of VirtualMachineExport objects.
+    # Get a list of VirtualMachineBackup objects.
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -5516,17 +6027,17 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(V1beta1VirtualMachineExportList, Integer, Hash)>] V1beta1VirtualMachineExportList data, response status code and response headers
-    def list_namespaced_virtual_machine_export_with_http_info(namespace, opts = {})
+    # @return [Array<(V1alpha1VirtualMachineBackupList, Integer, Hash)>] V1alpha1VirtualMachineBackupList data, response status code and response headers
+    def list_namespaced_virtual_machine_backup_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.list_namespaced_virtual_machine_export ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.list_namespaced_virtual_machine_backup ...'
       end
       # verify the required parameter 'namespace' is set
       if @api_client.config.client_side_validation && namespace.nil?
-        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.list_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.list_namespaced_virtual_machine_backup"
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachineexports'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinebackups'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -5551,7 +6062,92 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineExportList'
+      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineBackupList'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.list_namespaced_virtual_machine_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#list_namespaced_virtual_machine_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get a list of VirtualMachineExport objects.
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [V1VirtualMachineExportList]
+    def list_namespaced_virtual_machine_export(namespace, opts = {})
+      data, _status_code, _headers = list_namespaced_virtual_machine_export_with_http_info(namespace, opts)
+      data
+    end
+
+    # Get a list of VirtualMachineExport objects.
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [Array<(V1VirtualMachineExportList, Integer, Hash)>] V1VirtualMachineExportList data, response status code and response headers
+    def list_namespaced_virtual_machine_export_with_http_info(namespace, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.list_namespaced_virtual_machine_export ...'
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.list_namespaced_virtual_machine_export"
+      end
+      # resource path
+      local_var_path = '/apis/export.kubevirt.io/v1/namespaces/{namespace}/virtualmachineexports'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'continue'] = opts[:'continue'] if !opts[:'continue'].nil?
+      query_params[:'fieldSelector'] = opts[:'field_selector'] if !opts[:'field_selector'].nil?
+      query_params[:'includeUninitialized'] = opts[:'include_uninitialized'] if !opts[:'include_uninitialized'].nil?
+      query_params[:'labelSelector'] = opts[:'label_selector'] if !opts[:'label_selector'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'resourceVersion'] = opts[:'resource_version'] if !opts[:'resource_version'].nil?
+      query_params[:'timeoutSeconds'] = opts[:'timeout_seconds'] if !opts[:'timeout_seconds'].nil?
+      query_params[:'watch'] = opts[:'watch'] if !opts[:'watch'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'application/yaml', 'application/json;stream=watch']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1VirtualMachineExportList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -6009,7 +6605,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [V1alpha1VirtualMachinePoolList]
+    # @return [V1beta1VirtualMachinePoolList]
     def list_namespaced_virtual_machine_pool(namespace, opts = {})
       data, _status_code, _headers = list_namespaced_virtual_machine_pool_with_http_info(namespace, opts)
       data
@@ -6026,7 +6622,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(V1alpha1VirtualMachinePoolList, Integer, Hash)>] V1alpha1VirtualMachinePoolList data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachinePoolList, Integer, Hash)>] V1beta1VirtualMachinePoolList data, response status code and response headers
     def list_namespaced_virtual_machine_pool_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.list_namespaced_virtual_machine_pool ...'
@@ -6036,7 +6632,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.list_namespaced_virtual_machine_pool"
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinepools'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachinepools'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -6061,7 +6657,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachinePoolList'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachinePoolList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -6423,7 +7019,7 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Get a list of VirtualMachineClone objects.
+    # Get a list of all VirtualMachineBackup objects.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -6433,13 +7029,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [V1alpha1VirtualMachineCloneList]
-    def list_virtual_machine_clone(opts = {})
-      data, _status_code, _headers = list_virtual_machine_clone_with_http_info(opts)
+    # @return [V1alpha1VirtualMachineBackupList]
+    def list_virtual_machine_backup_for_all_namespaces(opts = {})
+      data, _status_code, _headers = list_virtual_machine_backup_for_all_namespaces_with_http_info(opts)
       data
     end
 
-    # Get a list of VirtualMachineClone objects.
+    # Get a list of all VirtualMachineBackup objects.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -6449,13 +7045,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(V1alpha1VirtualMachineCloneList, Integer, Hash)>] V1alpha1VirtualMachineCloneList data, response status code and response headers
-    def list_virtual_machine_clone_with_http_info(opts = {})
+    # @return [Array<(V1alpha1VirtualMachineBackupList, Integer, Hash)>] V1alpha1VirtualMachineBackupList data, response status code and response headers
+    def list_virtual_machine_backup_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.list_virtual_machine_clone ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.list_virtual_machine_backup_for_all_namespaces ...'
       end
       # resource path
-      local_var_path = '/apis/clone.kubevirt.io/v1alpha1/virtualmachineclones'
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/virtualmachinebackups'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -6480,7 +7076,86 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineCloneList'
+      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineBackupList'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.list_virtual_machine_backup_for_all_namespaces",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#list_virtual_machine_backup_for_all_namespaces\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get a list of VirtualMachineClone objects.
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [V1beta1VirtualMachineCloneList]
+    def list_virtual_machine_clone(opts = {})
+      data, _status_code, _headers = list_virtual_machine_clone_with_http_info(opts)
+      data
+    end
+
+    # Get a list of VirtualMachineClone objects.
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [Array<(V1beta1VirtualMachineCloneList, Integer, Hash)>] V1beta1VirtualMachineCloneList data, response status code and response headers
+    def list_virtual_machine_clone_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.list_virtual_machine_clone ...'
+      end
+      # resource path
+      local_var_path = '/apis/clone.kubevirt.io/v1beta1/virtualmachineclones'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'continue'] = opts[:'continue'] if !opts[:'continue'].nil?
+      query_params[:'fieldSelector'] = opts[:'field_selector'] if !opts[:'field_selector'].nil?
+      query_params[:'includeUninitialized'] = opts[:'include_uninitialized'] if !opts[:'include_uninitialized'].nil?
+      query_params[:'labelSelector'] = opts[:'label_selector'] if !opts[:'label_selector'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'resourceVersion'] = opts[:'resource_version'] if !opts[:'resource_version'].nil?
+      query_params[:'timeoutSeconds'] = opts[:'timeout_seconds'] if !opts[:'timeout_seconds'].nil?
+      query_params[:'watch'] = opts[:'watch'] if !opts[:'watch'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'application/yaml', 'application/json;stream=watch']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineCloneList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -6670,7 +7345,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [V1beta1VirtualMachineExportList]
+    # @return [V1VirtualMachineExportList]
     def list_virtual_machine_export_for_all_namespaces(opts = {})
       data, _status_code, _headers = list_virtual_machine_export_for_all_namespaces_with_http_info(opts)
       data
@@ -6686,13 +7361,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(V1beta1VirtualMachineExportList, Integer, Hash)>] V1beta1VirtualMachineExportList data, response status code and response headers
+    # @return [Array<(V1VirtualMachineExportList, Integer, Hash)>] V1VirtualMachineExportList data, response status code and response headers
     def list_virtual_machine_export_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.list_virtual_machine_export_for_all_namespaces ...'
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/virtualmachineexports'
+      local_var_path = '/apis/export.kubevirt.io/v1/virtualmachineexports'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -6717,7 +7392,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineExportList'
+      return_type = opts[:debug_return_type] || 'V1VirtualMachineExportList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -7223,7 +7898,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [V1alpha1VirtualMachinePoolList]
+    # @return [V1beta1VirtualMachinePoolList]
     def list_virtual_machine_pool_for_all_namespaces(opts = {})
       data, _status_code, _headers = list_virtual_machine_pool_for_all_namespaces_with_http_info(opts)
       data
@@ -7239,13 +7914,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(V1alpha1VirtualMachinePoolList, Integer, Hash)>] V1alpha1VirtualMachinePoolList data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachinePoolList, Integer, Hash)>] V1beta1VirtualMachinePoolList data, response status code and response headers
     def list_virtual_machine_pool_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.list_virtual_machine_pool_for_all_namespaces ...'
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/virtualmachinepools'
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/virtualmachinepools'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -7270,7 +7945,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachinePoolList'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachinePoolList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -7836,41 +8511,41 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Patch a VirtualMachineExport object.
+    # Patch a VirtualMachineBackup object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param body [Object] 
     # @param [Hash] opts the optional parameters
-    # @return [V1beta1VirtualMachineExport]
-    def patch_namespaced_virtual_machine_export(name, namespace, body, opts = {})
-      data, _status_code, _headers = patch_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts)
+    # @return [V1alpha1VirtualMachineBackup]
+    def patch_namespaced_virtual_machine_backup(name, namespace, body, opts = {})
+      data, _status_code, _headers = patch_namespaced_virtual_machine_backup_with_http_info(name, namespace, body, opts)
       data
     end
 
-    # Patch a VirtualMachineExport object.
+    # Patch a VirtualMachineBackup object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param body [Object] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(V1beta1VirtualMachineExport, Integer, Hash)>] V1beta1VirtualMachineExport data, response status code and response headers
-    def patch_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts = {})
+    # @return [Array<(V1alpha1VirtualMachineBackup, Integer, Hash)>] V1alpha1VirtualMachineBackup data, response status code and response headers
+    def patch_namespaced_virtual_machine_backup_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.patch_namespaced_virtual_machine_export ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.patch_namespaced_virtual_machine_backup ...'
       end
       # verify the required parameter 'name' is set
       if @api_client.config.client_side_validation && name.nil?
-        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.patch_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.patch_namespaced_virtual_machine_backup"
       end
       # verify the required parameter 'namespace' is set
       if @api_client.config.client_side_validation && namespace.nil?
-        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.patch_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.patch_namespaced_virtual_machine_backup"
       end
       # verify the required parameter 'body' is set
       if @api_client.config.client_side_validation && body.nil?
-        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.patch_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.patch_namespaced_virtual_machine_backup"
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachineexports/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinebackups/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -7892,7 +8567,85 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineExport'
+      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineBackup'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.patch_namespaced_virtual_machine_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#patch_namespaced_virtual_machine_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Patch a VirtualMachineExport object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [Object] 
+    # @param [Hash] opts the optional parameters
+    # @return [V1VirtualMachineExport]
+    def patch_namespaced_virtual_machine_export(name, namespace, body, opts = {})
+      data, _status_code, _headers = patch_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Patch a VirtualMachineExport object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [Object] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(V1VirtualMachineExport, Integer, Hash)>] V1VirtualMachineExport data, response status code and response headers
+    def patch_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.patch_namespaced_virtual_machine_export ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.patch_namespaced_virtual_machine_export"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.patch_namespaced_virtual_machine_export"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.patch_namespaced_virtual_machine_export"
+      end
+      # resource path
+      local_var_path = '/apis/export.kubevirt.io/v1/namespaces/{namespace}/virtualmachineexports/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json-patch+json', 'application/merge-patch+json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1VirtualMachineExport'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -8309,7 +9062,7 @@ module Kubevirt
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param body [Object] 
     # @param [Hash] opts the optional parameters
-    # @return [V1alpha1VirtualMachinePool]
+    # @return [V1beta1VirtualMachinePool]
     def patch_namespaced_virtual_machine_pool(name, namespace, body, opts = {})
       data, _status_code, _headers = patch_namespaced_virtual_machine_pool_with_http_info(name, namespace, body, opts)
       data
@@ -8320,7 +9073,7 @@ module Kubevirt
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param body [Object] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(V1alpha1VirtualMachinePool, Integer, Hash)>] V1alpha1VirtualMachinePool data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachinePool, Integer, Hash)>] V1beta1VirtualMachinePool data, response status code and response headers
     def patch_namespaced_virtual_machine_pool_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.patch_namespaced_virtual_machine_pool ...'
@@ -8338,7 +9091,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.patch_namespaced_virtual_machine_pool"
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinepools/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachinepools/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -8360,7 +9113,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachinePool'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachinePool'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -8698,7 +9451,7 @@ module Kubevirt
     # @param name [String] Name of the resource
     # @param body [Object] 
     # @param [Hash] opts the optional parameters
-    # @return [V1alpha1VirtualMachineClone]
+    # @return [V1beta1VirtualMachineClone]
     def patch_virtual_machine_clone(name, body, opts = {})
       data, _status_code, _headers = patch_virtual_machine_clone_with_http_info(name, body, opts)
       data
@@ -8708,7 +9461,7 @@ module Kubevirt
     # @param name [String] Name of the resource
     # @param body [Object] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(V1alpha1VirtualMachineClone, Integer, Hash)>] V1alpha1VirtualMachineClone data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachineClone, Integer, Hash)>] V1beta1VirtualMachineClone data, response status code and response headers
     def patch_virtual_machine_clone_with_http_info(name, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.patch_virtual_machine_clone ...'
@@ -8722,7 +9475,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.patch_virtual_machine_clone"
       end
       # resource path
-      local_var_path = '/apis/clone.kubevirt.io/v1alpha1/virtualmachineclones/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s))
+      local_var_path = '/apis/clone.kubevirt.io/v1beta1/virtualmachineclones/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -8744,7 +9497,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineClone'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineClone'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -9123,39 +9876,39 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Get a VirtualMachineExport object.
+    # Get a VirtualMachineBackup object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
     # @option opts [Boolean] :exact Should the export be exact. Exact export maintains cluster-specific fields like &#39;Namespace&#39;.
     # @option opts [Boolean] :export Should this value be exported. Export strips fields that a user can not specify.
-    # @return [V1beta1VirtualMachineExport]
-    def read_namespaced_virtual_machine_export(name, namespace, opts = {})
-      data, _status_code, _headers = read_namespaced_virtual_machine_export_with_http_info(name, namespace, opts)
+    # @return [V1alpha1VirtualMachineBackup]
+    def read_namespaced_virtual_machine_backup(name, namespace, opts = {})
+      data, _status_code, _headers = read_namespaced_virtual_machine_backup_with_http_info(name, namespace, opts)
       data
     end
 
-    # Get a VirtualMachineExport object.
+    # Get a VirtualMachineBackup object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
     # @option opts [Boolean] :exact Should the export be exact. Exact export maintains cluster-specific fields like &#39;Namespace&#39;.
     # @option opts [Boolean] :export Should this value be exported. Export strips fields that a user can not specify.
-    # @return [Array<(V1beta1VirtualMachineExport, Integer, Hash)>] V1beta1VirtualMachineExport data, response status code and response headers
-    def read_namespaced_virtual_machine_export_with_http_info(name, namespace, opts = {})
+    # @return [Array<(V1alpha1VirtualMachineBackup, Integer, Hash)>] V1alpha1VirtualMachineBackup data, response status code and response headers
+    def read_namespaced_virtual_machine_backup_with_http_info(name, namespace, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.read_namespaced_virtual_machine_export ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.read_namespaced_virtual_machine_backup ...'
       end
       # verify the required parameter 'name' is set
       if @api_client.config.client_side_validation && name.nil?
-        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.read_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.read_namespaced_virtual_machine_backup"
       end
       # verify the required parameter 'namespace' is set
       if @api_client.config.client_side_validation && namespace.nil?
-        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.read_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.read_namespaced_virtual_machine_backup"
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachineexports/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinebackups/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -9174,7 +9927,80 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineExport'
+      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineBackup'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.read_namespaced_virtual_machine_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#read_namespaced_virtual_machine_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get a VirtualMachineExport object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @option opts [Boolean] :exact Should the export be exact. Exact export maintains cluster-specific fields like &#39;Namespace&#39;.
+    # @option opts [Boolean] :export Should this value be exported. Export strips fields that a user can not specify.
+    # @return [V1VirtualMachineExport]
+    def read_namespaced_virtual_machine_export(name, namespace, opts = {})
+      data, _status_code, _headers = read_namespaced_virtual_machine_export_with_http_info(name, namespace, opts)
+      data
+    end
+
+    # Get a VirtualMachineExport object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @option opts [Boolean] :exact Should the export be exact. Exact export maintains cluster-specific fields like &#39;Namespace&#39;.
+    # @option opts [Boolean] :export Should this value be exported. Export strips fields that a user can not specify.
+    # @return [Array<(V1VirtualMachineExport, Integer, Hash)>] V1VirtualMachineExport data, response status code and response headers
+    def read_namespaced_virtual_machine_export_with_http_info(name, namespace, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.read_namespaced_virtual_machine_export ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.read_namespaced_virtual_machine_export"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.read_namespaced_virtual_machine_export"
+      end
+      # resource path
+      local_var_path = '/apis/export.kubevirt.io/v1/namespaces/{namespace}/virtualmachineexports/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'exact'] = opts[:'exact'] if !opts[:'exact'].nil?
+      query_params[:'export'] = opts[:'export'] if !opts[:'export'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'application/yaml', 'application/json;stream=watch']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1VirtualMachineExport'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -9567,7 +10393,7 @@ module Kubevirt
     # @param [Hash] opts the optional parameters
     # @option opts [Boolean] :exact Should the export be exact. Exact export maintains cluster-specific fields like &#39;Namespace&#39;.
     # @option opts [Boolean] :export Should this value be exported. Export strips fields that a user can not specify.
-    # @return [V1alpha1VirtualMachinePool]
+    # @return [V1beta1VirtualMachinePool]
     def read_namespaced_virtual_machine_pool(name, namespace, opts = {})
       data, _status_code, _headers = read_namespaced_virtual_machine_pool_with_http_info(name, namespace, opts)
       data
@@ -9579,7 +10405,7 @@ module Kubevirt
     # @param [Hash] opts the optional parameters
     # @option opts [Boolean] :exact Should the export be exact. Exact export maintains cluster-specific fields like &#39;Namespace&#39;.
     # @option opts [Boolean] :export Should this value be exported. Export strips fields that a user can not specify.
-    # @return [Array<(V1alpha1VirtualMachinePool, Integer, Hash)>] V1alpha1VirtualMachinePool data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachinePool, Integer, Hash)>] V1beta1VirtualMachinePool data, response status code and response headers
     def read_namespaced_virtual_machine_pool_with_http_info(name, namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.read_namespaced_virtual_machine_pool ...'
@@ -9593,7 +10419,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.read_namespaced_virtual_machine_pool"
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinepools/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachinepools/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -9612,7 +10438,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachinePool'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachinePool'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -9931,7 +10757,7 @@ module Kubevirt
     # @param [Hash] opts the optional parameters
     # @option opts [Boolean] :exact Should the export be exact. Exact export maintains cluster-specific fields like &#39;Namespace&#39;.
     # @option opts [Boolean] :export Should this value be exported. Export strips fields that a user can not specify.
-    # @return [V1alpha1VirtualMachineClone]
+    # @return [V1beta1VirtualMachineClone]
     def read_virtual_machine_clone(name, opts = {})
       data, _status_code, _headers = read_virtual_machine_clone_with_http_info(name, opts)
       data
@@ -9942,7 +10768,7 @@ module Kubevirt
     # @param [Hash] opts the optional parameters
     # @option opts [Boolean] :exact Should the export be exact. Exact export maintains cluster-specific fields like &#39;Namespace&#39;.
     # @option opts [Boolean] :export Should this value be exported. Export strips fields that a user can not specify.
-    # @return [Array<(V1alpha1VirtualMachineClone, Integer, Hash)>] V1alpha1VirtualMachineClone data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachineClone, Integer, Hash)>] V1beta1VirtualMachineClone data, response status code and response headers
     def read_virtual_machine_clone_with_http_info(name, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.read_virtual_machine_clone ...'
@@ -9952,7 +10778,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.read_virtual_machine_clone"
       end
       # resource path
-      local_var_path = '/apis/clone.kubevirt.io/v1alpha1/virtualmachineclones/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s))
+      local_var_path = '/apis/clone.kubevirt.io/v1beta1/virtualmachineclones/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -9971,7 +10797,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineClone'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineClone'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -10355,41 +11181,41 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Update a VirtualMachineExport object.
+    # Update a VirtualMachineBackup object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [V1beta1VirtualMachineExport] 
+    # @param body [V1alpha1VirtualMachineBackup] 
     # @param [Hash] opts the optional parameters
-    # @return [V1beta1VirtualMachineExport]
-    def replace_namespaced_virtual_machine_export(name, namespace, body, opts = {})
-      data, _status_code, _headers = replace_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts)
+    # @return [V1alpha1VirtualMachineBackup]
+    def replace_namespaced_virtual_machine_backup(name, namespace, body, opts = {})
+      data, _status_code, _headers = replace_namespaced_virtual_machine_backup_with_http_info(name, namespace, body, opts)
       data
     end
 
-    # Update a VirtualMachineExport object.
+    # Update a VirtualMachineBackup object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [V1beta1VirtualMachineExport] 
+    # @param body [V1alpha1VirtualMachineBackup] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(V1beta1VirtualMachineExport, Integer, Hash)>] V1beta1VirtualMachineExport data, response status code and response headers
-    def replace_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts = {})
+    # @return [Array<(V1alpha1VirtualMachineBackup, Integer, Hash)>] V1alpha1VirtualMachineBackup data, response status code and response headers
+    def replace_namespaced_virtual_machine_backup_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.replace_namespaced_virtual_machine_export ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.replace_namespaced_virtual_machine_backup ...'
       end
       # verify the required parameter 'name' is set
       if @api_client.config.client_side_validation && name.nil?
-        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.replace_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.replace_namespaced_virtual_machine_backup"
       end
       # verify the required parameter 'namespace' is set
       if @api_client.config.client_side_validation && namespace.nil?
-        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.replace_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.replace_namespaced_virtual_machine_backup"
       end
       # verify the required parameter 'body' is set
       if @api_client.config.client_side_validation && body.nil?
-        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.replace_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.replace_namespaced_virtual_machine_backup"
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachineexports/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinebackups/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -10411,7 +11237,85 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineExport'
+      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineBackup'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.replace_namespaced_virtual_machine_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#replace_namespaced_virtual_machine_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Update a VirtualMachineExport object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1VirtualMachineExport] 
+    # @param [Hash] opts the optional parameters
+    # @return [V1VirtualMachineExport]
+    def replace_namespaced_virtual_machine_export(name, namespace, body, opts = {})
+      data, _status_code, _headers = replace_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Update a VirtualMachineExport object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1VirtualMachineExport] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(V1VirtualMachineExport, Integer, Hash)>] V1VirtualMachineExport data, response status code and response headers
+    def replace_namespaced_virtual_machine_export_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.replace_namespaced_virtual_machine_export ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.replace_namespaced_virtual_machine_export"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.replace_namespaced_virtual_machine_export"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.replace_namespaced_virtual_machine_export"
+      end
+      # resource path
+      local_var_path = '/apis/export.kubevirt.io/v1/namespaces/{namespace}/virtualmachineexports/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'application/yaml']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json', 'application/yaml'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1VirtualMachineExport'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -10826,9 +11730,9 @@ module Kubevirt
     # Update a VirtualMachinePool object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [V1alpha1VirtualMachinePool] 
+    # @param body [V1beta1VirtualMachinePool] 
     # @param [Hash] opts the optional parameters
-    # @return [V1alpha1VirtualMachinePool]
+    # @return [V1beta1VirtualMachinePool]
     def replace_namespaced_virtual_machine_pool(name, namespace, body, opts = {})
       data, _status_code, _headers = replace_namespaced_virtual_machine_pool_with_http_info(name, namespace, body, opts)
       data
@@ -10837,9 +11741,9 @@ module Kubevirt
     # Update a VirtualMachinePool object.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
-    # @param body [V1alpha1VirtualMachinePool] 
+    # @param body [V1beta1VirtualMachinePool] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(V1alpha1VirtualMachinePool, Integer, Hash)>] V1alpha1VirtualMachinePool data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachinePool, Integer, Hash)>] V1beta1VirtualMachinePool data, response status code and response headers
     def replace_namespaced_virtual_machine_pool_with_http_info(name, namespace, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.replace_namespaced_virtual_machine_pool ...'
@@ -10857,7 +11761,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.replace_namespaced_virtual_machine_pool"
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/namespaces/{namespace}/virtualmachinepools/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/namespaces/{namespace}/virtualmachinepools/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -10879,7 +11783,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachinePool'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachinePool'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -11215,9 +12119,9 @@ module Kubevirt
 
     # Update a VirtualMachineClone object.
     # @param name [String] Name of the resource
-    # @param body [V1alpha1VirtualMachineClone] 
+    # @param body [V1beta1VirtualMachineClone] 
     # @param [Hash] opts the optional parameters
-    # @return [V1alpha1VirtualMachineClone]
+    # @return [V1beta1VirtualMachineClone]
     def replace_virtual_machine_clone(name, body, opts = {})
       data, _status_code, _headers = replace_virtual_machine_clone_with_http_info(name, body, opts)
       data
@@ -11225,9 +12129,9 @@ module Kubevirt
 
     # Update a VirtualMachineClone object.
     # @param name [String] Name of the resource
-    # @param body [V1alpha1VirtualMachineClone] 
+    # @param body [V1beta1VirtualMachineClone] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(V1alpha1VirtualMachineClone, Integer, Hash)>] V1alpha1VirtualMachineClone data, response status code and response headers
+    # @return [Array<(V1beta1VirtualMachineClone, Integer, Hash)>] V1beta1VirtualMachineClone data, response status code and response headers
     def replace_virtual_machine_clone_with_http_info(name, body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.replace_virtual_machine_clone ...'
@@ -11241,7 +12145,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.replace_virtual_machine_clone"
       end
       # resource path
-      local_var_path = '/apis/clone.kubevirt.io/v1alpha1/virtualmachineclones/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s))
+      local_var_path = '/apis/clone.kubevirt.io/v1beta1/virtualmachineclones/{name}'.sub('{' + 'name' + '}', CGI.escape(name.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -11263,7 +12167,7 @@ module Kubevirt
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'V1alpha1VirtualMachineClone'
+      return_type = opts[:debug_return_type] || 'V1beta1VirtualMachineClone'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -11425,6 +12329,79 @@ module Kubevirt
       data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: DefaultApi#replace_virtual_machine_cluster_preference\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Initiate a VirtualMachineInstance backup.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1alpha1BackupOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1_backup(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1_backup_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Initiate a VirtualMachineInstance backup.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1alpha1BackupOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1_backup_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1_backup ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1_backup"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1_backup"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1_backup"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/backup'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -11752,7 +12729,7 @@ module Kubevirt
 
     # Get a KubeVirt API Group
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIGroup]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIGroup]
     def v1_get_sub_api_group(opts = {})
       data, _status_code, _headers = v1_get_sub_api_group_with_http_info(opts)
       data
@@ -11760,7 +12737,7 @@ module Kubevirt
 
     # Get a KubeVirt API Group
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIGroup, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIGroup data, response status code and response headers
     def v1_get_sub_api_group_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.v1_get_sub_api_group ...'
@@ -11783,7 +12760,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIGroup'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIGroup'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -12144,6 +13121,79 @@ module Kubevirt
       return data, status_code, headers
     end
 
+    # Redefine a checkpoint for a VirtualMachineInstance.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1alpha1BackupCheckpoint] 
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1_redefine_checkpoint(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1_redefine_checkpoint_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Redefine a checkpoint for a VirtualMachineInstance.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1alpha1BackupCheckpoint] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1_redefine_checkpoint_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1_redefine_checkpoint ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1_redefine_checkpoint"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1_redefine_checkpoint"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1_redefine_checkpoint"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/redefine-checkpoint'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1_redefine_checkpoint",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1_redefine_checkpoint\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Remove memory dump association.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
@@ -12207,6 +13257,73 @@ module Kubevirt
       data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: DefaultApi#v1_remove_memory_dump\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Reset a VirtualMachineInstance object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1_reset(name, namespace, opts = {})
+      data, _status_code, _headers = v1_reset_with_http_info(name, namespace, opts)
+      data
+    end
+
+    # Reset a VirtualMachineInstance object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1_reset_with_http_info(name, namespace, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1_reset ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1_reset"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1_reset"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/reset'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1_reset",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1_reset\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -13031,6 +14148,7 @@ module Kubevirt
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
+    # @option opts [Boolean] :preserve_session Connect only if ongoing session is not disturbed.
     # @return [nil]
     def v1_vnc(name, namespace, opts = {})
       v1_vnc_with_http_info(name, namespace, opts)
@@ -13041,6 +14159,7 @@ module Kubevirt
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
+    # @option opts [Boolean] :preserve_session Connect only if ongoing session is not disturbed.
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
     def v1_vnc_with_http_info(name, namespace, opts = {})
       if @api_client.config.debugging
@@ -13059,6 +14178,7 @@ module Kubevirt
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'preserveSession'] = opts[:'preserve_session'] if !opts[:'preserve_session'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -13231,6 +14351,79 @@ module Kubevirt
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: DefaultApi#v1_vsock\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Initiate a VirtualMachineInstance backup.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1alpha1BackupOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1alpha3_backup(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1alpha3_backup_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Initiate a VirtualMachineInstance backup.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1alpha1BackupOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1alpha3_backup_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1alpha3_backup ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1alpha3_backup"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1alpha3_backup"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1alpha3_backup"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1alpha3/namespaces/{namespace}/virtualmachineinstances/{name}/backup'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1alpha3_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1alpha3_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -13895,6 +15088,79 @@ module Kubevirt
       return data, status_code, headers
     end
 
+    # Redefine a checkpoint for a VirtualMachineInstance.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1alpha1BackupCheckpoint] 
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1alpha3_redefine_checkpoint(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1alpha3_redefine_checkpoint_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Redefine a checkpoint for a VirtualMachineInstance.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1alpha1BackupCheckpoint] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1alpha3_redefine_checkpoint_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1alpha3_redefine_checkpoint ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1alpha3_redefine_checkpoint"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1alpha3_redefine_checkpoint"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1alpha3_redefine_checkpoint"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1alpha3/namespaces/{namespace}/virtualmachineinstances/{name}/redefine-checkpoint'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1alpha3_redefine_checkpoint",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1alpha3_redefine_checkpoint\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Remove memory dump association.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
@@ -13958,6 +15224,73 @@ module Kubevirt
       data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: DefaultApi#v1alpha3_remove_memory_dump\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Reset a VirtualMachineInstance object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1alpha3_reset(name, namespace, opts = {})
+      data, _status_code, _headers = v1alpha3_reset_with_http_info(name, namespace, opts)
+      data
+    end
+
+    # Reset a VirtualMachineInstance object.
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1alpha3_reset_with_http_info(name, namespace, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1alpha3_reset ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1alpha3_reset"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1alpha3_reset"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1alpha3/namespaces/{namespace}/virtualmachineinstances/{name}/reset'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1alpha3_reset",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1alpha3_reset\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -14782,6 +16115,7 @@ module Kubevirt
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
+    # @option opts [Boolean] :preserve_session Connect only if ongoing session is not disturbed.
     # @return [nil]
     def v1alpha3_vnc(name, namespace, opts = {})
       v1alpha3_vnc_with_http_info(name, namespace, opts)
@@ -14792,6 +16126,7 @@ module Kubevirt
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
+    # @option opts [Boolean] :preserve_session Connect only if ongoing session is not disturbed.
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
     def v1alpha3_vnc_with_http_info(name, namespace, opts = {})
       if @api_client.config.debugging
@@ -14810,6 +16145,7 @@ module Kubevirt
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'preserveSession'] = opts[:'preserve_session'] if !opts[:'preserve_session'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -15039,7 +16375,7 @@ module Kubevirt
 
     # Get a KubeVirt API resources
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIResourceList]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
     def v1alpha3get_api_sub_resources(opts = {})
       data, _status_code, _headers = v1alpha3get_api_sub_resources_with_http_info(opts)
       data
@@ -15047,7 +16383,7 @@ module Kubevirt
 
     # Get a KubeVirt API resources
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
     def v1alpha3get_api_sub_resources_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.v1alpha3get_api_sub_resources ...'
@@ -15070,7 +16406,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIResourceList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -15332,6 +16668,79 @@ module Kubevirt
       return data, status_code, headers
     end
 
+    # Cancel evacuation Virtual Machine
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1EvacuateCancelOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1alpha3vm_evacuatecancel(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1alpha3vm_evacuatecancel_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Cancel evacuation Virtual Machine
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1EvacuateCancelOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1alpha3vm_evacuatecancel_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1alpha3vm_evacuatecancel ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1alpha3vm_evacuatecancel"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1alpha3vm_evacuatecancel"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1alpha3vm_evacuatecancel"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1alpha3/namespaces/{namespace}/virtualmachines/{name}/evacuate/cancel'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1alpha3vm_evacuatecancel",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1alpha3vm_evacuatecancel\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Get VirtualMachine object with expanded instancetype and preference.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
@@ -15395,6 +16804,84 @@ module Kubevirt
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: DefaultApi#v1alpha3vm_expand_spec\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get graph of objects related to a Virtual Machine
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1ObjectGraphOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [V1ObjectGraphNode]
+    def v1alpha3vm_objectgraph(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1alpha3vm_objectgraph_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Get graph of objects related to a Virtual Machine
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1ObjectGraphOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(V1ObjectGraphNode, Integer, Hash)>] V1ObjectGraphNode data, response status code and response headers
+    def v1alpha3vm_objectgraph_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1alpha3vm_objectgraph ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1alpha3vm_objectgraph"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1alpha3vm_objectgraph"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1alpha3vm_objectgraph"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1alpha3/namespaces/{namespace}/virtualmachines/{name}/objectgraph'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1ObjectGraphNode'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1alpha3vm_objectgraph",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1alpha3vm_objectgraph\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -15693,6 +17180,157 @@ module Kubevirt
       return data, status_code, headers
     end
 
+    # Cancel evacuation Virtual Machine Instance
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1EvacuateCancelOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1alpha3vmi_evacuatecancel(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1alpha3vmi_evacuatecancel_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Cancel evacuation Virtual Machine Instance
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1EvacuateCancelOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1alpha3vmi_evacuatecancel_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1alpha3vmi_evacuatecancel ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1alpha3vmi_evacuatecancel"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1alpha3vmi_evacuatecancel"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1alpha3vmi_evacuatecancel"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1alpha3/namespaces/{namespace}/virtualmachineinstances/{name}/evacuate/cancel'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1alpha3vmi_evacuatecancel",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1alpha3vmi_evacuatecancel\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get graph of objects related to a Virtual Machine Instance
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1ObjectGraphOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [V1ObjectGraphNode]
+    def v1alpha3vmi_objectgraph(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1alpha3vmi_objectgraph_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Get graph of objects related to a Virtual Machine Instance
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1ObjectGraphOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(V1ObjectGraphNode, Integer, Hash)>] V1ObjectGraphNode data, response status code and response headers
+    def v1alpha3vmi_objectgraph_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1alpha3vmi_objectgraph ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1alpha3vmi_objectgraph"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1alpha3vmi_objectgraph"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1alpha3vmi_objectgraph"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1alpha3/namespaces/{namespace}/virtualmachineinstances/{name}/objectgraph'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1ObjectGraphNode'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1alpha3vmi_objectgraph",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1alpha3vmi_objectgraph\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Open a websocket connection forwarding traffic to the specified VirtualMachineInstance and port.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
@@ -15967,7 +17605,7 @@ module Kubevirt
 
     # Get a KubeVirt API resources
     # @param [Hash] opts the optional parameters
-    # @return [K8sIoApimachineryPkgApisMetaV1APIResourceList]
+    # @return [IoK8sApimachineryPkgApisMetaV1APIResourceList]
     def v1get_api_sub_resources(opts = {})
       data, _status_code, _headers = v1get_api_sub_resources_with_http_info(opts)
       data
@@ -15975,7 +17613,7 @@ module Kubevirt
 
     # Get a KubeVirt API resources
     # @param [Hash] opts the optional parameters
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1APIResourceList, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1APIResourceList data, response status code and response headers
     def v1get_api_sub_resources_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.v1get_api_sub_resources ...'
@@ -15998,7 +17636,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1APIResourceList'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1APIResourceList'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -16260,6 +17898,79 @@ module Kubevirt
       return data, status_code, headers
     end
 
+    # Cancel evacuation Virtual Machine
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1EvacuateCancelOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1vm_evacuatecancel(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1vm_evacuatecancel_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Cancel evacuation Virtual Machine
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1EvacuateCancelOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1vm_evacuatecancel_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1vm_evacuatecancel ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1vm_evacuatecancel"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1vm_evacuatecancel"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1vm_evacuatecancel"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/evacuate/cancel'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1vm_evacuatecancel",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1vm_evacuatecancel\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Get VirtualMachine object with expanded instancetype and preference.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
@@ -16323,6 +18034,84 @@ module Kubevirt
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: DefaultApi#v1vm_expand_spec\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get graph of objects related to a Virtual Machine
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1ObjectGraphOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [V1ObjectGraphNode]
+    def v1vm_objectgraph(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1vm_objectgraph_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Get graph of objects related to a Virtual Machine
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1ObjectGraphOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(V1ObjectGraphNode, Integer, Hash)>] V1ObjectGraphNode data, response status code and response headers
+    def v1vm_objectgraph_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1vm_objectgraph ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1vm_objectgraph"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1vm_objectgraph"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1vm_objectgraph"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/objectgraph'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1ObjectGraphNode'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1vm_objectgraph",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1vm_objectgraph\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -16621,6 +18410,157 @@ module Kubevirt
       return data, status_code, headers
     end
 
+    # Cancel evacuation Virtual Machine Instance
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1EvacuateCancelOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def v1vmi_evacuatecancel(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1vmi_evacuatecancel_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Cancel evacuation Virtual Machine Instance
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1EvacuateCancelOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
+    def v1vmi_evacuatecancel_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1vmi_evacuatecancel ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1vmi_evacuatecancel"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1vmi_evacuatecancel"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1vmi_evacuatecancel"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/evacuate/cancel'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['*/*']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'String'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1vmi_evacuatecancel",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1vmi_evacuatecancel\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get graph of objects related to a Virtual Machine Instance
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1ObjectGraphOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [V1ObjectGraphNode]
+    def v1vmi_objectgraph(name, namespace, body, opts = {})
+      data, _status_code, _headers = v1vmi_objectgraph_with_http_info(name, namespace, body, opts)
+      data
+    end
+
+    # Get graph of objects related to a Virtual Machine Instance
+    # @param name [String] Name of the resource
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param body [V1ObjectGraphOptions] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(V1ObjectGraphNode, Integer, Hash)>] V1ObjectGraphNode data, response status code and response headers
+    def v1vmi_objectgraph_with_http_info(name, namespace, body, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.v1vmi_objectgraph ...'
+      end
+      # verify the required parameter 'name' is set
+      if @api_client.config.client_side_validation && name.nil?
+        fail ArgumentError, "Missing the required parameter 'name' when calling DefaultApi.v1vmi_objectgraph"
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.v1vmi_objectgraph"
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling DefaultApi.v1vmi_objectgraph"
+      end
+      # resource path
+      local_var_path = '/apis/subresources.kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/objectgraph'.sub('{' + 'name' + '}', CGI.escape(name.to_s)).sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'V1ObjectGraphNode'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.v1vmi_objectgraph",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#v1vmi_objectgraph\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Open a websocket connection forwarding traffic to the specified VirtualMachineInstance and port.
     # @param name [String] Name of the resource
     # @param namespace [String] Object name and auth scope, such as for teams and projects
@@ -16852,7 +18792,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_kube_virt_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_kube_virt_list_for_all_namespaces_with_http_info(opts)
       data
@@ -16868,7 +18808,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_kube_virt_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_kube_virt_list_for_all_namespaces ...'
@@ -16899,7 +18839,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -16931,7 +18871,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_migration_policy_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_migration_policy_list_for_all_namespaces_with_http_info(opts)
       data
@@ -16947,7 +18887,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_migration_policy_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_migration_policy_list_for_all_namespaces ...'
@@ -16978,7 +18918,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17011,7 +18951,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_kube_virt(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_kube_virt_with_http_info(namespace, opts)
       data
@@ -17028,7 +18968,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_kube_virt_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_kube_virt ...'
@@ -17063,7 +19003,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17096,7 +19036,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_with_http_info(namespace, opts)
       data
@@ -17113,7 +19053,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine ...'
@@ -17148,7 +19088,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17170,7 +19110,7 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Watch a VirtualMachineExport object.
+    # Watch a VirtualMachineBackup object.
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -17181,13 +19121,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
-    def watch_namespaced_virtual_machine_export(namespace, opts = {})
-      data, _status_code, _headers = watch_namespaced_virtual_machine_export_with_http_info(namespace, opts)
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
+    def watch_namespaced_virtual_machine_backup(namespace, opts = {})
+      data, _status_code, _headers = watch_namespaced_virtual_machine_backup_with_http_info(namespace, opts)
       data
     end
 
-    # Watch a VirtualMachineExport object.
+    # Watch a VirtualMachineBackup object.
     # @param namespace [String] Object name and auth scope, such as for teams and projects
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -17198,17 +19138,17 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
-    def watch_namespaced_virtual_machine_export_with_http_info(namespace, opts = {})
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    def watch_namespaced_virtual_machine_backup_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_export ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_backup ...'
       end
       # verify the required parameter 'namespace' is set
       if @api_client.config.client_side_validation && namespace.nil?
-        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.watch_namespaced_virtual_machine_export"
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.watch_namespaced_virtual_machine_backup"
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/watch/namespaces/{namespace}/virtualmachineexports'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/watch/namespaces/{namespace}/virtualmachinebackups'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -17233,7 +19173,92 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.watch_namespaced_virtual_machine_backup",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#watch_namespaced_virtual_machine_backup\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Watch a VirtualMachineExport object.
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
+    def watch_namespaced_virtual_machine_export(namespace, opts = {})
+      data, _status_code, _headers = watch_namespaced_virtual_machine_export_with_http_info(namespace, opts)
+      data
+    end
+
+    # Watch a VirtualMachineExport object.
+    # @param namespace [String] Object name and auth scope, such as for teams and projects
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    def watch_namespaced_virtual_machine_export_with_http_info(namespace, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_export ...'
+      end
+      # verify the required parameter 'namespace' is set
+      if @api_client.config.client_side_validation && namespace.nil?
+        fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.watch_namespaced_virtual_machine_export"
+      end
+      # resource path
+      local_var_path = '/apis/export.kubevirt.io/v1/watch/namespaces/{namespace}/virtualmachineexports'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'continue'] = opts[:'continue'] if !opts[:'continue'].nil?
+      query_params[:'fieldSelector'] = opts[:'field_selector'] if !opts[:'field_selector'].nil?
+      query_params[:'includeUninitialized'] = opts[:'include_uninitialized'] if !opts[:'include_uninitialized'].nil?
+      query_params[:'labelSelector'] = opts[:'label_selector'] if !opts[:'label_selector'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'resourceVersion'] = opts[:'resource_version'] if !opts[:'resource_version'].nil?
+      query_params[:'timeoutSeconds'] = opts[:'timeout_seconds'] if !opts[:'timeout_seconds'].nil?
+      query_params[:'watch'] = opts[:'watch'] if !opts[:'watch'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17266,7 +19291,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_instance(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_instance_with_http_info(namespace, opts)
       data
@@ -17283,7 +19308,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_instance_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_instance ...'
@@ -17318,7 +19343,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17351,7 +19376,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_instance_migration(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_instance_migration_with_http_info(namespace, opts)
       data
@@ -17368,7 +19393,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_instance_migration_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_instance_migration ...'
@@ -17403,7 +19428,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17436,7 +19461,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_instance_preset(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_instance_preset_with_http_info(namespace, opts)
       data
@@ -17453,7 +19478,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_instance_preset_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_instance_preset ...'
@@ -17488,7 +19513,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17521,7 +19546,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_instance_replica_set(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_instance_replica_set_with_http_info(namespace, opts)
       data
@@ -17538,7 +19563,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_instance_replica_set_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_instance_replica_set ...'
@@ -17573,7 +19598,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17606,7 +19631,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_instancetype(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_instancetype_with_http_info(namespace, opts)
       data
@@ -17623,7 +19648,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_instancetype_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_instancetype ...'
@@ -17658,7 +19683,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17691,7 +19716,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_pool(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_pool_with_http_info(namespace, opts)
       data
@@ -17708,7 +19733,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_pool_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_pool ...'
@@ -17718,7 +19743,7 @@ module Kubevirt
         fail ArgumentError, "Missing the required parameter 'namespace' when calling DefaultApi.watch_namespaced_virtual_machine_pool"
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/watch/namespaces/{namespace}/virtualmachinepools'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/watch/namespaces/{namespace}/virtualmachinepools'.sub('{' + 'namespace' + '}', CGI.escape(namespace.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -17743,7 +19768,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17776,7 +19801,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_preference(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_preference_with_http_info(namespace, opts)
       data
@@ -17793,7 +19818,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_preference_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_preference ...'
@@ -17828,7 +19853,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17861,7 +19886,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_restore(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_restore_with_http_info(namespace, opts)
       data
@@ -17878,7 +19903,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_restore_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_restore ...'
@@ -17913,7 +19938,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -17946,7 +19971,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_snapshot(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_snapshot_with_http_info(namespace, opts)
       data
@@ -17963,7 +19988,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_snapshot_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_snapshot ...'
@@ -17998,7 +20023,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18031,7 +20056,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_namespaced_virtual_machine_snapshot_content(namespace, opts = {})
       data, _status_code, _headers = watch_namespaced_virtual_machine_snapshot_content_with_http_info(namespace, opts)
       data
@@ -18048,7 +20073,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_namespaced_virtual_machine_snapshot_content_with_http_info(namespace, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_namespaced_virtual_machine_snapshot_content ...'
@@ -18083,7 +20108,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18105,7 +20130,7 @@ module Kubevirt
       return data, status_code, headers
     end
 
-    # Watch a VirtualMachineCloneList object.
+    # Watch a VirtualMachineBackupList object.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -18115,13 +20140,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
-    def watch_virtual_machine_clone_list_for_all_namespaces(opts = {})
-      data, _status_code, _headers = watch_virtual_machine_clone_list_for_all_namespaces_with_http_info(opts)
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
+    def watch_virtual_machine_backup_list_for_all_namespaces(opts = {})
+      data, _status_code, _headers = watch_virtual_machine_backup_list_for_all_namespaces_with_http_info(opts)
       data
     end
 
-    # Watch a VirtualMachineCloneList object.
+    # Watch a VirtualMachineBackupList object.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -18131,13 +20156,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
-    def watch_virtual_machine_clone_list_for_all_namespaces_with_http_info(opts = {})
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    def watch_virtual_machine_backup_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_clone_list_for_all_namespaces ...'
+        @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_backup_list_for_all_namespaces ...'
       end
       # resource path
-      local_var_path = '/apis/clone.kubevirt.io/v1alpha1/watch/virtualmachineclones'
+      local_var_path = '/apis/backup.kubevirt.io/v1alpha1/watch/virtualmachinebackups'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -18162,7 +20187,86 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"DefaultApi.watch_virtual_machine_backup_list_for_all_namespaces",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: DefaultApi#watch_virtual_machine_backup_list_for_all_namespaces\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Watch a VirtualMachineCloneList object.
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
+    def watch_virtual_machine_clone_list_for_all_namespaces(opts = {})
+      data, _status_code, _headers = watch_virtual_machine_clone_list_for_all_namespaces_with_http_info(opts)
+      data
+    end
+
+    # Watch a VirtualMachineCloneList object.
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    # @option opts [String] :field_selector A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    # @option opts [Boolean] :include_uninitialized If true, partially initialized resources are included in the response.
+    # @option opts [String] :label_selector A selector to restrict the list of returned objects by their labels. Defaults to everything
+    # @option opts [Integer] :limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
+    # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
+    # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    def watch_virtual_machine_clone_list_for_all_namespaces_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_clone_list_for_all_namespaces ...'
+      end
+      # resource path
+      local_var_path = '/apis/clone.kubevirt.io/v1beta1/watch/virtualmachineclones'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'continue'] = opts[:'continue'] if !opts[:'continue'].nil?
+      query_params[:'fieldSelector'] = opts[:'field_selector'] if !opts[:'field_selector'].nil?
+      query_params[:'includeUninitialized'] = opts[:'include_uninitialized'] if !opts[:'include_uninitialized'].nil?
+      query_params[:'labelSelector'] = opts[:'label_selector'] if !opts[:'label_selector'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'resourceVersion'] = opts[:'resource_version'] if !opts[:'resource_version'].nil?
+      query_params[:'timeoutSeconds'] = opts[:'timeout_seconds'] if !opts[:'timeout_seconds'].nil?
+      query_params[:'watch'] = opts[:'watch'] if !opts[:'watch'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18194,7 +20298,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_cluster_instancetype_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_cluster_instancetype_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18210,7 +20314,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_cluster_instancetype_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_cluster_instancetype_list_for_all_namespaces ...'
@@ -18241,7 +20345,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18273,7 +20377,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_cluster_preference_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_cluster_preference_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18289,7 +20393,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_cluster_preference_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_cluster_preference_list_for_all_namespaces ...'
@@ -18320,7 +20424,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18352,7 +20456,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_export_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_export_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18368,13 +20472,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_export_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_export_list_for_all_namespaces ...'
       end
       # resource path
-      local_var_path = '/apis/export.kubevirt.io/v1beta1/watch/virtualmachineexports'
+      local_var_path = '/apis/export.kubevirt.io/v1/watch/virtualmachineexports'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -18399,7 +20503,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18431,7 +20535,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_instance_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_instance_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18447,7 +20551,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_instance_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_instance_list_for_all_namespaces ...'
@@ -18478,7 +20582,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18510,7 +20614,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_instance_migration_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_instance_migration_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18526,7 +20630,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_instance_migration_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_instance_migration_list_for_all_namespaces ...'
@@ -18557,7 +20661,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18589,7 +20693,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_instance_preset_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_instance_preset_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18605,7 +20709,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_instance_preset_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_instance_preset_list_for_all_namespaces ...'
@@ -18636,7 +20740,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18668,7 +20772,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_instance_replica_set_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_instance_replica_set_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18684,7 +20788,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_instance_replica_set_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_instance_replica_set_list_for_all_namespaces ...'
@@ -18715,7 +20819,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18747,7 +20851,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_instancetype_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_instancetype_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18763,7 +20867,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_instancetype_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_instancetype_list_for_all_namespaces ...'
@@ -18794,7 +20898,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18826,7 +20930,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18842,7 +20946,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_list_for_all_namespaces ...'
@@ -18873,7 +20977,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18905,7 +21009,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_pool_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_pool_list_for_all_namespaces_with_http_info(opts)
       data
@@ -18921,13 +21025,13 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_pool_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_pool_list_for_all_namespaces ...'
       end
       # resource path
-      local_var_path = '/apis/pool.kubevirt.io/v1alpha1/watch/virtualmachinepools'
+      local_var_path = '/apis/pool.kubevirt.io/v1beta1/watch/virtualmachinepools'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -18952,7 +21056,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -18984,7 +21088,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_preference_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_preference_list_for_all_namespaces_with_http_info(opts)
       data
@@ -19000,7 +21104,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_preference_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_preference_list_for_all_namespaces ...'
@@ -19031,7 +21135,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -19063,7 +21167,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_restore_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_restore_list_for_all_namespaces_with_http_info(opts)
       data
@@ -19079,7 +21183,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_restore_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_restore_list_for_all_namespaces ...'
@@ -19110,7 +21214,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -19142,7 +21246,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_snapshot_content_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_snapshot_content_list_for_all_namespaces_with_http_info(opts)
       data
@@ -19158,7 +21262,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_snapshot_content_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_snapshot_content_list_for_all_namespaces ...'
@@ -19189,7 +21293,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -19221,7 +21325,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [K8sIoApimachineryPkgApisMetaV1WatchEvent]
+    # @return [IoK8sApimachineryPkgApisMetaV1WatchEvent]
     def watch_virtual_machine_snapshot_list_for_all_namespaces(opts = {})
       data, _status_code, _headers = watch_virtual_machine_snapshot_list_for_all_namespaces_with_http_info(opts)
       data
@@ -19237,7 +21341,7 @@ module Kubevirt
     # @option opts [String] :resource_version When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.
     # @option opts [Integer] :timeout_seconds TimeoutSeconds for the list/watch call.
     # @option opts [Boolean] :watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    # @return [Array<(K8sIoApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] K8sIoApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
+    # @return [Array<(IoK8sApimachineryPkgApisMetaV1WatchEvent, Integer, Hash)>] IoK8sApimachineryPkgApisMetaV1WatchEvent data, response status code and response headers
     def watch_virtual_machine_snapshot_list_for_all_namespaces_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: DefaultApi.watch_virtual_machine_snapshot_list_for_all_namespaces ...'
@@ -19268,7 +21372,7 @@ module Kubevirt
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'K8sIoApimachineryPkgApisMetaV1WatchEvent'
+      return_type = opts[:debug_return_type] || 'IoK8sApimachineryPkgApisMetaV1WatchEvent'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []

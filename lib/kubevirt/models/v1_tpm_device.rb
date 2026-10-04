@@ -15,12 +15,16 @@ require 'time'
 
 module Kubevirt
   class V1TPMDevice
+    # Enabled allows a user to explicitly disable the vTPM even when one is enabled by a preference referenced by the VirtualMachine Defaults to True
+    attr_accessor :enabled
+
     # Persistent indicates the state of the TPM device should be kept accross reboots Defaults to false
     attr_accessor :persistent
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'enabled' => :'enabled',
         :'persistent' => :'persistent'
       }
     end
@@ -33,6 +37,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'enabled' => :'Boolean',
         :'persistent' => :'Boolean'
       }
     end
@@ -57,6 +62,10 @@ module Kubevirt
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'enabled')
+        self.enabled = attributes[:'enabled']
+      end
 
       if attributes.key?(:'persistent')
         self.persistent = attributes[:'persistent']
@@ -83,6 +92,7 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          enabled == o.enabled &&
           persistent == o.persistent
     end
 
@@ -95,7 +105,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [persistent].hash
+      [enabled, persistent].hash
     end
 
     # Builds the object from hash

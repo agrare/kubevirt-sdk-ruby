@@ -81,11 +81,11 @@ module Kubevirt
     def self.openapi_types
       {
         :'access_modes' => :'Array<String>',
-        :'capacity' => :'Hash<String, String>',
+        :'capacity' => :'Hash<String, Object>',
         :'claim_name' => :'String',
         :'filesystem_overhead' => :'String',
         :'preallocated' => :'Boolean',
-        :'requests' => :'Hash<String, String>',
+        :'requests' => :'Hash<String, Object>',
         :'volume_mode' => :'String'
       }
     end

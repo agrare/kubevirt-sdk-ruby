@@ -33,7 +33,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'node_label_selector' => :'K8sIoApimachineryPkgApisMetaV1LabelSelector'
+        :'node_label_selector' => :'IoK8sApimachineryPkgApisMetaV1LabelSelector'
       }
     end
 

@@ -23,13 +23,16 @@ module Kubevirt
 
     attr_accessor :ppc64le
 
+    attr_accessor :s390x
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'amd64' => :'amd64',
         :'arm64' => :'arm64',
         :'default_architecture' => :'defaultArchitecture',
-        :'ppc64le' => :'ppc64le'
+        :'ppc64le' => :'ppc64le',
+        :'s390x' => :'s390x'
       }
     end
 
@@ -44,7 +47,8 @@ module Kubevirt
         :'amd64' => :'V1ArchSpecificConfiguration',
         :'arm64' => :'V1ArchSpecificConfiguration',
         :'default_architecture' => :'String',
-        :'ppc64le' => :'V1ArchSpecificConfiguration'
+        :'ppc64le' => :'V1ArchSpecificConfiguration',
+        :'s390x' => :'V1ArchSpecificConfiguration'
       }
     end
 
@@ -84,6 +88,10 @@ module Kubevirt
       if attributes.key?(:'ppc64le')
         self.ppc64le = attributes[:'ppc64le']
       end
+
+      if attributes.key?(:'s390x')
+        self.s390x = attributes[:'s390x']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -109,7 +117,8 @@ module Kubevirt
           amd64 == o.amd64 &&
           arm64 == o.arm64 &&
           default_architecture == o.default_architecture &&
-          ppc64le == o.ppc64le
+          ppc64le == o.ppc64le &&
+          s390x == o.s390x
     end
 
     # @see the `==` method
@@ -121,7 +130,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [amd64, arm64, default_architecture, ppc64le].hash
+      [amd64, arm64, default_architecture, ppc64le, s390x].hash
     end
 
     # Builds the object from hash

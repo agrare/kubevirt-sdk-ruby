@@ -15,10 +15,17 @@ require 'time'
 
 module Kubevirt
   class V1GPU
+    # ClaimName references the name of an entry in the VMI's spec.resourceClaims[] array. The referenced entry may use either resourceClaimName or resourceClaimTemplateName.
+    attr_accessor :claim_name
+
+    # DeviceName is the name of the device provisioned by device-plugins
     attr_accessor :device_name
 
     # Name of the GPU device as exposed by a device plugin
     attr_accessor :name
+
+    # RequestName specifies which request from the ResourceClaim/ResourceClaimTemplate spec.devices.requests array this claim request corresponds to.
+    attr_accessor :request_name
 
     # If specified, the virtual network interface address and its tag will be provided to the guest via config drive
     attr_accessor :tag
@@ -28,8 +35,10 @@ module Kubevirt
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'claim_name' => :'claimName',
         :'device_name' => :'deviceName',
         :'name' => :'name',
+        :'request_name' => :'requestName',
         :'tag' => :'tag',
         :'virtual_gpu_options' => :'virtualGPUOptions'
       }
@@ -43,8 +52,10 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'claim_name' => :'String',
         :'device_name' => :'String',
         :'name' => :'String',
+        :'request_name' => :'String',
         :'tag' => :'String',
         :'virtual_gpu_options' => :'V1VGPUOptions'
       }
@@ -71,16 +82,22 @@ module Kubevirt
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'claim_name')
+        self.claim_name = attributes[:'claim_name']
+      end
+
       if attributes.key?(:'device_name')
         self.device_name = attributes[:'device_name']
-      else
-        self.device_name = ''
       end
 
       if attributes.key?(:'name')
         self.name = attributes[:'name']
       else
         self.name = ''
+      end
+
+      if attributes.key?(:'request_name')
+        self.request_name = attributes[:'request_name']
       end
 
       if attributes.key?(:'tag')
@@ -97,10 +114,6 @@ module Kubevirt
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @device_name.nil?
-        invalid_properties.push('invalid value for "device_name", device_name cannot be nil.')
-      end
-
       if @name.nil?
         invalid_properties.push('invalid value for "name", name cannot be nil.')
       end
@@ -112,7 +125,6 @@ module Kubevirt
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @device_name.nil?
       return false if @name.nil?
       true
     end
@@ -122,8 +134,10 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          claim_name == o.claim_name &&
           device_name == o.device_name &&
           name == o.name &&
+          request_name == o.request_name &&
           tag == o.tag &&
           virtual_gpu_options == o.virtual_gpu_options
     end
@@ -137,7 +151,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [device_name, name, tag, virtual_gpu_options].hash
+      [claim_name, device_name, name, request_name, tag, virtual_gpu_options].hash
     end
 
     # Builds the object from hash

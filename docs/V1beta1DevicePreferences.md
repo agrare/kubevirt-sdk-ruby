@@ -23,10 +23,12 @@
 | **preferred_interface_model** | **String** | PreferredInterfaceModel optionally defines the preferred model to be used by Interface devices. | [optional] |
 | **preferred_lun_bus** | **String** | PreferredLunBus optionally defines the preferred bus for Lun Disk devices. | [optional] |
 | **preferred_network_interface_multi_queue** | **Boolean** | PreferredNetworkInterfaceMultiQueue optionally enables the vhost multiqueue feature for virtio interfaces. | [optional] |
+| **preferred_panic_device_model** | **String** | PreferredPanicDeviceModel optionally defines the preferred panic device model to use with panic devices. | [optional] |
 | **preferred_rng** | **Object** | Rng represents the random device passed from host | [optional] |
 | **preferred_sound_model** | **String** | PreferredSoundModel optionally defines the preferred model for Sound devices. | [optional] |
 | **preferred_tpm** | [**V1TPMDevice**](V1TPMDevice.md) |  | [optional] |
 | **preferred_use_virtio_transitional** | **Boolean** | PreferredUseVirtioTransitional optionally defines the preferred value of UseVirtioTransitional | [optional] |
+| **preferred_video_type** | **String** | PreferredVideoType optionally defines the preferred type for Video devices. | [optional] |
 | **preferred_virtual_gpu_options** | [**V1VGPUOptions**](V1VGPUOptions.md) |  | [optional] |
 
 ## Example
@@ -54,10 +56,12 @@ instance = Kubevirt::V1beta1DevicePreferences.new(
   preferred_interface_model: null,
   preferred_lun_bus: null,
   preferred_network_interface_multi_queue: null,
+  preferred_panic_device_model: null,
   preferred_rng: null,
   preferred_sound_model: null,
   preferred_tpm: null,
   preferred_use_virtio_transitional: null,
+  preferred_video_type: null,
   preferred_virtual_gpu_options: null
 )
 ```

@@ -31,7 +31,7 @@ module Kubevirt
 
     attr_accessor :domain
 
-    # EvictionStrategy describes the strategy to follow when a node drain occurs. The possible options are: - \"None\": No action will be taken, according to the specified 'RunStrategy' the VirtualMachine will be restarted or shutdown. - \"LiveMigrate\": the VirtualMachineInstance will be migrated instead of being shutdown. - \"LiveMigrateIfPossible\": the same as \"LiveMigrate\" but only if the VirtualMachine is Live-Migratable, otherwise it will behave as \"None\". - \"External\": the VirtualMachineInstance will be protected by a PDB and `vmi.Status.EvacuationNodeName` will be set on eviction. This is mainly useful for cluster-api-provider-kubevirt (capk) which needs a way for VMI's to be blocked from eviction, yet signal capk that eviction has been called on the VMI so the capk controller can handle tearing the VMI down. Details can be found in the commit description https://github.com/kubevirt/kubevirt/commit/c1d77face705c8b126696bac9a3ee3825f27f1fa.
+    # EvictionStrategy describes the strategy to follow when a node drain occurs. The possible options are: - \"None\": No action will be taken, according to the specified 'RunStrategy' the VirtualMachine will be restarted or shutdown. - \"LiveMigrate\": the VirtualMachineInstance will be migrated instead of being shutdown. - \"LiveMigrateIfPossible\": the same as \"LiveMigrate\" but only if the VirtualMachine is Live-Migratable, otherwise it will behave as \"None\". - \"External\": the VirtualMachineInstance will be protected and `vmi.Status.EvacuationNodeName` will be set on eviction. This is mainly useful for cluster-api-provider-kubevirt (capk) which needs a way for VMI's to be blocked from eviction, yet signal capk that eviction has been called on the VMI so the capk controller can handle tearing the VMI down. Details can be found in the commit description https://github.com/kubevirt/kubevirt/commit/c1d77face705c8b126696bac9a3ee3825f27f1fa.
     attr_accessor :eviction_strategy
 
     # Specifies the hostname of the vmi If not specified, the hostname will be set to the name of the vmi, if dhcp or cloud-init is configured properly.
@@ -50,8 +50,14 @@ module Kubevirt
 
     attr_accessor :readiness_probe
 
+    # ResourceClaims define which ResourceClaims must be allocated and reserved before the VMI, hence virt-launcher pod is allowed to start. The resources will be made available to the domain which consumes them by name.  This is an alpha field and requires enabling the DynamicResourceAllocation feature gate in kubernetes  https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/ This field should only be configured if one of the feature-gates GPUsWithDRA, HostDevicesWithDRA, or NetworkDevicesWithDRA is enabled. This feature is in alpha.
+    attr_accessor :resource_claims
+
     # If specified, the VMI will be dispatched by specified scheduler. If not specified, the VMI will be dispatched by default scheduler.
     attr_accessor :scheduler_name
+
+    # ServiceAccountName is the name of the ServiceAccount to use to run the virt-launcher pod. This sets pod.spec.serviceAccountName but does NOT automatically expose the service account token to the VM guest. To expose the token to the VM, use a serviceAccount volume.
+    attr_accessor :service_account_name
 
     # StartStrategy can be set to \"Paused\" if Virtual Machine should be started in paused state.
     attr_accessor :start_strategy
@@ -67,6 +73,9 @@ module Kubevirt
 
     # TopologySpreadConstraints describes how a group of VMIs will be spread across a given topology domains. K8s scheduler will schedule VMI pods in a way which abides by the constraints.
     attr_accessor :topology_spread_constraints
+
+    # List of utility volumes that can be mounted to the vmi virt-launcher pod without having a matching disk in the domain. Used to collect data for various operational workflows.
+    attr_accessor :utility_volumes
 
     # List of volumes that can be mounted by disks belonging to the vmi.
     attr_accessor :volumes
@@ -109,12 +118,15 @@ module Kubevirt
         :'node_selector' => :'nodeSelector',
         :'priority_class_name' => :'priorityClassName',
         :'readiness_probe' => :'readinessProbe',
+        :'resource_claims' => :'resourceClaims',
         :'scheduler_name' => :'schedulerName',
+        :'service_account_name' => :'serviceAccountName',
         :'start_strategy' => :'startStrategy',
         :'subdomain' => :'subdomain',
         :'termination_grace_period_seconds' => :'terminationGracePeriodSeconds',
         :'tolerations' => :'tolerations',
         :'topology_spread_constraints' => :'topologySpreadConstraints',
+        :'utility_volumes' => :'utilityVolumes',
         :'volumes' => :'volumes'
       }
     end
@@ -128,9 +140,9 @@ module Kubevirt
     def self.openapi_types
       {
         :'access_credentials' => :'Array<V1AccessCredential>',
-        :'affinity' => :'K8sIoApiCoreV1Affinity',
+        :'affinity' => :'IoK8sApiCoreV1Affinity',
         :'architecture' => :'String',
-        :'dns_config' => :'K8sIoApiCoreV1PodDNSConfig',
+        :'dns_config' => :'IoK8sApiCoreV1PodDNSConfig',
         :'dns_policy' => :'String',
         :'domain' => :'V1DomainSpec',
         :'eviction_strategy' => :'String',
@@ -140,12 +152,15 @@ module Kubevirt
         :'node_selector' => :'Hash<String, String>',
         :'priority_class_name' => :'String',
         :'readiness_probe' => :'V1Probe',
+        :'resource_claims' => :'Array<V1VirtualMachineInstanceResourceClaim>',
         :'scheduler_name' => :'String',
+        :'service_account_name' => :'String',
         :'start_strategy' => :'String',
         :'subdomain' => :'String',
         :'termination_grace_period_seconds' => :'Integer',
-        :'tolerations' => :'Array<K8sIoApiCoreV1Toleration>',
-        :'topology_spread_constraints' => :'Array<K8sIoApiCoreV1TopologySpreadConstraint>',
+        :'tolerations' => :'Array<IoK8sApiCoreV1Toleration>',
+        :'topology_spread_constraints' => :'Array<IoK8sApiCoreV1TopologySpreadConstraint>',
+        :'utility_volumes' => :'Array<V1UtilityVolume>',
         :'volumes' => :'Array<V1Volume>'
       }
     end
@@ -231,8 +246,18 @@ module Kubevirt
         self.readiness_probe = attributes[:'readiness_probe']
       end
 
+      if attributes.key?(:'resource_claims')
+        if (value = attributes[:'resource_claims']).is_a?(Array)
+          self.resource_claims = value
+        end
+      end
+
       if attributes.key?(:'scheduler_name')
         self.scheduler_name = attributes[:'scheduler_name']
+      end
+
+      if attributes.key?(:'service_account_name')
+        self.service_account_name = attributes[:'service_account_name']
       end
 
       if attributes.key?(:'start_strategy')
@@ -256,6 +281,12 @@ module Kubevirt
       if attributes.key?(:'topology_spread_constraints')
         if (value = attributes[:'topology_spread_constraints']).is_a?(Array)
           self.topology_spread_constraints = value
+        end
+      end
+
+      if attributes.key?(:'utility_volumes')
+        if (value = attributes[:'utility_volumes']).is_a?(Array)
+          self.utility_volumes = value
         end
       end
 
@@ -316,12 +347,15 @@ module Kubevirt
           node_selector == o.node_selector &&
           priority_class_name == o.priority_class_name &&
           readiness_probe == o.readiness_probe &&
+          resource_claims == o.resource_claims &&
           scheduler_name == o.scheduler_name &&
+          service_account_name == o.service_account_name &&
           start_strategy == o.start_strategy &&
           subdomain == o.subdomain &&
           termination_grace_period_seconds == o.termination_grace_period_seconds &&
           tolerations == o.tolerations &&
           topology_spread_constraints == o.topology_spread_constraints &&
+          utility_volumes == o.utility_volumes &&
           volumes == o.volumes
     end
 
@@ -334,7 +368,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [access_credentials, affinity, architecture, dns_config, dns_policy, domain, eviction_strategy, hostname, liveness_probe, networks, node_selector, priority_class_name, readiness_probe, scheduler_name, start_strategy, subdomain, termination_grace_period_seconds, tolerations, topology_spread_constraints, volumes].hash
+      [access_credentials, affinity, architecture, dns_config, dns_policy, domain, eviction_strategy, hostname, liveness_probe, networks, node_selector, priority_class_name, readiness_probe, resource_claims, scheduler_name, service_account_name, start_strategy, subdomain, termination_grace_period_seconds, tolerations, topology_spread_constraints, utility_volumes, volumes].hash
     end
 
     # Builds the object from hash

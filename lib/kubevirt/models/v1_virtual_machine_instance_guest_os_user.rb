@@ -18,6 +18,7 @@ module Kubevirt
   class V1VirtualMachineInstanceGuestOSUser
     attr_accessor :domain
 
+    # Time of login of this user on the computer. If multiple instances of the user are logged in, the earliest login time is reported. The value is in fractional seconds since epoch time.
     attr_accessor :login_time
 
     attr_accessor :user_name

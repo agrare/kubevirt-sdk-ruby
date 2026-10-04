@@ -63,14 +63,14 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'exec' => :'K8sIoApiCoreV1ExecAction',
+        :'exec' => :'IoK8sApiCoreV1ExecAction',
         :'failure_threshold' => :'Integer',
         :'guest_agent_ping' => :'Object',
-        :'http_get' => :'K8sIoApiCoreV1HTTPGetAction',
+        :'http_get' => :'IoK8sApiCoreV1HTTPGetAction',
         :'initial_delay_seconds' => :'Integer',
         :'period_seconds' => :'Integer',
         :'success_threshold' => :'Integer',
-        :'tcp_socket' => :'K8sIoApiCoreV1TCPSocketAction',
+        :'tcp_socket' => :'IoK8sApiCoreV1TCPSocketAction',
         :'timeout_seconds' => :'Integer'
       }
     end

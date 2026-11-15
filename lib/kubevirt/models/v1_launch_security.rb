@@ -17,10 +17,16 @@ module Kubevirt
   class V1LaunchSecurity
     attr_accessor :sev
 
+    attr_accessor :snp
+
+    attr_accessor :tdx
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'sev' => :'sev'
+        :'sev' => :'sev',
+        :'snp' => :'snp',
+        :'tdx' => :'tdx'
       }
     end
 
@@ -32,7 +38,9 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'sev' => :'V1SEV'
+        :'sev' => :'V1SEV',
+        :'snp' => :'Object',
+        :'tdx' => :'Object'
       }
     end
 
@@ -60,6 +68,14 @@ module Kubevirt
       if attributes.key?(:'sev')
         self.sev = attributes[:'sev']
       end
+
+      if attributes.key?(:'snp')
+        self.snp = attributes[:'snp']
+      end
+
+      if attributes.key?(:'tdx')
+        self.tdx = attributes[:'tdx']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -82,7 +98,9 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          sev == o.sev
+          sev == o.sev &&
+          snp == o.snp &&
+          tdx == o.tdx
     end
 
     # @see the `==` method
@@ -94,7 +112,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sev].hash
+      [sev, snp, tdx].hash
     end
 
     # Builds the object from hash

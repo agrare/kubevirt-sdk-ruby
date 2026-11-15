@@ -42,7 +42,7 @@ module Kubevirt
     def self.openapi_types
       {
         :'max_cpu_sockets' => :'Integer',
-        :'max_guest' => :'String',
+        :'max_guest' => :'Object',
         :'max_hotplug_ratio' => :'Integer'
       }
     end

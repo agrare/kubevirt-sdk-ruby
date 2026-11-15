@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module Kubevirt
-  # VirtualMachineRestoreStatus is the spec for a VirtualMachineRestoreresource
+  # VirtualMachineRestoreStatus is the status for a VirtualMachineRestore resource
   class V1beta1VirtualMachineRestoreStatus
     attr_accessor :complete
 

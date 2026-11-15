@@ -54,8 +54,8 @@ module Kubevirt
       {
         :'network_data' => :'String',
         :'network_data_base64' => :'String',
-        :'network_data_secret_ref' => :'K8sIoApiCoreV1LocalObjectReference',
-        :'secret_ref' => :'K8sIoApiCoreV1LocalObjectReference',
+        :'network_data_secret_ref' => :'IoK8sApiCoreV1LocalObjectReference',
+        :'secret_ref' => :'IoK8sApiCoreV1LocalObjectReference',
         :'user_data' => :'String',
         :'user_data_base64' => :'String'
       }

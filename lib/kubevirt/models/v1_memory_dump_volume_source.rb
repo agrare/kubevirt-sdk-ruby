@@ -14,6 +14,7 @@ require 'date'
 require 'time'
 
 module Kubevirt
+  # MemoryDumpVolumeSource represents a memory dump PVC in the volumes of a VMI. Deprecated: memory dumps are attached as utility volumes of type MemoryDump.
   class V1MemoryDumpVolumeSource
     # claimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
     attr_accessor :claim_name

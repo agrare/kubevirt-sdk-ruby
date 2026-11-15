@@ -23,6 +23,7 @@ module Kubevirt
 
     attr_accessor :error
 
+    # Deprecated: Use SourceIndications instead. This field will be removed in a future version.
     attr_accessor :indications
 
     attr_accessor :phase
@@ -30,6 +31,8 @@ module Kubevirt
     attr_accessor :ready_to_use
 
     attr_accessor :snapshot_volumes
+
+    attr_accessor :source_indications
 
     attr_accessor :source_uid
 
@@ -45,6 +48,7 @@ module Kubevirt
         :'phase' => :'phase',
         :'ready_to_use' => :'readyToUse',
         :'snapshot_volumes' => :'snapshotVolumes',
+        :'source_indications' => :'sourceIndications',
         :'source_uid' => :'sourceUID',
         :'virtual_machine_snapshot_content_name' => :'virtualMachineSnapshotContentName'
       }
@@ -65,6 +69,7 @@ module Kubevirt
         :'phase' => :'String',
         :'ready_to_use' => :'Boolean',
         :'snapshot_volumes' => :'V1beta1SnapshotVolumesLists',
+        :'source_indications' => :'Array<V1beta1SourceIndication>',
         :'source_uid' => :'String',
         :'virtual_machine_snapshot_content_name' => :'String'
       }
@@ -123,6 +128,12 @@ module Kubevirt
         self.snapshot_volumes = attributes[:'snapshot_volumes']
       end
 
+      if attributes.key?(:'source_indications')
+        if (value = attributes[:'source_indications']).is_a?(Array)
+          self.source_indications = value
+        end
+      end
+
       if attributes.key?(:'source_uid')
         self.source_uid = attributes[:'source_uid']
       end
@@ -159,6 +170,7 @@ module Kubevirt
           phase == o.phase &&
           ready_to_use == o.ready_to_use &&
           snapshot_volumes == o.snapshot_volumes &&
+          source_indications == o.source_indications &&
           source_uid == o.source_uid &&
           virtual_machine_snapshot_content_name == o.virtual_machine_snapshot_content_name
     end
@@ -172,7 +184,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [conditions, creation_time, error, indications, phase, ready_to_use, snapshot_volumes, source_uid, virtual_machine_snapshot_content_name].hash
+      [conditions, creation_time, error, indications, phase, ready_to_use, snapshot_volumes, source_indications, source_uid, virtual_machine_snapshot_content_name].hash
     end
 
     # Builds the object from hash

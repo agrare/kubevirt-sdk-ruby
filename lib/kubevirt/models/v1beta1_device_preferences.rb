@@ -72,6 +72,9 @@ module Kubevirt
     # PreferredNetworkInterfaceMultiQueue optionally enables the vhost multiqueue feature for virtio interfaces.
     attr_accessor :preferred_network_interface_multi_queue
 
+    # PreferredPanicDeviceModel optionally defines the preferred panic device model to use with panic devices.
+    attr_accessor :preferred_panic_device_model
+
     # Rng represents the random device passed from host
     attr_accessor :preferred_rng
 
@@ -82,6 +85,9 @@ module Kubevirt
 
     # PreferredUseVirtioTransitional optionally defines the preferred value of UseVirtioTransitional
     attr_accessor :preferred_use_virtio_transitional
+
+    # PreferredVideoType optionally defines the preferred type for Video devices.
+    attr_accessor :preferred_video_type
 
     attr_accessor :preferred_virtual_gpu_options
 
@@ -107,10 +113,12 @@ module Kubevirt
         :'preferred_interface_model' => :'preferredInterfaceModel',
         :'preferred_lun_bus' => :'preferredLunBus',
         :'preferred_network_interface_multi_queue' => :'preferredNetworkInterfaceMultiQueue',
+        :'preferred_panic_device_model' => :'preferredPanicDeviceModel',
         :'preferred_rng' => :'preferredRng',
         :'preferred_sound_model' => :'preferredSoundModel',
         :'preferred_tpm' => :'preferredTPM',
         :'preferred_use_virtio_transitional' => :'preferredUseVirtioTransitional',
+        :'preferred_video_type' => :'preferredVideoType',
         :'preferred_virtual_gpu_options' => :'preferredVirtualGPUOptions'
       }
     end
@@ -142,10 +150,12 @@ module Kubevirt
         :'preferred_interface_model' => :'String',
         :'preferred_lun_bus' => :'String',
         :'preferred_network_interface_multi_queue' => :'Boolean',
+        :'preferred_panic_device_model' => :'String',
         :'preferred_rng' => :'Object',
         :'preferred_sound_model' => :'String',
         :'preferred_tpm' => :'V1TPMDevice',
         :'preferred_use_virtio_transitional' => :'Boolean',
+        :'preferred_video_type' => :'String',
         :'preferred_virtual_gpu_options' => :'V1VGPUOptions'
       }
     end
@@ -247,6 +257,10 @@ module Kubevirt
         self.preferred_network_interface_multi_queue = attributes[:'preferred_network_interface_multi_queue']
       end
 
+      if attributes.key?(:'preferred_panic_device_model')
+        self.preferred_panic_device_model = attributes[:'preferred_panic_device_model']
+      end
+
       if attributes.key?(:'preferred_rng')
         self.preferred_rng = attributes[:'preferred_rng']
       end
@@ -261,6 +275,10 @@ module Kubevirt
 
       if attributes.key?(:'preferred_use_virtio_transitional')
         self.preferred_use_virtio_transitional = attributes[:'preferred_use_virtio_transitional']
+      end
+
+      if attributes.key?(:'preferred_video_type')
+        self.preferred_video_type = attributes[:'preferred_video_type']
       end
 
       if attributes.key?(:'preferred_virtual_gpu_options')
@@ -307,10 +325,12 @@ module Kubevirt
           preferred_interface_model == o.preferred_interface_model &&
           preferred_lun_bus == o.preferred_lun_bus &&
           preferred_network_interface_multi_queue == o.preferred_network_interface_multi_queue &&
+          preferred_panic_device_model == o.preferred_panic_device_model &&
           preferred_rng == o.preferred_rng &&
           preferred_sound_model == o.preferred_sound_model &&
           preferred_tpm == o.preferred_tpm &&
           preferred_use_virtio_transitional == o.preferred_use_virtio_transitional &&
+          preferred_video_type == o.preferred_video_type &&
           preferred_virtual_gpu_options == o.preferred_virtual_gpu_options
     end
 
@@ -323,7 +343,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [preferred_autoattach_graphics_device, preferred_autoattach_input_device, preferred_autoattach_mem_balloon, preferred_autoattach_pod_interface, preferred_autoattach_serial_console, preferred_block_multi_queue, preferred_cdrom_bus, preferred_disable_hotplug, preferred_disk_block_size, preferred_disk_bus, preferred_disk_cache, preferred_disk_dedicated_io_thread, preferred_disk_io, preferred_input_bus, preferred_input_type, preferred_interface_masquerade, preferred_interface_model, preferred_lun_bus, preferred_network_interface_multi_queue, preferred_rng, preferred_sound_model, preferred_tpm, preferred_use_virtio_transitional, preferred_virtual_gpu_options].hash
+      [preferred_autoattach_graphics_device, preferred_autoattach_input_device, preferred_autoattach_mem_balloon, preferred_autoattach_pod_interface, preferred_autoattach_serial_console, preferred_block_multi_queue, preferred_cdrom_bus, preferred_disable_hotplug, preferred_disk_block_size, preferred_disk_bus, preferred_disk_cache, preferred_disk_dedicated_io_thread, preferred_disk_io, preferred_input_bus, preferred_input_type, preferred_interface_masquerade, preferred_interface_model, preferred_lun_bus, preferred_network_interface_multi_queue, preferred_panic_device_model, preferred_rng, preferred_sound_model, preferred_tpm, preferred_use_virtio_transitional, preferred_video_type, preferred_virtual_gpu_options].hash
     end
 
     # Builds the object from hash

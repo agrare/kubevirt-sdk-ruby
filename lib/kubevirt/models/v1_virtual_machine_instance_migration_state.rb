@@ -35,6 +35,9 @@ module Kubevirt
 
     attr_accessor :migration_configuration
 
+    # The type of migration network, either 'pod' or 'migration'
+    attr_accessor :migration_network_type
+
     # Name of the migration policy. If string is empty, no policy is matched
     attr_accessor :migration_policy_name
 
@@ -52,6 +55,8 @@ module Kubevirt
 
     attr_accessor :source_pod
 
+    attr_accessor :source_state
+
     # Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
     attr_accessor :start_timestamp
 
@@ -63,6 +68,9 @@ module Kubevirt
 
     # The list of ports opened for live migration on the destination node
     attr_accessor :target_direct_migration_node_ports
+
+    # Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.  The serialization format is:  ``` <quantity>        ::= <signedNumber><suffix>   (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)  <digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei   (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)  <decimalSI>       ::= m | \"\" | k | M | G | T | P | E   (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)  <decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber> ```  No matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.  When a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.  Before serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:  - No precision is lost - No fractional digits will be emitted - The exponent (or suffix) is as large as possible.  The sign will be omitted unless the number is negative.  Examples:  - 1.5 will be serialized as \"1500m\" - 1.5Gi will be serialized as \"1536Mi\"  Note that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.  Non-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)  This format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.
+    attr_accessor :target_memory_overhead
 
     # The target node that the VMI is moving to
     attr_accessor :target_node
@@ -85,6 +93,8 @@ module Kubevirt
     # The target pod that the VMI is moving to
     attr_accessor :target_pod
 
+    attr_accessor :target_state
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -95,23 +105,27 @@ module Kubevirt
         :'failed' => :'failed',
         :'failure_reason' => :'failureReason',
         :'migration_configuration' => :'migrationConfiguration',
+        :'migration_network_type' => :'migrationNetworkType',
         :'migration_policy_name' => :'migrationPolicyName',
         :'migration_uid' => :'migrationUid',
         :'mode' => :'mode',
         :'source_node' => :'sourceNode',
         :'source_persistent_state_pvc_name' => :'sourcePersistentStatePVCName',
         :'source_pod' => :'sourcePod',
+        :'source_state' => :'sourceState',
         :'start_timestamp' => :'startTimestamp',
         :'target_attachment_pod_uid' => :'targetAttachmentPodUID',
         :'target_cpu_set' => :'targetCPUSet',
         :'target_direct_migration_node_ports' => :'targetDirectMigrationNodePorts',
+        :'target_memory_overhead' => :'targetMemoryOverhead',
         :'target_node' => :'targetNode',
         :'target_node_address' => :'targetNodeAddress',
         :'target_node_domain_detected' => :'targetNodeDomainDetected',
         :'target_node_domain_ready_timestamp' => :'targetNodeDomainReadyTimestamp',
         :'target_node_topology' => :'targetNodeTopology',
         :'target_persistent_state_pvc_name' => :'targetPersistentStatePVCName',
-        :'target_pod' => :'targetPod'
+        :'target_pod' => :'targetPod',
+        :'target_state' => :'targetState'
       }
     end
 
@@ -129,24 +143,28 @@ module Kubevirt
         :'end_timestamp' => :'Time',
         :'failed' => :'Boolean',
         :'failure_reason' => :'String',
-        :'migration_configuration' => :'V1MigrationConfiguration',
+        :'migration_configuration' => :'V1VMIMConfigurationOptions',
+        :'migration_network_type' => :'String',
         :'migration_policy_name' => :'String',
         :'migration_uid' => :'String',
         :'mode' => :'String',
         :'source_node' => :'String',
         :'source_persistent_state_pvc_name' => :'String',
         :'source_pod' => :'String',
+        :'source_state' => :'V1VirtualMachineInstanceMigrationSourceState',
         :'start_timestamp' => :'Time',
         :'target_attachment_pod_uid' => :'String',
         :'target_cpu_set' => :'Array<Integer>',
         :'target_direct_migration_node_ports' => :'Hash<String, Integer>',
+        :'target_memory_overhead' => :'Object',
         :'target_node' => :'String',
         :'target_node_address' => :'String',
         :'target_node_domain_detected' => :'Boolean',
         :'target_node_domain_ready_timestamp' => :'Time',
         :'target_node_topology' => :'String',
         :'target_persistent_state_pvc_name' => :'String',
-        :'target_pod' => :'String'
+        :'target_pod' => :'String',
+        :'target_state' => :'V1VirtualMachineInstanceMigrationTargetState'
       }
     end
 
@@ -199,6 +217,10 @@ module Kubevirt
         self.migration_configuration = attributes[:'migration_configuration']
       end
 
+      if attributes.key?(:'migration_network_type')
+        self.migration_network_type = attributes[:'migration_network_type']
+      end
+
       if attributes.key?(:'migration_policy_name')
         self.migration_policy_name = attributes[:'migration_policy_name']
       end
@@ -223,6 +245,10 @@ module Kubevirt
         self.source_pod = attributes[:'source_pod']
       end
 
+      if attributes.key?(:'source_state')
+        self.source_state = attributes[:'source_state']
+      end
+
       if attributes.key?(:'start_timestamp')
         self.start_timestamp = attributes[:'start_timestamp']
       end
@@ -241,6 +267,10 @@ module Kubevirt
         if (value = attributes[:'target_direct_migration_node_ports']).is_a?(Hash)
           self.target_direct_migration_node_ports = value
         end
+      end
+
+      if attributes.key?(:'target_memory_overhead')
+        self.target_memory_overhead = attributes[:'target_memory_overhead']
       end
 
       if attributes.key?(:'target_node')
@@ -269,6 +299,10 @@ module Kubevirt
 
       if attributes.key?(:'target_pod')
         self.target_pod = attributes[:'target_pod']
+      end
+
+      if attributes.key?(:'target_state')
+        self.target_state = attributes[:'target_state']
       end
     end
 
@@ -299,23 +333,27 @@ module Kubevirt
           failed == o.failed &&
           failure_reason == o.failure_reason &&
           migration_configuration == o.migration_configuration &&
+          migration_network_type == o.migration_network_type &&
           migration_policy_name == o.migration_policy_name &&
           migration_uid == o.migration_uid &&
           mode == o.mode &&
           source_node == o.source_node &&
           source_persistent_state_pvc_name == o.source_persistent_state_pvc_name &&
           source_pod == o.source_pod &&
+          source_state == o.source_state &&
           start_timestamp == o.start_timestamp &&
           target_attachment_pod_uid == o.target_attachment_pod_uid &&
           target_cpu_set == o.target_cpu_set &&
           target_direct_migration_node_ports == o.target_direct_migration_node_ports &&
+          target_memory_overhead == o.target_memory_overhead &&
           target_node == o.target_node &&
           target_node_address == o.target_node_address &&
           target_node_domain_detected == o.target_node_domain_detected &&
           target_node_domain_ready_timestamp == o.target_node_domain_ready_timestamp &&
           target_node_topology == o.target_node_topology &&
           target_persistent_state_pvc_name == o.target_persistent_state_pvc_name &&
-          target_pod == o.target_pod
+          target_pod == o.target_pod &&
+          target_state == o.target_state
     end
 
     # @see the `==` method
@@ -327,7 +365,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [abort_requested, abort_status, completed, end_timestamp, failed, failure_reason, migration_configuration, migration_policy_name, migration_uid, mode, source_node, source_persistent_state_pvc_name, source_pod, start_timestamp, target_attachment_pod_uid, target_cpu_set, target_direct_migration_node_ports, target_node, target_node_address, target_node_domain_detected, target_node_domain_ready_timestamp, target_node_topology, target_persistent_state_pvc_name, target_pod].hash
+      [abort_requested, abort_status, completed, end_timestamp, failed, failure_reason, migration_configuration, migration_network_type, migration_policy_name, migration_uid, mode, source_node, source_persistent_state_pvc_name, source_pod, source_state, start_timestamp, target_attachment_pod_uid, target_cpu_set, target_direct_migration_node_ports, target_memory_overhead, target_node, target_node_address, target_node_domain_detected, target_node_domain_ready_timestamp, target_node_topology, target_persistent_state_pvc_name, target_pod, target_state].hash
     end
 
     # Builds the object from hash

@@ -23,12 +23,15 @@ module Kubevirt
 
     attr_accessor :pod
 
+    attr_accessor :resource_claim
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'multus' => :'multus',
         :'name' => :'name',
-        :'pod' => :'pod'
+        :'pod' => :'pod',
+        :'resource_claim' => :'resourceClaim'
       }
     end
 
@@ -42,7 +45,8 @@ module Kubevirt
       {
         :'multus' => :'V1MultusNetwork',
         :'name' => :'String',
-        :'pod' => :'V1PodNetwork'
+        :'pod' => :'V1PodNetwork',
+        :'resource_claim' => :'V1ClaimRequest'
       }
     end
 
@@ -80,6 +84,10 @@ module Kubevirt
       if attributes.key?(:'pod')
         self.pod = attributes[:'pod']
       end
+
+      if attributes.key?(:'resource_claim')
+        self.resource_claim = attributes[:'resource_claim']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -109,7 +117,8 @@ module Kubevirt
       self.class == o.class &&
           multus == o.multus &&
           name == o.name &&
-          pod == o.pod
+          pod == o.pod &&
+          resource_claim == o.resource_claim
     end
 
     # @see the `==` method
@@ -121,7 +130,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [multus, name, pod].hash
+      [multus, name, pod, resource_claim].hash
     end
 
     # Builds the object from hash

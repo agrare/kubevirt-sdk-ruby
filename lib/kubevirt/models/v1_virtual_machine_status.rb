@@ -16,6 +16,11 @@ require 'time'
 module Kubevirt
   # VirtualMachineStatus represents the status returned by the controller to describe how the VirtualMachine is doing
   class V1VirtualMachineStatus
+    # BackupInProgress is the name of the VirtualMachineBackup currently executing
+    attr_accessor :backup_in_progress
+
+    attr_accessor :changed_block_tracking
+
     # Hold the state information of the VirtualMachine and its VirtualMachineInstance
     attr_accessor :conditions
 
@@ -25,10 +30,14 @@ module Kubevirt
     # DesiredGeneration is the generation which is desired for the VMI. This will be used in comparisons with ObservedGeneration to understand when the VMI is out of sync. This will be changed at the same time as ObservedGeneration to remove errors which could occur if Generation is updated through an Update() before ObservedGeneration in Status.
     attr_accessor :desired_generation
 
+    attr_accessor :instancetype_ref
+
     attr_accessor :memory_dump_request
 
     # ObservedGeneration is the generation observed by the vmi when started.
     attr_accessor :observed_generation
+
+    attr_accessor :preference_ref
 
     # PrintableStatus is a human readable, high-level representation of the status of the virtual machine
     attr_accessor :printable_status
@@ -50,6 +59,8 @@ module Kubevirt
     # StateChangeRequests indicates a list of actions that should be taken on a VMI e.g. stop a specific VMI then start a new one.
     attr_accessor :state_change_requests
 
+    attr_accessor :virtual_machine_state_volume
+
     # VolumeRequests indicates a list of volumes add or remove from the VMI template and hotplug on an active running VMI.
     attr_accessor :volume_requests
 
@@ -61,11 +72,15 @@ module Kubevirt
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'backup_in_progress' => :'backupInProgress',
+        :'changed_block_tracking' => :'changedBlockTracking',
         :'conditions' => :'conditions',
         :'created' => :'created',
         :'desired_generation' => :'desiredGeneration',
+        :'instancetype_ref' => :'instancetypeRef',
         :'memory_dump_request' => :'memoryDumpRequest',
         :'observed_generation' => :'observedGeneration',
+        :'preference_ref' => :'preferenceRef',
         :'printable_status' => :'printableStatus',
         :'ready' => :'ready',
         :'restore_in_progress' => :'restoreInProgress',
@@ -73,6 +88,7 @@ module Kubevirt
         :'snapshot_in_progress' => :'snapshotInProgress',
         :'start_failure' => :'startFailure',
         :'state_change_requests' => :'stateChangeRequests',
+        :'virtual_machine_state_volume' => :'virtualMachineStateVolume',
         :'volume_requests' => :'volumeRequests',
         :'volume_snapshot_statuses' => :'volumeSnapshotStatuses',
         :'volume_update_state' => :'volumeUpdateState'
@@ -87,11 +103,15 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'backup_in_progress' => :'String',
+        :'changed_block_tracking' => :'V1ChangedBlockTrackingStatus',
         :'conditions' => :'Array<V1VirtualMachineCondition>',
         :'created' => :'Boolean',
         :'desired_generation' => :'Integer',
+        :'instancetype_ref' => :'V1InstancetypeStatusRef',
         :'memory_dump_request' => :'V1VirtualMachineMemoryDumpRequest',
         :'observed_generation' => :'Integer',
+        :'preference_ref' => :'V1InstancetypeStatusRef',
         :'printable_status' => :'String',
         :'ready' => :'Boolean',
         :'restore_in_progress' => :'String',
@@ -99,6 +119,7 @@ module Kubevirt
         :'snapshot_in_progress' => :'String',
         :'start_failure' => :'V1VirtualMachineStartFailure',
         :'state_change_requests' => :'Array<V1VirtualMachineStateChangeRequest>',
+        :'virtual_machine_state_volume' => :'V1VolumeStatus',
         :'volume_requests' => :'Array<V1VirtualMachineVolumeRequest>',
         :'volume_snapshot_statuses' => :'Array<V1VolumeSnapshotStatus>',
         :'volume_update_state' => :'V1VolumeUpdateState'
@@ -126,6 +147,14 @@ module Kubevirt
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'backup_in_progress')
+        self.backup_in_progress = attributes[:'backup_in_progress']
+      end
+
+      if attributes.key?(:'changed_block_tracking')
+        self.changed_block_tracking = attributes[:'changed_block_tracking']
+      end
+
       if attributes.key?(:'conditions')
         if (value = attributes[:'conditions']).is_a?(Array)
           self.conditions = value
@@ -140,12 +169,20 @@ module Kubevirt
         self.desired_generation = attributes[:'desired_generation']
       end
 
+      if attributes.key?(:'instancetype_ref')
+        self.instancetype_ref = attributes[:'instancetype_ref']
+      end
+
       if attributes.key?(:'memory_dump_request')
         self.memory_dump_request = attributes[:'memory_dump_request']
       end
 
       if attributes.key?(:'observed_generation')
         self.observed_generation = attributes[:'observed_generation']
+      end
+
+      if attributes.key?(:'preference_ref')
+        self.preference_ref = attributes[:'preference_ref']
       end
 
       if attributes.key?(:'printable_status')
@@ -176,6 +213,10 @@ module Kubevirt
         if (value = attributes[:'state_change_requests']).is_a?(Array)
           self.state_change_requests = value
         end
+      end
+
+      if attributes.key?(:'virtual_machine_state_volume')
+        self.virtual_machine_state_volume = attributes[:'virtual_machine_state_volume']
       end
 
       if attributes.key?(:'volume_requests')
@@ -215,11 +256,15 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          backup_in_progress == o.backup_in_progress &&
+          changed_block_tracking == o.changed_block_tracking &&
           conditions == o.conditions &&
           created == o.created &&
           desired_generation == o.desired_generation &&
+          instancetype_ref == o.instancetype_ref &&
           memory_dump_request == o.memory_dump_request &&
           observed_generation == o.observed_generation &&
+          preference_ref == o.preference_ref &&
           printable_status == o.printable_status &&
           ready == o.ready &&
           restore_in_progress == o.restore_in_progress &&
@@ -227,6 +272,7 @@ module Kubevirt
           snapshot_in_progress == o.snapshot_in_progress &&
           start_failure == o.start_failure &&
           state_change_requests == o.state_change_requests &&
+          virtual_machine_state_volume == o.virtual_machine_state_volume &&
           volume_requests == o.volume_requests &&
           volume_snapshot_statuses == o.volume_snapshot_statuses &&
           volume_update_state == o.volume_update_state
@@ -241,7 +287,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [conditions, created, desired_generation, memory_dump_request, observed_generation, printable_status, ready, restore_in_progress, run_strategy, snapshot_in_progress, start_failure, state_change_requests, volume_requests, volume_snapshot_statuses, volume_update_state].hash
+      [backup_in_progress, changed_block_tracking, conditions, created, desired_generation, instancetype_ref, memory_dump_request, observed_generation, preference_ref, printable_status, ready, restore_in_progress, run_strategy, snapshot_in_progress, start_failure, state_change_requests, virtual_machine_state_volume, volume_requests, volume_snapshot_statuses, volume_update_state].hash
     end
 
     # Builds the object from hash

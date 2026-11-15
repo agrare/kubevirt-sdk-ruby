@@ -5,7 +5,7 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **direct** | [**V1FeatureState**](V1FeatureState.md) |  | [optional] |
-| **enabled** | **Boolean** |  | [optional] |
+| **enabled** | **Boolean** | Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true. | [optional] |
 
 ## Example
 

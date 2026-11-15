@@ -36,8 +36,8 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'config_map' => :'K8sIoApiCoreV1LocalObjectReference',
-        :'secret' => :'K8sIoApiCoreV1LocalObjectReference'
+        :'config_map' => :'IoK8sApiCoreV1LocalObjectReference',
+        :'secret' => :'IoK8sApiCoreV1LocalObjectReference'
       }
     end
 

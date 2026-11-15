@@ -27,7 +27,9 @@ module Kubevirt
 
     attr_accessor :firmware
 
-    # Controls whether or not disks will share IOThreads. Omitting IOThreadsPolicy disables use of IOThreads. One of: shared, auto
+    attr_accessor :io_threads
+
+    # Controls whether or not disks will share IOThreads. Omitting IOThreadsPolicy disables use of IOThreads. One of: shared, auto, supplementalPool
     attr_accessor :io_threads_policy
 
     attr_accessor :launch_security
@@ -35,6 +37,9 @@ module Kubevirt
     attr_accessor :machine
 
     attr_accessor :memory
+
+    # RebootPolicy specifies how the guest should behave on reboot. Reboot (default): The guest is allowed to reboot silently. Terminate: The VMI will be terminated on guest reboot, allowing higher level controllers (such as the VM controller) to recreate the VMI with any updated configuration such as boot order changes.
+    attr_accessor :reboot_policy
 
     attr_accessor :resources
 
@@ -47,10 +52,12 @@ module Kubevirt
         :'devices' => :'devices',
         :'features' => :'features',
         :'firmware' => :'firmware',
+        :'io_threads' => :'ioThreads',
         :'io_threads_policy' => :'ioThreadsPolicy',
         :'launch_security' => :'launchSecurity',
         :'machine' => :'machine',
         :'memory' => :'memory',
+        :'reboot_policy' => :'rebootPolicy',
         :'resources' => :'resources'
       }
     end
@@ -69,10 +76,12 @@ module Kubevirt
         :'devices' => :'V1Devices',
         :'features' => :'V1Features',
         :'firmware' => :'V1Firmware',
+        :'io_threads' => :'V1DiskIOThreads',
         :'io_threads_policy' => :'String',
         :'launch_security' => :'V1LaunchSecurity',
         :'machine' => :'V1Machine',
         :'memory' => :'V1Memory',
+        :'reboot_policy' => :'String',
         :'resources' => :'V1ResourceRequirements'
       }
     end
@@ -124,6 +133,10 @@ module Kubevirt
         self.firmware = attributes[:'firmware']
       end
 
+      if attributes.key?(:'io_threads')
+        self.io_threads = attributes[:'io_threads']
+      end
+
       if attributes.key?(:'io_threads_policy')
         self.io_threads_policy = attributes[:'io_threads_policy']
       end
@@ -138,6 +151,10 @@ module Kubevirt
 
       if attributes.key?(:'memory')
         self.memory = attributes[:'memory']
+      end
+
+      if attributes.key?(:'reboot_policy')
+        self.reboot_policy = attributes[:'reboot_policy']
       end
 
       if attributes.key?(:'resources')
@@ -176,10 +193,12 @@ module Kubevirt
           devices == o.devices &&
           features == o.features &&
           firmware == o.firmware &&
+          io_threads == o.io_threads &&
           io_threads_policy == o.io_threads_policy &&
           launch_security == o.launch_security &&
           machine == o.machine &&
           memory == o.memory &&
+          reboot_policy == o.reboot_policy &&
           resources == o.resources
     end
 
@@ -192,7 +211,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [chassis, clock, cpu, devices, features, firmware, io_threads_policy, launch_security, machine, memory, resources].hash
+      [chassis, clock, cpu, devices, features, firmware, io_threads, io_threads_policy, launch_security, machine, memory, reboot_policy, resources].hash
     end
 
     # Builds the object from hash

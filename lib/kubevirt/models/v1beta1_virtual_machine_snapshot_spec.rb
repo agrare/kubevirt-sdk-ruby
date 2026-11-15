@@ -21,6 +21,12 @@ module Kubevirt
     # Duration is a wrapper around time.Duration which supports correct marshaling to YAML and JSON. In particular, it marshals into strings, which can be used as map keys in json.
     attr_accessor :failure_deadline
 
+    # Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.  The serialization format is:  ``` <quantity>        ::= <signedNumber><suffix>   (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)  <digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei   (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)  <decimalSI>       ::= m | \"\" | k | M | G | T | P | E   (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)  <decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber> ```  No matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.  When a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.  Before serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:  - No precision is lost - No fractional digits will be emitted - The exponent (or suffix) is as large as possible.  The sign will be omitted unless the number is negative.  Examples:  - 1.5 will be serialized as \"1500m\" - 1.5Gi will be serialized as \"1536Mi\"  Note that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.  Non-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)  This format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.
+    attr_accessor :overlay_scratch_size
+
+    # SnapshotMode selects the flow used to snapshot a running VM. Only meaningful for online snapshots; offline snapshots are unaffected. External requires the ExternalVMSnapshot feature gate. Defaults to Direct
+    attr_accessor :snapshot_mode
+
     attr_accessor :source
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -28,6 +34,8 @@ module Kubevirt
       {
         :'deletion_policy' => :'deletionPolicy',
         :'failure_deadline' => :'failureDeadline',
+        :'overlay_scratch_size' => :'overlayScratchSize',
+        :'snapshot_mode' => :'snapshotMode',
         :'source' => :'source'
       }
     end
@@ -42,7 +50,9 @@ module Kubevirt
       {
         :'deletion_policy' => :'String',
         :'failure_deadline' => :'String',
-        :'source' => :'K8sIoApiCoreV1TypedLocalObjectReference'
+        :'overlay_scratch_size' => :'Object',
+        :'snapshot_mode' => :'String',
+        :'source' => :'IoK8sApiCoreV1TypedLocalObjectReference'
       }
     end
 
@@ -73,6 +83,14 @@ module Kubevirt
 
       if attributes.key?(:'failure_deadline')
         self.failure_deadline = attributes[:'failure_deadline']
+      end
+
+      if attributes.key?(:'overlay_scratch_size')
+        self.overlay_scratch_size = attributes[:'overlay_scratch_size']
+      end
+
+      if attributes.key?(:'snapshot_mode')
+        self.snapshot_mode = attributes[:'snapshot_mode']
       end
 
       if attributes.key?(:'source')
@@ -109,6 +127,8 @@ module Kubevirt
       self.class == o.class &&
           deletion_policy == o.deletion_policy &&
           failure_deadline == o.failure_deadline &&
+          overlay_scratch_size == o.overlay_scratch_size &&
+          snapshot_mode == o.snapshot_mode &&
           source == o.source
     end
 
@@ -121,7 +141,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [deletion_policy, failure_deadline, source].hash
+      [deletion_policy, failure_deadline, overlay_scratch_size, snapshot_mode, source].hash
     end
 
     # Builds the object from hash

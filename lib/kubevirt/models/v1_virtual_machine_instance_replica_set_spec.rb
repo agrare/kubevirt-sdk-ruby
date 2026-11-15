@@ -45,7 +45,7 @@ module Kubevirt
       {
         :'paused' => :'Boolean',
         :'replicas' => :'Integer',
-        :'selector' => :'K8sIoApimachineryPkgApisMetaV1LabelSelector',
+        :'selector' => :'IoK8sApimachineryPkgApisMetaV1LabelSelector',
         :'template' => :'V1VirtualMachineInstanceTemplateSpec'
       }
     end

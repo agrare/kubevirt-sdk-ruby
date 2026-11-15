@@ -67,7 +67,7 @@ module Kubevirt
         :'final_checkpoint' => :'Boolean',
         :'preallocation' => :'Boolean',
         :'priority_class_name' => :'String',
-        :'pvc' => :'K8sIoApiCoreV1PersistentVolumeClaimSpec',
+        :'pvc' => :'IoK8sApiCoreV1PersistentVolumeClaimSpec',
         :'source' => :'V1beta1DataVolumeSource',
         :'source_ref' => :'V1beta1DataVolumeSourceRef',
         :'storage' => :'V1beta1StorageSpec'

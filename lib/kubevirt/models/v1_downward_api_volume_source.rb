@@ -38,7 +38,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'fields' => :'Array<K8sIoApiCoreV1DownwardAPIVolumeFile>',
+        :'fields' => :'Array<IoK8sApiCoreV1DownwardAPIVolumeFile>',
         :'volume_label' => :'String'
       }
     end

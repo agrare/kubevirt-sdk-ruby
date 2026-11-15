@@ -20,10 +20,13 @@ module Kubevirt
     # BootOrder is an integer value > 0, used to determine ordering of boot devices. Lower values take precedence. Each disk or interface that has a boot order must have a unique value. Disks without a boot order are not tried if a disk with a boot order exists.
     attr_accessor :boot_order
 
-    # Cache specifies which kvm disk cache mode should be used. Supported values are: CacheNone, CacheWriteThrough.
+    # Cache specifies which kvm disk cache mode should be used. Supported values are: none: Guest I/O not cached on the host, but may be kept in a disk cache. writethrough: Guest I/O cached on the host but written through to the physical medium. Slowest but with most guarantees. writeback: Guest I/O cached on the host. directsync: Guest I/O bypasses the host page cache and is written to the physical medium synchronously. Defaults to none if the storage supports O_DIRECT, otherwise writethrough.
     attr_accessor :cache
 
     attr_accessor :cdrom
+
+    # ChangedBlockTracking indicates this disk should have CBT option Defaults to false.
+    attr_accessor :changed_block_tracking
 
     # dedicatedIOThread indicates this disk should have an exclusive IO Thread. Enabling this implies useIOThreads = true. Defaults to false.
     attr_accessor :dedicated_io_thread
@@ -57,6 +60,7 @@ module Kubevirt
         :'boot_order' => :'bootOrder',
         :'cache' => :'cache',
         :'cdrom' => :'cdrom',
+        :'changed_block_tracking' => :'changedBlockTracking',
         :'dedicated_io_thread' => :'dedicatedIOThread',
         :'disk' => :'disk',
         :'error_policy' => :'errorPolicy',
@@ -81,6 +85,7 @@ module Kubevirt
         :'boot_order' => :'Integer',
         :'cache' => :'String',
         :'cdrom' => :'V1CDRomTarget',
+        :'changed_block_tracking' => :'Boolean',
         :'dedicated_io_thread' => :'Boolean',
         :'disk' => :'V1DiskTarget',
         :'error_policy' => :'String',
@@ -128,6 +133,10 @@ module Kubevirt
 
       if attributes.key?(:'cdrom')
         self.cdrom = attributes[:'cdrom']
+      end
+
+      if attributes.key?(:'changed_block_tracking')
+        self.changed_block_tracking = attributes[:'changed_block_tracking']
       end
 
       if attributes.key?(:'dedicated_io_thread')
@@ -198,6 +207,7 @@ module Kubevirt
           boot_order == o.boot_order &&
           cache == o.cache &&
           cdrom == o.cdrom &&
+          changed_block_tracking == o.changed_block_tracking &&
           dedicated_io_thread == o.dedicated_io_thread &&
           disk == o.disk &&
           error_policy == o.error_policy &&
@@ -218,7 +228,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [block_size, boot_order, cache, cdrom, dedicated_io_thread, disk, error_policy, io, lun, name, serial, shareable, tag].hash
+      [block_size, boot_order, cache, cdrom, changed_block_tracking, dedicated_io_thread, disk, error_policy, io, lun, name, serial, shareable, tag].hash
     end
 
     # Builds the object from hash

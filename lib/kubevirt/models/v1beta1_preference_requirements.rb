@@ -15,6 +15,9 @@ require 'time'
 
 module Kubevirt
   class V1beta1PreferenceRequirements
+    # Required Architecture of the VM referencing this preference
+    attr_accessor :architecture
+
     attr_accessor :cpu
 
     attr_accessor :memory
@@ -22,6 +25,7 @@ module Kubevirt
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'architecture' => :'architecture',
         :'cpu' => :'cpu',
         :'memory' => :'memory'
       }
@@ -35,6 +39,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'architecture' => :'String',
         :'cpu' => :'V1beta1CPUPreferenceRequirement',
         :'memory' => :'V1beta1MemoryPreferenceRequirement'
       }
@@ -60,6 +65,10 @@ module Kubevirt
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'architecture')
+        self.architecture = attributes[:'architecture']
+      end
 
       if attributes.key?(:'cpu')
         self.cpu = attributes[:'cpu']
@@ -90,6 +99,7 @@ module Kubevirt
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          architecture == o.architecture &&
           cpu == o.cpu &&
           memory == o.memory
     end
@@ -103,7 +113,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [cpu, memory].hash
+      [architecture, cpu, memory].hash
     end
 
     # Builds the object from hash

@@ -23,6 +23,9 @@ module Kubevirt
 
     attr_accessor :ready_to_use
 
+    # SnapshotMode is the actual mode the snapshot is taken with
+    attr_accessor :snapshot_mode
+
     attr_accessor :volume_snapshot_status
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -31,6 +34,7 @@ module Kubevirt
         :'creation_time' => :'creationTime',
         :'error' => :'error',
         :'ready_to_use' => :'readyToUse',
+        :'snapshot_mode' => :'snapshotMode',
         :'volume_snapshot_status' => :'volumeSnapshotStatus'
       }
     end
@@ -46,6 +50,7 @@ module Kubevirt
         :'creation_time' => :'Time',
         :'error' => :'V1beta1Error',
         :'ready_to_use' => :'Boolean',
+        :'snapshot_mode' => :'String',
         :'volume_snapshot_status' => :'Array<V1beta1VolumeSnapshotStatus>'
       }
     end
@@ -83,6 +88,10 @@ module Kubevirt
         self.ready_to_use = attributes[:'ready_to_use']
       end
 
+      if attributes.key?(:'snapshot_mode')
+        self.snapshot_mode = attributes[:'snapshot_mode']
+      end
+
       if attributes.key?(:'volume_snapshot_status')
         if (value = attributes[:'volume_snapshot_status']).is_a?(Array)
           self.volume_snapshot_status = value
@@ -113,6 +122,7 @@ module Kubevirt
           creation_time == o.creation_time &&
           error == o.error &&
           ready_to_use == o.ready_to_use &&
+          snapshot_mode == o.snapshot_mode &&
           volume_snapshot_status == o.volume_snapshot_status
     end
 
@@ -125,7 +135,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [creation_time, error, ready_to_use, volume_snapshot_status].hash
+      [creation_time, error, ready_to_use, snapshot_mode, volume_snapshot_status].hash
     end
 
     # Builds the object from hash

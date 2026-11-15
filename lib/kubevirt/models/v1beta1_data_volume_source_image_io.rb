@@ -22,6 +22,9 @@ module Kubevirt
     # DiskID provides id of a disk to be imported
     attr_accessor :disk_id
 
+    # InsecureSkipVerify is a flag to skip certificate verification
+    attr_accessor :insecure_skip_verify
+
     # SecretRef provides the secret reference needed to access the ovirt-engine
     attr_accessor :secret_ref
 
@@ -33,6 +36,7 @@ module Kubevirt
       {
         :'cert_config_map' => :'certConfigMap',
         :'disk_id' => :'diskId',
+        :'insecure_skip_verify' => :'insecureSkipVerify',
         :'secret_ref' => :'secretRef',
         :'url' => :'url'
       }
@@ -48,6 +52,7 @@ module Kubevirt
       {
         :'cert_config_map' => :'String',
         :'disk_id' => :'String',
+        :'insecure_skip_verify' => :'Boolean',
         :'secret_ref' => :'String',
         :'url' => :'String'
       }
@@ -82,6 +87,10 @@ module Kubevirt
         self.disk_id = attributes[:'disk_id']
       else
         self.disk_id = ''
+      end
+
+      if attributes.key?(:'insecure_skip_verify')
+        self.insecure_skip_verify = attributes[:'insecure_skip_verify']
       end
 
       if attributes.key?(:'secret_ref')
@@ -127,6 +136,7 @@ module Kubevirt
       self.class == o.class &&
           cert_config_map == o.cert_config_map &&
           disk_id == o.disk_id &&
+          insecure_skip_verify == o.insecure_skip_verify &&
           secret_ref == o.secret_ref &&
           url == o.url
     end
@@ -140,7 +150,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [cert_config_map, disk_id, secret_ref, url].hash
+      [cert_config_map, disk_id, insecure_skip_verify, secret_ref, url].hash
     end
 
     # Builds the object from hash

@@ -38,7 +38,7 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'metadata' => :'K8sIoApimachineryPkgApisMetaV1ObjectMeta',
+        :'metadata' => :'IoK8sApimachineryPkgApisMetaV1ObjectMeta',
         :'spec' => :'V1VirtualMachineSpec',
         :'status' => :'V1VirtualMachineStatus'
       }

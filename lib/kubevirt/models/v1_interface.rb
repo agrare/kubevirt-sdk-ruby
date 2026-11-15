@@ -46,10 +46,16 @@ module Kubevirt
     # DeprecatedInterfacePasst is an alias to the deprecated InterfacePasst Deprecated: Removed in v1.3
     attr_accessor :passt
 
+    # InterfacePasstBinding connects to a given network using passt usermode networking.
+    attr_accessor :passt_binding
+
     # If specified, the virtual network interface will be placed on the guests pci address with the specified PCI address. For example: 0000:81:01.10
     attr_accessor :pci_address
 
-    # List of ports to be forwarded to the virtual machine.
+    # List of port ranges to be forwarded to the virtual machine. Mutually exclusive with ports. Only supported on masquerade interfaces. This feature is in Alpha.
+    attr_accessor :port_ranges
+
+    # List of ports to be forwarded to the virtual machine. Mutually exclusive with portRanges.
     attr_accessor :ports
 
     # DeprecatedInterfaceSlirp is an alias to the deprecated InterfaceSlirp that connects to a given network using QEMU user networking mode. Deprecated: Removed in v1.3
@@ -58,7 +64,7 @@ module Kubevirt
     # InterfaceSRIOV connects to a given network by passing-through an SR-IOV PCI device via vfio.
     attr_accessor :sriov
 
-    # State represents the requested operational state of the interface. The (only) value supported is `absent`, expressing a request to remove the interface.
+    # State represents the requested operational state of the interface. The supported values are: `absent`, expressing a request to remove the interface. `down`, expressing a request to set the link down. `up`, expressing a request to set the link up. Empty value functions as `up`.
     attr_accessor :state
 
     # If specified, the virtual network interface address and its tag will be provided to the guest via config drive
@@ -78,7 +84,9 @@ module Kubevirt
         :'model' => :'model',
         :'name' => :'name',
         :'passt' => :'passt',
+        :'passt_binding' => :'passtBinding',
         :'pci_address' => :'pciAddress',
+        :'port_ranges' => :'portRanges',
         :'ports' => :'ports',
         :'slirp' => :'slirp',
         :'sriov' => :'sriov',
@@ -106,7 +114,9 @@ module Kubevirt
         :'model' => :'String',
         :'name' => :'String',
         :'passt' => :'Object',
+        :'passt_binding' => :'Object',
         :'pci_address' => :'String',
+        :'port_ranges' => :'Array<V1PortRange>',
         :'ports' => :'Array<V1Port>',
         :'slirp' => :'Object',
         :'sriov' => :'Object',
@@ -182,8 +192,18 @@ module Kubevirt
         self.passt = attributes[:'passt']
       end
 
+      if attributes.key?(:'passt_binding')
+        self.passt_binding = attributes[:'passt_binding']
+      end
+
       if attributes.key?(:'pci_address')
         self.pci_address = attributes[:'pci_address']
+      end
+
+      if attributes.key?(:'port_ranges')
+        if (value = attributes[:'port_ranges']).is_a?(Array)
+          self.port_ranges = value
+        end
       end
 
       if attributes.key?(:'ports')
@@ -245,7 +265,9 @@ module Kubevirt
           model == o.model &&
           name == o.name &&
           passt == o.passt &&
+          passt_binding == o.passt_binding &&
           pci_address == o.pci_address &&
+          port_ranges == o.port_ranges &&
           ports == o.ports &&
           slirp == o.slirp &&
           sriov == o.sriov &&
@@ -262,7 +284,7 @@ module Kubevirt
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [acpi_index, binding, boot_order, bridge, dhcp_options, mac_address, macvtap, masquerade, model, name, passt, pci_address, ports, slirp, sriov, state, tag].hash
+      [acpi_index, binding, boot_order, bridge, dhcp_options, mac_address, macvtap, masquerade, model, name, passt, passt_binding, pci_address, port_ranges, ports, slirp, sriov, state, tag].hash
     end
 
     # Builds the object from hash

@@ -38,8 +38,8 @@ module Kubevirt
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'limits' => :'Hash<String, String>',
-        :'requests' => :'Hash<String, String>'
+        :'limits' => :'Hash<String, Object>',
+        :'requests' => :'Hash<String, Object>'
       }
     end
 
